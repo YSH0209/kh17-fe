@@ -1,0 +1,39 @@
+<!-- 
+    Doctype 은 문서의 유형과 버전을 정의할 때 사용 
+    - html 이라고만 말하면 HTML 버전5를 의미한다 (HTML5)
+    - 4 이하를 사용하고 싶다면 태그 정보를 옆에 주소 형태로 적어야 한다
+
+    <html> 은 문서의 범위를 설정할 때 사용하지만 안만들어도 자동생성이 된다
+        <head> 에는 문서의 정보와 화면에 표시되지 않는 도구들을 설정한다
+            <meta> 는 이 문서를 외부에서 바라봤을 때 알 수 있는 정보들이다
+            <title> 은 문서의 제목이다
+        <body> 에는 실제 화면에 표시될 내용들을 작성한다
+ -->
+<!DOCTYPE html> 
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <!-- favicon 설정 -->
+    <link rel="icon" href="/kh.png" type="image/png">
+   
+    <title>디자인 예제</title>
+</head>
+<body>
+    <!--
+        inline 스타일
+        - HTML에 직접 디자인 코드를 삽입하여 구현하는 것
+        - style 속성 사용 
+        - 전체적인 디자인 구현보다는 기존의 디자인을 수정하거나 가볍게 추가할 때 사용
+
+        [장점] 그 어떤 방식의 디자인보다도 우선순위가 높다 (디자인 변경이 쉽다)
+        [단점] 재사용(모듈화) 불가
+    -->
+    <h1 style="color: rgba(37, 193, 255, 0.856);">Hello css</h1>    
+    <h1 style="font-size: 100px; color: rgb(88, 252, 170);">Hello css</h1>
+    <h1 style="border: 3px solid black;">Hello css</h1>
+    <h1 style="background-color: rgba(40, 233, 98, 0.815); color:rgb(78, 80, 78);">Hello css</h1>
+    <h1 style="text-decoration: line-through;">Hello css</h1>    
+</body>
+</html>
