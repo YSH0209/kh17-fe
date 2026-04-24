@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.png" type="image/png"
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        *{
+            /* 전체에게 설정한다! */
+
+            /* 이제부터 폭과 높이는 테두리가 기준이야 */
+            box-sizing: border-box;
+        }
+        input{
+            /* 글꼴 속성(font-* ) */
+            font-family: 굴림, sans-serif ;
+            font-size: 22px;
+            /* font-weight: bold; */
+            /* font-style: italic; */
+        }
+        .first{
+
+            /* 배경 속성 */
+            /* css1 */
+            /* background-color: rgba(250, 222, 250, 0.904); */
+            /* css3 */
+            /* background: linear-gradient(background: #808080; */
+            background: radial-gradient(circle, rgba(128, 128, 128, 1) 0%, rgba(96, 90, 226, 1) 17%, rgba(102, 89, 222, 1) 21%, rgba(84, 69, 133, 1) 32%, rgba(79, 19, 128, 1) 42%, rgba(153, 83, 182, 1) 48%, rgba(184, 140, 177, 1) 59%, rgba(182, 79, 160, 1) 63%, rgba(203, 77, 144, 1) 74%, rgba(208, 76, 140, 1) 77%, rgba(226, 74, 127, 1) 86%, rgba(181, 67, 84, 1) 100%););
+        }
+
+        .second{
+            /* 테두리 디자인 (border-*) */
+            border-width: 2px;
+            border-style: solid;
+            border-color: crimson;
+
+            border-radius: 5px;
+            /* border-radius: 100px; */
+            /* border-radius: 50%; */
+
+            /* 입력창과 같이 포커스 효과가 있는 경우 제거하는 속성 */
+            outline: none;
+
+            /* 
+                내부 여백 (padding) 
+                - 글자가 중요한 태그라면 (input, button 등) em을 쓸수 있음
+                - 1em은 글자 1개의 높이
+                - px로도 부여할 수 있으니 상황에 맞게 선택하여 부여
+                - 부위별로 부여도 가능 (top, botton, left, right)
+                - 2개로 나눠쓰면 상하/좌우
+                - 4개로 나눠쓰면 시계방향 | 12시 / 3시 / 6시 / 9시
+            */
+            /* padding: 10px; */
+            /* padding: 1em; */
+            /* padding: 0.5em 1em; */
+            /* padding: 5px 10px 15px 20px; */
+            padding: 0.5em;
+            padding-left: 2em;
+        }
+        .third{
+            /* 크기설정 (width, height) */
+            width: 300px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>기본 디자인 속성들</h1>
+
+    <input type="text" class="first">
+    <br><br>
+    <input type="text" class="second">
+    <br><br>
+    <input type="text" class="third">
+
+</body>
+</html>
