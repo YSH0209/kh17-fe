@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="./images/instagram.png" type="image/png"
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+
+        body{
+            text-align: center;
+        }
+
+        hr{
+            width: 530px;
+            margin-top: 20px ;
+            margin-bottom: 100px;
+        }
+
+        h3{
+            width: 530px;
+            text-align: left;
+            margin: 30px auto;
+        }
+
+        input{
+            display: block;
+            width: 530px;
+            margin: 15px auto;
+            font-family: sans-serif;
+            font-size: 20px;
+            padding: 0.75em;
+            border-radius: 0.75em;
+            outline: none;
+            border-style: solid;
+            border-color: #b2bec3;
+            border-width: 1px;
+        }
+
+        button{
+            display: block;
+            width: 530px;
+            margin: 25px auto;
+            font-family: sans-serif;
+            font-size: 20px;
+            padding: 0.5em;
+            border-color: #0984e3;
+            background-color: #0984e3;
+            border-style: solid;
+            border-radius: 100px;
+            color: white;
+            font-width: bold;
+        }
+
+        a{
+            color: #484949
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+    </style>
+</head>
+<body>
+    <img src="./images/instagram.png" width="50">
+    <hr>
+    <h3>Instagram으로 로그인</h3>
+    <form>
+        <input type="text" name="memberId" required placeholder="휴대폰 번호, 사용자 이름 또는 이메일 주소">
+        <input type="password" name="memberPassword" required placeholder="비밀번호">
+        <button>로그인</button>
+    </form>
+    <a href="#">비밀번호를 잊으셨나요?</a>
+</body>
+</html>
