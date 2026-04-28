@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네이버 : 로그인</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <style>
+        /* 영역을 시각적으로 보이게 만드는 테스트 코드 */
+        div {
+            /* box-shadow: 우 하 번짐 퍼짐 색상; */
+            box-shadow: 0 0 0 1px #b2bec3;
+        }
+
+        input[name=memberId] , input[name=memberPassword] {
+            width: 100%;
+            font-size: 20px;
+            padding: 0.75em;
+            outline: none;
+        }
+        input[name=memberId] {
+            border-top-left-radius: 0.75em;
+            border-top-right-radius: 0.75em;
+        }
+        input[name=memberPassword] {
+            border-bottom-left-radius: 0.75em;
+            border-bottom-right-radius: 0.75em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="width: 410px;">
+        <div class="cell center">
+            <img src="./images/naver.png" width="180">
+        </div>
+        <div class="cell" style="margin-top: 40px; margin-bottom: 0;">
+            <input type="text" name="memberId" placeholder="아이디 또는 전화번호" required>
+        </div>
+        <div class="cell" style="margin-top: 0;">
+            <input type="text" name="memberPassword" placeholder="비밀번호" required>
+        </div>
+        <div class="cell">
+            <input type="checkbox"> 로그인 상태 유지
+        </div>
+        <div class="cell">
+            <button class="btn-login">로그인</button>
+        </div>
+        <hr style="margin-top: 20px;">
+        <div class="cell" style="margin-top: 20px;">
+            <button class="btn-passkey">패스키 로그인</button>
+        </div>
+    </div>
+</body>
+</html>
