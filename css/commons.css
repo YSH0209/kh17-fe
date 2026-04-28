@@ -272,4 +272,34 @@ color: #2d3436;
 {
     background-color: rgb(245, 255, 255);
 }
+  /* 
+링크 디자인
+- 변화를 부드럽게 보여주도록 처리
+- transition-property : 변화가 부드럽게 처리할 항목
+- transition-duration : 변화가 완료되는 지속시간
+- transition-timing-function : 변화의 처리 방식
+- linear : 일정한 변화
+- ease-out : 끝을 느리게 ( 자동차 브레이크 )
+*/
+.link {
+color: black;
+text-decoration: none;
+transition-property: transform, color;
+transition-duration: 0.1s;
+ transition-timing-function: ease-out;
+}
+.link:hover {
+    /* text-decoration: underline; */
+    color: rgb(23, 216, 152);
 
+    /* 
+    transform을 이용한 물리적인 변화
+    - translate()로 이동
+    - rotate() 로 회전
+     - skew() 로 기울이기
+    - scale() 로 확대/축소
+    */
+    display: inline-block;
+    transform: scale(1.02);
+
+}
