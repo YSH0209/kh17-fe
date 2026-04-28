@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>float 속성</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div{
+            box-shadow: 0 0 0 1px red;
+        }
+        .first-char{
+            font-size: 100px;
+            float:left;
+        }
+
+        /*
+            float  전용 격리 영역 생성  
+            - .float-area 안에 있는 모든 항목은 float:left 이다
+            - 새로운 영역을 만들어 clear는 힘드니 가상영역을 활용
+                   - : :before 는 시작 지점을 의미
+                   - : :after 는 종료 지점을 의미
+        */
+        .float-area > *{
+            float:left;
+        }
+        .float-area::after {
+            /* 이 영역은 실제로는 존재하지 않는다 (content로 생성) */
+            content:" "; /*생성하고*/
+            display: block; /*한줄을 다 차지하게 만들고*/
+            clear: both; /*사용한 float를 청소*/
+
+        }
+
+    </style>
+</head>
+<body>
+   <div class="container w-600 mt-50 mb-50">
+     <div class="cell center">
+        <h1>Float 속성 다루기</h1>
+     </div>
+     <div class="cell">
+        <span class="first-char">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nisi tortor, pellentesque non neque sed, eleifend gravida ligula. Morbi sed facilisis est. Quisque rhoncus convallis vehicula. Proin et odio ullamcorper, hendrerit mi et, lacinia turpis. Nam non magna et diam convallis eleifend et quis eros. Nam augue nulla, varius dictum commodo ut, mollis ut quam. Aliquam et ultrices ligula. Curabitur elit nisl, mattis et euismod a, pulvinar in enim. Praesent sem ipsum, vehicula sed nunc dictum, sagittis gravida augue. Nunc rhoncus turpis sed tellus tincidunt, eget dapibus odio lobortis. Phasellus nulla sem, gravida et venenatis in, facilisis id odio. Phasellus nec urna molestie ipsum consequat faucibus ac quis purus. Phasellus scelerisque venenatis placerat.
+        <span class="first-char">E</span>tiam faucibus ex dictum mi volutpat fermentum. Curabitur fermentum aliquet mollis. Suspendisse ornare efficitur porttitor. Maecenas non orci ex. Donec lectus urna, ullamcorper eget diam in, auctor scelerisque justo. Nunc lacinia ullamcorper est, non tristique nisl venenatis vel. Quisque in risus non ipsum consectetur dictum quis in ipsum. Morbi vehicula augue sed velit pharetra porta. Sed vehicula arcu et neque lobortis, sit amet gravida magna viverra. Aliquam feugiat metus sodales libero placerat efficitur. Curabitur gravida pellentesque augue, consequat pellentesque turpis fringilla at. Nam auctor, neque in mollis accumsan, mauris lacus ultricies nibh, sed ullamcorper sem tellus in ex. Mauris sed lacus id elit blandit dignissim. Suspendisse sit amet tellus vel ante rutrum vehicula.
+     </div>
+     <div class="cell me-50">
+        inline-block은 반씩 나눠서 배치할 수 없다
+     </div>
+     <div class="cell">
+        <button class="btn" style="width:49.63%">좌측</button>
+        <button class="btn" style="width:49.63%">우측</button>
+     </div>
+
+     <div class="cell mt-50">
+        float를 써서 배치하면 여백이 안생긴다
+     </div>
+     <div class="cell">
+        <button class="btn w-50" style="float: left">좌측</button>
+        <button class="btn w-50" style="float: left">우측</button>
+     </div>
+     </div>
+     <div class="cell">
+        <div class="w-50" style="float:left;">좌측</div>
+        <!-- <div class="w-50" style="float:left;">우측</div> -->
+     </div>
+
+     <!-- 
+        * 중요 *
+        - float는 여백이 없고 배치 방향 설정이 쉽지만,
+        - 우리가 여태까지 설계한 레이아웃을 무시한다
+        - float는 제한된 공간에서 자기들끼리만 놀게 해야 한다 (격리)
+        - float 속성을 정리할 수 있는 별도의 공간이 필요
+            -> (clear 속성이 사용된 영역이 필요)
+     -->
+     <div style="clear:both;"></div>
+
+     <div class="cell mt-50">
+        일반 글자
+     </div>
+
+     <!--
+        최종 목표 : 
+        - float 좋아 근데 위험해
+        - float-area 라는 클래스를 만들어서 float 끼리 놀게 하자
+        - 이 영역이 끝나면 자동으로 clear까지 되도록 처리  
+     -->
+        <div class="cell mt-50">
+            <div class="float-area">
+                <div class="w-50">1번</div>
+                <div class="w-50">2번</div>
+            </div>
+        </div>
+        <div class="cell mt-50">
+            일반 글자
+        </div>
+
+   </div>
+</body>
+</html>
