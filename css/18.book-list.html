@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 목록</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+
+        /* 테이블 확장 스타일 - 마우스 감지 색상 변경 테이블 */
+        .table.table-hover > tbody > tr:hover{
+            background-color: azure;
+        }
+
+        /* 
+            테이블 확장 스타일 - 줄무늬 테이블 
+            - nth-child 라는 조건은 "N번쨰 자식" 이라는 뜻
+            - 값에 n을 포함 시키면 n=1,2,3,4,5,...로 변하며 적용
+        */
+        .table.table-stripe > thead >tr,
+        .table.table-stripe > tbody > tr:nth-child(2n-1)
+        {
+            background-color: rgb(245, 255, 255);
+        }
+    </style>
+</head>
+<body>
+   <div class="container w-1000 mt-50 mb-50">
+    <div class="cell center">
+        <h1>도서 정보 조회</h1>
+    </div>
+    <div class="cell mt-40 center">
+        <form autocomplete="off">
+            <select name="column" class="field">
+                <option value="book_title">도서명</option>
+                <option value="book_author">저자</option>
+                <option value="book_publisher">출판사</option>
+                <option value="book_genre">장르</option>
+            </select>
+            <input name="keyword" class="field" required
+                type="text" placeholder="검색어 입력">
+            <button type="submit" class="btn btn-positive">
+                 <i class="fa-solid fa-magnifying-glass"></i>
+                <span>검색</span>
+            </button>
+        </form>
+    </div>
+    <div class="cell right">
+        <a href="#" class="btn btn-neutral">신규 등록하기</a>
+    </div>
+    <div calss="cell">
+        결과 수 : 
+    </div>
+    <div calss="cell">
+        <table class="table table-hover table-stripe">
+            <thead>
+                <tr>
+                    <th>도서ID</th>
+                    <th width="30%">도서명</th>
+                    <th>저자명</th>
+                    <th>출간일</th>
+                    <th>도서가격</th>
+                    <th>페이지 수</th>
+                    <th>출판사</th>
+                    <th>장르</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>해리포터와 마법사의 돌</td>
+                    <td>J.K 롤링</td>
+                    <td>1997-06-26</td>
+                    <td>15,000</td>
+                    <td>320</td>
+                    <td>문학동네</td>
+                    <td>판타지</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div calss="cell">
+       <div class="pagination">
+                <a href="#"><i class="fa-solid fa-chevron-left"></i></a>
+                <a href="#" class="on">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#"><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+    </div>
+
+   </div>
+</body>
+</html>
