@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드롭다운(ul)</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        /* 모든 ul 태그의 기본 스타일을 제거 */
+        .menu,
+        .menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        /* 하위메뉴를 숨긴다 */
+        .menu ul {
+            display: none;
+        }
+        /* li에 마우스가 올라가면 하위 ul을 표시 */
+        .menu li:hover > ul {
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        드롭다운을 <ul>을 써서 구현
+        - 메뉴는 계층형 구조를 가진다 (=트리구조)
+    -->
+    <ul class="menu">
+        <li>
+            <a>보여질 글자</a>
+            <ul>
+                <li><a>항목1</a></li>
+                <li><a>항목2</a></li>
+                <li><a>항목3</a></li>
+                <li><a>항목4</a></li>
+                <li><a>항목5</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <hr>
+    메뉴에 영향을 받지 말아야 하는 컨텐츠들
+</body>
+</html>
