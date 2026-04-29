@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드롭다운 (drop down)</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div{
+            box-shadow: 0 0 0 1px blue;
+        }
+        .menu{
+            position:relative;
+            width: 120px;
+            z-index: 999;
+        }
+        .menu > .menu-more{
+            /* display: none; */
+            opacity: 0;
+            z-index: 998;
+            transition: opacity 0.1s ease-out;
+            position: absolute;
+            width: 100%;
+            top: 100%;
+            background-color: rgb(218, 218, 218);
+            transition-property: opacity, transform;
+            transition-duration: 0.2s;
+            transition-timing-function: ease-out;
+            transform: translateY(-100%);
+        }
+
+      .menu:hover > .menu-more{
+        /* display: block; */
+        opacity: 1;
+        transform: translateY(0%);
+      }
+
+    </style>
+</head>
+<body> 
+   <div class="container w-600 mt-50 md-50">
+        <div class="cell">
+            <div class="menu">
+                <label> 
+                    메뉴
+                </label>
+                <div class="menu-more">
+                    <div>항목1</div>
+                    <div>항목2</div>
+                    <div>항목3</div>
+                    <div>항목4</div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        아래쪽 컨텐츠들 123123123123123123
+   </div>
+</body>
+</html>
