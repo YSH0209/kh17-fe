@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다단 화면 구현</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        .outer{
+            width: 50%;
+            padding:5px  10px;
+        }
+        .outer > .inner{
+            box-shadow: 0 0 1px 1px gray;
+            padding: 1em;
+
+        }
+        .flex-area > .w-400 {
+            border: 1px solid skyblue;
+            border-radius: 0.5em;
+            padding: 10px;
+        }
+
+        .badge {
+            background-color: #ffeaa7cc;
+            padding: 0.1em 0.2em;
+            border-radius: 0.5em;
+        }
+        
+    </style>
+</head>
+<body>
+   <div class="container w-1200">
+        <div class="cell">
+            <div class="outer">
+                <div class="inner">
+                    <div class="flex-area">
+                        <div class="w-400">
+                            
+        
+                            <div class="flex-vertical">
+                                <div>#iShopCARE</div>
+                                <div style="font-weight: bold;">각 부분별 신입/경력 채용</div>
+                                <div>(주)아이샵케어</div>
+                                <div style="color: gray; font-size: 14px;">
+                                    <span><i class="fa-solid fa-location"></i></span>
+                                    서울 강남구 외 신입/경력 학력무관
+                                </div>
+                                
+                                <div class="flex-area" style="font-size: 16px;">
+                                    <div>
+                                        <span class="badge" style="font-size: 14px;">
+                                            <span style="color: red;">
+                                                <i class="fa-solid fa-fire"></i>
+                                            </span>
+                                            상품기획·MD 지원 TOP100 </div>
+                                        </span>
+                                        <div class="flex-fill right">
+                                            D-3
+                                           <i class="fa-regular fa-star"></i>
+                                        </div>
+                                    </div>
+                            </div>
+
+                    
+                </div>
+            </div>
+                </div>
+
+
+            </div>
+        </div>
+   </div>
+</body>
+</html>

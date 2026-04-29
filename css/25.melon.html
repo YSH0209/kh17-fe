@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <link rel="stylesheet" type="text/css" href="./commons.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {
+            box-shadow: 0 0 0 1px gray;
+        }
+
+        .outer {
+            width: 100%;
+            height: 168px;
+            padding: 16px 0px;
+             flex-shrink: 1;
+        }
+
+        .outer > .inner > .flex-area {
+            height: 100%;
+        }
+
+        .outer .date-area {
+            width: 135px;
+            flex-shrink: 0;
+        }
+        .outer .content-area{
+            width: 100%;
+            margin-left: 15px;
+            flex-shrink: 1;
+            min-width: 0;/*flex로 인해서 늘어나는 성질을 제거*/
+        }
+
+        .outer .image-area{
+             flex-shrink: 0;
+        }
+
+        /* flex-shrink는 공간이 모자른 경우 어느 비율로 영역에서 가져갈지를 결정하는 속성( <-> flex-grow) */
+        /* 
+            제목은 1줄만 나오게 처리 
+            <디자인이 적용되기 위한 전제조건>
+            1. 폭이 정해져 있을 것(flex의 경우는 min-width를 제거) - 넘어감을 감지할 수 있도록
+            2. overflow 속성을 숨김(hidden)으로 바꿀 것
+            3. text-overflow 속성을 말줄임(ellipsis)으로 바꿀것
+
+        */
+        .outer .content-area .title h3{
+            white-space:nowarp; /*줄 바꿈 금지*/
+            overflow: hidden; /*넘어가면 숨김처리*/
+            text-overflow: ellipsis; /*글자가 넘어간 부분을 말줄임표로 표시*/
+        }
+
+        /* 
+            내용은 2줄만 나오게 처리 
+            - 원래 css의 신기능은 브라우저 개발사에서 실험적으로 도입한 뒤 반응이 좋으면 표준이 되는 방식
+            - 브라우저 업체별로 실험적 기능을 제공하기 위한 접두사가 존재한다
+                '-webkt-'은 크롬, 사파리, 엣지, 안드로이드 등을 의미(크로니움 엔진)
+                '-moz-'는 파이어폭스를 의미(Gecko 엔진)
+                '-ms-'는 구형 Edge, Internet Explorer를 의미(현재 사용하지 않음)
+                '-o-'는 오페라를 의미
+        */
+        .outer .content-area .detail {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container w-1100 mt-50 md-50">
+        <div class="cell">
+            <div class="flex-area flex-vertical">
+                <div class="outer">
+                    <div class="inner">
+                        <div class="flex-area">
+                            <div class="date-area flex-area flex-center">날짜</div>
+                            <div class="image-area">
+                                <img src="https://www.dummyimage.com/240x135" width="100% height=" 100%">
+                            </div>
+                            <div class="content-area flex-fill">
+                                <div class="title">
+                                    <h3 class="mt-0 mb-0">제목</h3>
+                                </div>
+                                <div class="mt-10">
+                                    내용
+                                </div>
+                                <div class="mt-30">
+                                    하트 | 댓글 | 조회수
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

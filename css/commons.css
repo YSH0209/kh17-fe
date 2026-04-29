@@ -292,62 +292,87 @@ transition-duration: 0.1s;
     /* text-decoration: underline; */
     color: rgb(23, 216, 152);
 
-    /* 
+/* 
     transform을 이용한 물리적인 변화
     - translate()로 이동
     - rotate() 로 회전
      - skew() 로 기울이기
     - scale() 로 확대/축소
-    */
+*/
     display: inline-block;
     transform: scale(1.02);
 
 }
 
-        .first-char{
-            font-size: 100px;
-            float:left;
-        }
+.first-char{
+    font-size: 100px;
+    float:left;
+}
 
-        /*
-            float  전용 격리 영역 생성  
-            - .float-area 안에 있는 모든 항목은 float:left 이다
-            - 새로운 영역을 만들어 clear는 힘드니 가상영역을 활용
-                   - : :before 는 시작 지점을 의미
-                   - : :after 는 종료 지점을 의미
-        */
-        .float-area > *{
-            float:left;
-        }
-        .float-area::after {
-            /* 이 영역은 실제로는 존재하지 않는다 (content로 생성) */
-            content:" "; /*생성하고*/
-            display: block; /*한줄을 다 차지하게 만들고*/
-            clear: both; /*사용한 float를 청소*/
+/*
+    float  전용 격리 영역 생성  
+    - .float-area 안에 있는 모든 항목은 float:left 이다
+     - 새로운 영역을 만들어 clear는 힘드니 가상영역을 활용
+            - : :before 는 시작 지점을 의미
+            - : :after 는 종료 지점을 의미
+*/
+.float-area > *{
+    float:left;
+}
+.float-area::after {
+    /* 이 영역은 실제로는 존재하지 않는다 (content로 생성) */
+     content:" "; /*생성하고*/
+    display: block; /*한줄을 다 차지하게 만들고*/
+     clear: both; /*사용한 float를 청소*/
 
-        }
-        /*
-            flex디자인 
-            - 기본 영역은 .flex-area로 설정
-            - 내부에 .flex-fill 이 있다면 flex-grow 설정
-            - 정중앙 배치만 할 경우 .flex-center를 영역에 추가 설정
-            - 세로 배치를 원한다면 .flex-vertical를 영역에 추가 설정
-        */
-        .flex-area{
-            display: flex;
-            flex-direction: row;   /*한 줄에 배치*/
-            flex-wrap: nowrap;     /*줄 바꿈 금지*/
-        }
+}
+/*
+    flex디자인 
+    - 기본 영역은 .flex-area로 설정
+    - 내부에 .flex-fill 이 있다면 flex-grow 설정
+    - 정중앙 배치만 할 경우 .flex-center를 영역에 추가 설정
+    - 세로 배치를 원한다면 .flex-vertical를 영역에 추가 설정
+*/
+.flex-area{
+    display: flex;
+    flex-direction: row;   /*한 줄에 배치*/
+    flex-wrap: nowrap;     /*줄 바꿈 금지*/
+}
 
-        .flex-area > .flex-fill {
-            flex-grow: 1;
-        }
+.flex-area > .flex-fill {
+    flex-grow: 1;
+}
 
-        .flex-area.flex-center {
-            justify-content: center;
-            align-items: center;
-        }
+.flex-area .flex-center {
+    justify-content: center;
+    align-items: center;
+}
 
-        .flex-area.flex-vertical {
-            flex-direction: column;
-        }
+.flex-area .flex-vertical {
+    flex-direction: column;
+}
+
+/* 말줄임표 처리 */
+.ellipsis {
+    white-space:nowarp; /*줄 바꿈 금지*/
+    overflow: hidden; /*넘어가면 숨김처리*/
+    text-overflow: ellipsis; /*글자가 넘어간 부분을 말줄임표로 표시*/
+}
+.ellipsis-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ellipsis-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.ellipsis-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 42;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
