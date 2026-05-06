@@ -200,163 +200,154 @@ a.btn {
 
 /* 
     테이블 디자인 
-- 테이블은 다양한 태그가 조합된 구조를 가진다
-- 최상위 태그인 <table>에 클래스를 부여하고 나머지는 탐색
-- 연계 선택자 : 하위, 후손 선택자
+    - 테이블은 다양한 태그가 조합된 구조를 가진다
+    - 최상위 태그인 <table>에 클래스를 부여하고 나머지는 탐색
+    - 연계 선택자 : 하위, 후손 선택자
 
-후손 선택자
-- .table th 와 같이 띄어쓰기로 내부에 포함된 요소임을 명시
-- 테이블이 중첩된 경우 원치 않는 대상이 선택될 수 있음
+    후손 선택자
+    - .table th 와 같이 띄어쓰기로 내부에 포함된 요소임을 명시
+    - 테이블이 중첩된 경우 원치 않는 대상이 선택될 수 있음
 
-자식(하위) 선택자
-- .table > thead > tr > th 과 같이 부등호 표시로 연결
-
+    자식(하위) 선택자
+    - .table > thead > tr > th 과 같이 부등호 표시로 연결
 */
 .table {
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid #2d3436;
     border-collapse: collapse;
 }
 
-.table > thead > tr > th,
+.table > thead > tr > th, 
 .table > tbody > tr > td
 {
-    border: 1px solid black;
- }
+    border: 1px solid #2d3436;
+    padding: 0.2em;
+}
 
-.table > tbody{
+.table > tbody {
     text-align: center;
+}
+
+/* 테이블 확장 스타일 - 마우스 감지 색상 변경 테이블 */
+.table.table-hover > tbody > tr:hover {
+    background-color: #dfe6e9;
 }
 
 /* 
-    페이지네이션 디자인
-    - .pagination 이라고 추가하면 자동 적용되도록 구현
-    - a태그를 개조해서 폭 설정이 가능한 형태로 구현
+    테이블 확장 스타일 - 줄무늬 테이블 
+    - nth-child라는 조건은 "N번째 자식"이라는 뜻
+    - 값에 n을 포함시키면 n=1,2,3,4,5,... 로 변하며 적용
 */
-.pagination{
-text-align: center;
-font-size: 16px;
-color: #2d3436;
+.table.table-stripe > thead > tr,
+.table.table-stripe > tbody > tr:nth-child(2n) 
+{
+    background-color: #dfe6e9;
 }
 
- .pagination > a {
-    color: inherit;
+/* 
+    페이지네이션 디자인 
+    - .pagination이라고 추가하면 자동 적용되도록 구현
+    - a태그를 개조해서 폭 설정이 가능하도록 구현
+*/
+.pagination {
+    text-align: center;
+    font-size: 16px;
+    color: #2d3436;
+}
+.pagination > a {
     text-decoration: none;
-/* border: 1px solid transparent; */
+    /* border: 1px solid transparent; */
     display: inline-block;
-    font-size: 14px;
     min-width: 2em;
     padding: 0.25em;
     text-align: center;
+    color: inherit;
+    font-size: inherit;
 }
-    .pagination >a.on,
-    .pagination > a:hover {
-/* border: 1px solid #b2bec3; */
+.pagination > a.on,
+.pagination > a:hover {
+    /* border: 1px solid #b2bec3; */
     box-shadow: 0 0 0 1px #b2bec3;
     font-weight: bold;
     color: #e17055;
 }
 
- /* 테이블 확장 스타일 - 마우스 감지 색상 변경 테이블 */
-.table.table-hover > tbody > tr:hover{
-     background-color: azure;
-}
-
 /* 
-    테이블 확장 스타일 - 줄무늬 테이블 
-    - nth-child 라는 조건은 "N번쨰 자식" 이라는 뜻
-    - 값에 n을 포함 시키면 n=1,2,3,4,5,...로 변하며 적용
-*/
-.table.table-stripe > thead >tr,
-.table.table-stripe > tbody > tr:nth-child(2n-1)
-{
-    background-color: rgb(245, 255, 255);
-}
-  /* 
-링크 디자인
-- 변화를 부드럽게 보여주도록 처리
-- transition-property : 변화가 부드럽게 처리할 항목
-- transition-duration : 변화가 완료되는 지속시간
-- transition-timing-function : 변화의 처리 방식
-- linear : 일정한 변화
-- ease-out : 끝을 느리게 ( 자동차 브레이크 )
+    링크 디자인 
+    - 변화를 부드럽게 보여주도록 처리
+    - transition-property : 변화를 부드럽게 처리할 항목
+    - transition-duration : 변화가 완료되는 지속시간
+    - transition-timing-function : 변화의 처리방식
+        - linear : 일정한 변화
+        - ease-out : 끝을 느리게 (자동차 브레이크)
 */
 .link {
-color: black;
-text-decoration: none;
-transition-property: transform, color;
-transition-duration: 0.1s;
- transition-timing-function: ease-out;
+    display: inline-block;
+    color: #2d3436;
+    text-decoration: none;
+    transition-property: transform, color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out;
 }
 .link:hover {
     /* text-decoration: underline; */
-    color: rgb(23, 216, 152);
-
-/* 
-    transform을 이용한 물리적인 변화
-    - translate()로 이동
-    - rotate() 로 회전
-     - skew() 로 기울이기
-    - scale() 로 확대/축소
-*/
-    display: inline-block;
-    transform: scale(1.02);
-
-}
-
-.first-char{
-    font-size: 100px;
-    float:left;
+    color: #0984e3;
+    /* 
+        transform을 이용한 물리적인 변화
+        - translate()로 이동
+        - rotate()로 회전
+        - skew()로 기울이기
+        - scale()로 확대/축소
+    */
+    transform: scale(1.01);
 }
 
 /*
-    float  전용 격리 영역 생성  
-    - .float-area 안에 있는 모든 항목은 float:left 이다
-     - 새로운 영역을 만들어 clear는 힘드니 가상영역을 활용
-            - : :before 는 시작 지점을 의미
-            - : :after 는 종료 지점을 의미
+    float 전용 격리 영역 생성
+    - .float-area 안에 있는 모든 항목은 float:left이다.
+    - 새로운 영역을 만들어 clear는 힘드니 가상영역을 활용
+        - ::before 는 시작 지점을 의미
+        - ::after 는 종료 지점을 의미
 */
-.float-area > *{
-    float:left;
+.float-area > * {
+    float: left;
 }
 .float-area::after {
-    /* 이 영역은 실제로는 존재하지 않는다 (content로 생성) */
-     content:" "; /*생성하고*/
+    /* 이 영역은 실제로는 존재하지 않는다(content로 생성) */
+    content:"";     /*생성하고*/
     display: block; /*한줄을 다 차지하게 만들고*/
-     clear: both; /*사용한 float를 청소*/
-
+    clear: both;    /*사용한 float들을 청소*/
 }
+
 /*
-    flex디자인 
+    flex 디자인
     - 기본 영역은 .flex-area로 설정
-    - 내부에 .flex-fill 이 있다면 flex-grow 설정
+    - 내부에 .flex-fill이 있다면 flex-grow 설정
     - 정중앙 배치만 할 경우 .flex-center를 영역에 추가 설정
-    - 세로 배치를 원한다면 .flex-vertical를 영역에 추가 설정
+    - 세로 배치를 원한다면 .flex-vertical을 영역에 추가 설정
 */
-.flex-area{
+.flex-area {
     display: flex;
-    flex-direction: row;   /*한 줄에 배치*/
-    flex-wrap: nowrap;     /*줄 바꿈 금지*/
+    flex-direction: row;    /* 한 줄에 배치 */
+    flex-wrap: nowrap;      /* 줄바꿈 금지 */
 }
-
 .flex-area > .flex-fill {
     flex-grow: 1;
 }
-
-.flex-area .flex-center {
+.flex-area.flex-center {
     justify-content: center;
     align-items: center;
 }
-
-.flex-area .flex-vertical {
+.flex-area.flex-vertical {
     flex-direction: column;
 }
 
+
 /* 말줄임표 처리 */
 .ellipsis {
-    white-space:nowarp; /*줄 바꿈 금지*/
-    overflow: hidden; /*넘어가면 숨김처리*/
-    text-overflow: ellipsis; /*글자가 넘어간 부분을 말줄임표로 표시*/
+    white-space: nowrap;    /*줄바꿈 금지*/
+    overflow: hidden;       /*넘어가면 숨김처리*/
+    text-overflow: ellipsis;/*글자가 넘어간 부분을 말줄임표로 표시*/
 }
 .ellipsis-2 {
     display: -webkit-box;
@@ -372,35 +363,148 @@ transition-duration: 0.1s;
 }
 .ellipsis-4 {
     display: -webkit-box;
-    -webkit-line-clamp: 42;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.fullscreen{
-    position: fixed; /* absolute 를 준다면 전부 가라지 못하게됨*/
+/* 전체화면 보호기 */
+.fullscreen {
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    /* width:150px; */
+    
+    /* 불투명(1) - 배경색을 주고 불투명도(opacity)를 조절 (내용물도 투명해짐) */
+    /* background-color: black; */
+    /* opacity: 0.5; */
 
-/* 불투명(1) - 배경색을 주고 불투명도(opacity)를 조절 (내용물도 투명해짐)*/
-/* background-color: black; */
-/* opacity: 0.5; */
+    /* 불투명(2) - 배경색에 투명도(alpha)를 부여 (내용물에는 영향이 없음) */
+    background-color: rgba(0, 0, 0, 0.5);
 
-/* 불투명(2) - 배경색에 투명도(alpha)를 부여 (내용물에는 영향이 없음) */
-background-color: rgba(0, 0, 0, 0.5);
-
-/* 내용물을 가운데에 위치하도록 설정 */
-display: flex;
-justify-content: center;
-align-items: center;
-
-            
+    /* 내용물을 가운데 위치하도록 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.fullscreen > .inner{
-    background-color: white;
-    padding: 20px;
-    border-radius: 20px;
+
+/* 드롭다운 메뉴 디자인 */
+/* (1) ul 태그의 기본 스타일 제거 */
+.menu , 
+.menu ul /* .sub-menu 대신 */
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+/* (2) 서브메뉴를 숨김 */
+.menu ul {
+    display: none;
+}
+/* (3) 메뉴를 가로로 나오게 배치 */
+.menu {
+    display: flex;
+}
+/* (4) 모든 메뉴에 폭과 여백 지정 */
+.menu li {
+    width: 150px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0.5em;
+    text-align: center;
+}
+/* (5) 메뉴에 마우스가 올라가면 하위 메뉴를 출력 */
+.menu li:hover > ul {
+    display: block;
+}
+/* (6) 하위메뉴는 absolute 배치를 통해 다음 컨텐츠의 위치에 영향을 주지 않도록 변경 (+기준영역 설정) */
+.menu li {
+    position: relative;
+}
+.menu ul {
+    position: absolute;
+    left: 0;
+    top:100%;
+    width: 150px;
+}
+/* (7) 좌우 분리를 위한 .divider 생성 */
+.menu > .divider {
+    width: 0px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+/* (8) 메뉴, 항목, 링크의 디자인 변경 */
+.menu, 
+.menu ul {
+    background-color: #2d3436;
+    color: white;
+}
+.menu a {
+    color: inherit;
+    background-color: inherit;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+/* .menu a:hover  */
+.menu li:hover 
+{
+    background-color: #636e72;
+}
+/* 
+    (9) 3차메뉴부터는 좌측 아니면 우측에 나와야 함 
+    - 기본적으로 우측에 나오도록 처리
+    - 단, .divider 뒤에 있는 메뉴들은 좌측에 나오도록 처리
+*/
+.menu > li li:hover > ul {
+    top: 0;
+    left: 100%;
+}
+.menu > li.divider ~ li li:hover > ul {
+    top: 0;
+    left: auto;
+    right: 100%;
+}
+
+/* 이미지 관련 스타일 */
+.image-shadow {
+    box-shadow: 0 0 2px 1px gray;
+}
+.image-circle {
+    border-radius: 50%;
+}
+.image-round {
+    border-radius: 1em;
+}
+.image-hover {
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    position: relative;
+}
+.image-hover > img {
+    width: 100%;
+    height: 100%;
+}
+.image-hover > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* display: none; */
+    opacity: 0;
+
+    transition: opacity 0.1s ease-out;
+}
+.image-hover:hover > .content {
+    /* display: flex; */
+    opacity: 1;
 }
