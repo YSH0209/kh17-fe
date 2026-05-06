@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+
+        .target{
+            font-size: 50px;
+            font-weight: bold;
+
+            transition: color 0.5s ease-out;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function changeRed(){
+            var target = document.querySelector(".target");
+            target.style = "color: red";
+        }
+         function changeGreen(){
+            var target = document.querySelector(".target");
+            target.style = "color:  green";
+        }
+         function changeBlue(){
+            var target = document.querySelector(".target");
+            target.style = "color : blue";
+        }
+         function changeBlack(){
+            var target = document.querySelector(".target");
+            target.style = "color : black";
+        }
+
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt50 md-50">
+        <div class="cell center">
+            <button type="button" class="btn" onclick="changeRed();">빨강</button>
+            <button type="button" class="btn" onclick="changeGreen();">초록</button>
+            <button type="button" class="btn" onclick="changeBlue();">파랑</button>
+            <button type="button" class="btn" onclick="changeBlack();">검정</button>
+        </div>
+
+        <div class="cell center target">
+            Hello Javascript!
+        </div>
+
+   </div>
+</body>
+</html>

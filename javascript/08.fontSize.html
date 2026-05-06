@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+
+        .target {
+            word-break: break-all;
+
+            transition: font-size 0.1s ease-out;
+        }
+        .target.smaill {
+            font-size : 12px;
+        }
+        .target.big {
+            font-size : 20px;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+       function changeSmall()){
+            var target = document.querySelector(".target");
+            target.classList.add("small");
+        }
+       function changeNormal()){
+            var target = document.querySelector(".target");
+            target.classList.add("normal");
+        }
+       function changeBig()){
+            var target = document.querySelector(".target");
+            target.classList.add("big");
+        }
+        
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt50 md-50">
+        <div class="cell center">
+            <button type="button" class="btn" onclick="changeFont('12px')">작게(12px)</button>
+            <button type="button" class="btn" onclick="changeFont('16px')">보통(16px)</button>
+            <button type="button" class="btn" onclick="changeFont('20px')">크게(20px)</button>
+        </div>
+
+        <div class="cell center target">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel faucibus lectus. Sed a felis id lectus 
+            venenatis scelerisque interdum sit amet massa. Donec dapibus, tortor ultrices consequat tempus, dolor nisi tempus dolor, 
+            id viverra elit libero a elit. Nunc condimentum dui non porttitor mattis. Sed vestibulum porta sem eget malesuada. Class aptent 
+            taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec at tempor nisl, id laoreet odio. Cras tristique 
+            eros nec elementum iaculis. Curabitur auctor neque vel erat faucibus elementum. Donec est augue, dignissim quis metus nec, aliquam facilisis ante.
+        </div>
+
+
+   </div>
+</body>
+</html>

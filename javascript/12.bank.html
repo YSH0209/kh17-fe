@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        /* div {box-shadow: 0 0 0 1px gray;} */
+         .display {
+            font-size: 24px;
+            padding: 0.5em;
+            min-height: 2.5em;
+            word-break: break-all;
+            border-style: solid;
+
+        }
+
+        .outer {
+            width: 10%;
+            padding: 0.5em;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+
+        function numberButton(number){
+             var display = document.querySelector(".display");
+             var currentVar = parseInt(display.textContent) || 0;
+             var result = currentVar + parseInt(number);
+             display.textContent = result;
+        }
+         function numberDelete(){
+            //마지막 한 글자를 지운다 
+            // = 입력글자를 꺼내와서 끝부분을 잘라낸 뒤 재설정
+            // = 잘라내는 명령 - substring(시작점, 끝점)
+            // = 글자수 구하기 - length
+            var display = document.querySelector(".display");
+            var origin = display.textContent;
+            var cut = origin.substring(0, origin.length-1);
+            display.textContent = cut;
+         }
+         function numberClear(){
+            var display = document.querySelector(".display");
+            display.textContent = "";
+         }
+
+
+
+     </script>
+</head>
+<body>
+   <div class="container w-900 mt-50 md-50">
+        <div class="cell">
+             <div class="display"></div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('10000000')">
+                    천만
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('1000000')">
+                    백만
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('100000')">
+                    십만
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('10000')">
+                    만
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('1000')">
+                    천
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('100')">
+                    백
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('10')">
+                    십
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('1')">
+                    일
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberDelete();">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-neutral w-100" onclick="numberClear();">
+                    <i class="fa-solid fa-eraser"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- <div class="cell left">이체하시려는 금액은 총 <span class="display"></span>원 입니다</div> -->
+    
+    </div>
+
+
+   </div>
+</body>
+</html>
