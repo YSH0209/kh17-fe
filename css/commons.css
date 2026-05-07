@@ -508,3 +508,41 @@ a.btn {
     /* display: flex; */
     opacity: 1;
 }
+    /* 
+            피드백 디자인
+            - 자바스크립트와 결합하여 입력창의 피드백을 표시하기 위한 디자인
+            - .field 에 .success가 붙으면 뒤에 있는 .success-feedback 을 출력
+            - .field 에 .fail 이 붙으면 뒤에 있는 .fail-feedback을 출력
+            - .field 에 .success 나 .fail 이 붙으면 상황에 맞게 입력창도 디자인을 변경
+            - .field 에 우측 여백을 주고 상황에 맞는 이미지를 출력(background-image)
+         */
+        .field~ .success-feedback {
+            color: rgb(63, 63, 222);
+            display: none;
+        }
+        .field~ .fail-feedback{
+            color: rgb(218, 59, 59);
+            display: none;
+        }
+        .field.success ~ .success-feedback {
+            display: block;
+        }
+        .field.fail ~ .fail-feedback {
+            display: block;
+        }
+
+        .field{
+            background-size: 1em;
+            background-repeat: no-repeat;
+            background-position: right 0.5em center;
+            padding-right: 2em;
+        }
+
+        .field.success{
+            background-image: url("https://ysh0209.github.io/cdn/valid.png");
+            border-color: rgb(63, 63, 222);
+        }
+        .field.fail{
+            background-image: url("https://ysh0209.github.io/cdn/invalid.png");
+            border-color: rgb(218, 59, 59);
+        }
