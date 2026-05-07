@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function charCount(){
+            var target = document.querySelector(".target");
+            var size = target.value.length;
+            var count = document.querySelector(".count");
+
+            // var count = textarea.nextElementSibling; //바로 뒤의 (형제)를 카운트
+            count.textContent = size;
+            
+            if(size > 1000){
+              count.style.color ="red";  
+            }
+            else {
+                count.style.color = "";
+            }
+            
+            // 글자수를 표시
+            var div = textarea.nextElementSibling;
+            var span = div.children[0]; //div 아래있는 첫번째 태그를 내놔!
+            span.textContent = size;
+
+            // 글자수가 1000을 넘게되면 색상 변경을 시도
+            if(size > 1000){
+                span.classList.add("red");
+            }
+            else{
+                span.classList.remove("red");
+            }
+        }
+
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt-50 md-50">
+        <div class="cell left">
+            (Q) 가장 최근에 관심있게 본 IT 소식은 무엇입니까?
+        </div>
+        <div class="cell">
+            <textarea class="field w-600  md-50 target" rows="10" oninput="charCount();" style="font-size: 14px;"></textarea>
+        </div>
+
+        <div class="cell right">
+            <span class="count">0</span>/1000
+        </div>
+
+   </div>
+</body>
+</html>
