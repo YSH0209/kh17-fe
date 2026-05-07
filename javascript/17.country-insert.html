@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function checkCountryRegion(){
+            var tag = document.querySelector("[name=countryRegion]");
+            // var valid = tag.value.length > 0; //빈칸만 아니면 됨
+            var regex = /^(아시아|아프리카|[남북]아메리카|유럽|오세아니아)$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success","fail");
+            tag.classList.add(valid ? "success" : "fail");
+
+        }
+
+        function checkCountryName(){
+            var tag = document.querySelector("[name=countryName]");
+            var regex = /^[가-힣]{1,10}$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success","fail"); //클래스 초기화
+            tag.classList.add(valid ? "success" : "fail");//클래스 추가
+        }
+
+        function checkCountryCapital(){
+            var tag = document.querySelector("[name=countryCapital]");
+            // var regex = /^[가-힣]{1,12}$/;
+            // var valid = regex.test(tag.value);
+            var valid = getByteLength(tag.value) <=36;
+            tag.classList.remove("success","fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }   
+
+        function getByteLength(str) {
+            return new TextEncoder().encode(str).length;
+        }
+
+        //숫자입력 필드는 숫자만 입력되도록 처리하는 것이 좋을 수도 있다
+        function filterCountryPopulation(){
+            var tag = document.querySelector("[name=countryPopulation]");
+            var regex = /[^0-9]+g/; //g(lobal)을 붙히면 개수 제한 없이 다 적용됨
+            var replacement = tag.value.raplace(regex, "");
+            tag.value = replacement;
+
+        }
+
+        //숫자 범위 검사
+        function checkCountryPopulation(){
+            var tag = document.querySelector("[name=countryPopulation]");
+            // var valid = parseInt(tag.value) > 0;
+            var valid = tag.value.length > 0 && parseInt(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success": "fail");
+        }   
+
+
+     </script>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data" autocomplete="off">
+
+        <div class="container w-600 mt-50 md-50">
+            <div class="cell center">
+                <h1>피드백 디자인 실습</h1>
+            </div>
+            
+            <form autocomplete="off">
+                
+                <div class="container w-400 mt-50">
+                    <div class="cell center">
+                        <h1>국가 정보 등록</h1>
+                    </div>
+                    <!--대륙명을 선택해야함 feedback -->
+                    <div class="cell">
+                        <label>대륙명 <i class="fa-solid fa-asterisk red"> </i></label> 
+                        <select class="field w-100" oninput="checkCountryRegion();" name="countryRegion">
+                            <option value="">선택하세요</option>
+                            <option>아시아</option>
+                            <option>아프리카</option>
+                            <option>북아메리카</option>
+                            <option>남아메리카</option>
+                            <option>유럽</option>
+                            <option>오세아니아</option>
+                        </select>
+                        <div class="fail-feedback">필수항목입니다</div>
+                    </div>
+                    
+                    <!--국가명은 입력해야함 feedback -->
+                    <div class="cell">
+                        <label>국가명 <i class="fa-solid fa-asterisk red"></i> </label>
+                        <input type="text" name="countryName"
+                        class="field w-100"
+                        placeholder="e.g., 대한민국" onblur="checkCountryName();">
+                        <div class="fail-feedback">올바른 국가명을 입력해야 합니다</div>
+                    </div>
+                    
+                    <!--수도명은 입력해야함 feedback -->
+                    <div class="cell">
+                        <label>수도명 <i class="fa-solid fa-asterisk red"></i></label>
+                        <input type="text" name="countryCapital"
+                        class="field w-100" onblur="checkCountryCapital();"
+                        placeholder="e.g., 서울">
+                        <div class="fail-feedback">올바른 값을 입력해야 합니다</div>
+                    </div>
+                    
+                    <!--인구수는 입력해야함 feedback -->
+                    <div class="cell">
+                        <label>인구수 <i class="fa-solid fa-asterisk red"></i></label>
+                        <input type="text" inputmode="numeric"
+                        name="countryPopulation"
+                        class="field w-100" onblur="checkCountryPopulation();"
+                        placeholder="e.g., 55000000">
+                        <div class="fail-feedback">올바른 값을 입력해야 합니다</div>
+                    </div>
+                    <div class="cell mt-40 right">
+                        <button class="btn btn-positive w-100">
+                            등록하기
+                        </button>
+                    </div>
+                    <div class="cell mt-40 right">
+                        <button class="btn btn-neutral">
+                            목록으로
+                        </button>
+                        <button class="btn btn-positive">
+                            등록하기
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+        </body>
+        </html>

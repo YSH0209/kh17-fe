@@ -537,6 +537,9 @@ a.btn {
             background-position: right 0.5em center;
             padding-right: 2em;
         }
+        select.field {
+            background-position: right 1em center; 
+        }
 
         .field.success{
             background-image: url("https://ysh0209.github.io/cdn/valid.png");
