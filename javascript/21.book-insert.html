@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        function checkBookTitle(){
+
+        }
+        function checkBookAuthor(){
+
+        }
+        function checkBookPublisher(){
+
+        }
+        function checkBookPublicationDate(){
+
+        }
+
+
+        function filterBookPrice(){
+
+        }
+        function checkBookprice(){
+
+        }
+
+
+        function filterBookPageCount(){
+
+        }
+        function checkBookPageCount(){
+
+        }
+        function checkBookGenre(){
+
+        }
+        function checkForm(){
+            var bookTitleValid = checkBookTitle();
+            var bookAuthorValid = checkBookAuthor();
+            var bookPublisherValid = checkBookPublisher();
+            var bookPublicationDateValid = checkBookPublicationDate();
+            var bookPriceValid = checkBookprice();
+            var bookPageCountValid = checkBookPageCount();
+            var bookGenreValid = checkBookGenre();
+
+            var valid = bookTitleValid && bookAuthorValid && bookPublisherValid && bookPublicationDateValid
+                                        && bookPriceValid && bookPageCountValid && bookGenreValid;
+
+            return valid;
+        }
+     </script>
+</head>
+<body>
+    <form autocomplete="off" method="post" enctype="multipart/form-data" onsubmit="checkForm();">
+
+        <div class="container w-600 mt-50 md-50">
+            <div class="cell center">
+                <h1>도서 정보 등록</h1>
+            </div>
+            
+            <div class="cell">
+                <label>도서명 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookTitle" class="field w-100" onblur="checkBookTitle();">
+                <div class="fail-feedback">필수 입력 사항입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>지은이</label>
+                <input type="text" name="bookAuthor" class="field w-100" onblur="checkBookAuthor();">
+                <div class="fail-feedback">유효하지 않은 입력입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>출판사</label>
+                <input type="text" name="bookPublisher" class="field w-100" onblur="checkBookPublisher();">
+                <div class="fail-feedback">유효하지 않은 입력입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>출간일</label>
+                <input type="date" name="bookPublicationDate" class="field w-100" onblue="checkBookPublicationDate">
+                <div class="fail-feedback">유효하지 않은 입력입니다</div>
+            </div>
+
+
+
+        </div>
+    </form>
+</body>
+</html>

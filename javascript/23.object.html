@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        //배열 (Array)
+        // - 자바스크립트의 배열은 자바의 배열과는 다르고 ArrayList와 매우 비슷하다
+        // - 크기가 자동으로 늘어나거나 줄어든다
+        // - 만드는 방법이 두 가지나 존재
+
+        // 1. 초기값을 지정하여 생성
+        //(cf) 자바 : int[] n = new int[] {10, 20, 30, 40, 50};
+        var n = [10, 20, 30, 40, 50];
+        console.log(n);
+        console.log(n.length); //칸수(길이)
+        console.log(n[0], n[1], n[2], n[3], n[4]); // 하나씩 찍기
+        console.log(n[5], n[6], n[7]); //자바에선 안되는데 자바스크립트에선 가능
+
+        n[10] = 100;
+        console.log(n);
+
+        //맨 뒤에 추가 (자바의 add)
+        n.push(200);
+
+        for(var i=0; i<n.length; i++){ //자바와 동일
+            console.log(n[i]);
+        }
+
+        console.log("-----");
+        for(var i in n){ //존재하는 key만 나옴 (자바와 사용법이 다름)
+            console.log(n[i]);
+        }
+
+        //객체(Object)
+        //- 자바스크립트(ES5)는 클래스가 없다
+        //- 그렇다고 객체지향이 없는건 아니고 나름의 방법으로 풀어냈다
+        // 1. 생성자 함수를 사용하여 동일한 형태의 객체를 여러 개 만드는 방법
+        // 2. 생성자 함수 없이 간단하게 사용할 일회용 객체를 만드는 방법
+
+
+        //1번상황
+        //생성자 함수 (this = 주인공)
+        function Student(name, score){
+            this.name = name;
+            this.score = score;
+        }
+        var s1 = new Student("피카츄", 50);
+        console.log(s1);
+        console.log(s1.name, s1.score);
+
+        //없는 항목을 만들 수도 있다
+        s1.level = 3;
+        console.log(s1);
+        
+        //2번상황 (=자바의 Map과 유사한 방식)
+        var s2 = { name : "꼬부기", score : 90};
+
+        // * 중요 *
+        //자바스클비트에서는 함수도 변수처럼 취급된다 (같은 등급)
+
+        // [1] 함수 선언문 : function 이름() { 코드 }; // 함수의 기본 형태 
+        //  - 호이스팅 (hoisting)이 발생해서 자도응로 최상단에 목차가 생김
+        //  - 위치와 상관없이 아무데서나 부를 수 있음(= 범위가 넓고 충돌이 많이 생김)
+
+        // [2] 함수 표현식 : var 이름 = function() { 코드 }
+        //  - 변수 형태이기 때문에 작성 순서(절차)에 의해 사용됨 (선후관계 존재)
+        //  - 만들어지기 전에는 쓸 수 없다 (=내가 원하는 범위에서만 쓰게 할 수 있다)
+
+
+        var hello = function(){
+            console.log("안녕?");
+        };
+
+        hello(); //부르는 방법은 동일
+
+        //객체에도 함수가 변수처럼 작성된다
+        var s3 = {
+            name : "파이리",
+            korean : 60,
+            english : 80,
+            getTotal : function(){return this.korean + this.english;},
+            getAverage : function(){
+                return this.getTotal() / 2;
+            }
+        };
+    
+        console.log(s3.getTotal());
+
+        console.log(s3.getAverage());
+
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt-50 md-50">
+        <div class="cell center">
+            <h1>제목</h1>
+        </div>
+
+
+   </div>
+</body>
+</html>
