@@ -3,162 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자바스크립트</title>
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
 
-    <link rel="icon" href="/kh.png" type="image/png">
-    
-    <link rel="stylesheet" type="text/css" href="../css/commons.css">
-    
+    <!-- 아이콘 -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    
-    
+
     <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
     <style>
-        /* div {box-shadow: 0 0 0 1px gray;} */
-         .display {
-            font-size: 24px;
-            padding: 0.5em;
-            min-height: 2.5em;
-            word-break: break-all;
-            border-style: solid;
-
-        }
-
-        .outer {
-            width: 10%;
-            padding: 0.5em;
-        }
+        div { box-shadow: 0 0 0 1px #cccccc;}
     </style>
 
     <!-- 자바스크립트 작성 영역 -->
-     <script>
-        //입력창에 이미 입력된 값은 어떠한 경우에도 문자열이기 때문에 계산을 위해선 빼내서 숫자 변환
-
+    <script>
+        //입력창에 이미 입력된 값은 어떠한 경우에도 문자열이기 때문에 계산 과정에서 숫자 변환이 필요
         function addMoney(amount){
-            var target = documnet.querySelector(".target");
-            //target.value가 비어있는 경우를 고려하여 코드를 작성
-            if(target.value.length == 0){ //글자수가 0이냐 
-                target.value = amount;
+            var target = document.querySelector(".target");
+            var newAmount = parseInt(target.value) + amount;
+            target.value = newAmount;
+
+            displayAmount();
+        }
+        function deleteOne() {
+            var target = document.querySelector(".target");
+            var origin = target.value;
+            target.value = origin.substring(0, origin.length-1);
+
+            if(target.value.length == 0) {//입력창 입력 글자수가 0이면 = 입력값이 없으면
+                target.value = "0";
             }
-            else{
-                var newAmoutn = parseInt(target.value)+amount;
-                target.value=newAmount;
-            }
-            
+
+            displayAmount();
+        }
+        function deleteAll() {
+            var target = document.querySelector(".target");
+            target.value = "0";
+
             displayAmount();
         }
 
-        function updateSummary() {
-        // 1. 위쪽 display 영역의 글자를 가져옵니다.
-         var display = document.querySelector(".display");
-        var amount = display.value || "0";
-    
-        // 2. 아래쪽 span 영역을 찾아서 값을 넣어줍니다.
-        var summary = document.querySelector("#total-amount");
-        summary.value = amount;
-        }
-
-        function numberButton(number){
-             var display = document.querySelector(".display");
-             var currentVar = parseInt(display.value) || 0;
-             var result = currentVar + parseInt(number);
-             display.value = result;
-
-             updateSummary();
-             //(+추가) newAmount 를 외부 화면에 출력
-            // toLocaleString (, 를 넣어주기 위한 처리)
-        }
-         function numberDelete(){
-            //마지막 한 글자를 지운다 
-            // = 입력글자를 꺼내와서 끝부분을 잘라낸 뒤 재설정
-            // = 잘라내는 명령 - substring(시작점, 끝점)
-            // = 글자수 구하기 - length
-            var display = document.querySelector(".display");
-            var origin = display.value;
-            var cut = origin.substring(0, origin.length-1);
-
-            display.value = cut;
+        //.target의 입력값을 .display에 옮겨 표시하는 함수
+        function displayAmount() {
+            //(+추가) 입력값을 외부 화면에 출력
+            var target = document.querySelector(".target");
+            var money = parseInt(target.value);
             
-        }
-        function numberClear(){
             var display = document.querySelector(".display");
-            display.value = "";
-
-            if(display.value.length == 0){
-                display.value="0";
-            }
+            display.textContent = money.toLocaleString();
         }
-
-        //.display 의 입력 값을 span의 total-amount 에 옮겨 담는 함수
-        // 다른 함수 사용 후 함수를 언급하여 마지막에 실행되게 함
-        
-
-     </script>
+    </script>
 </head>
 <body>
-   <div class="container w-900 mt-50 md-50">
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이체 금액 입력</h1>
+        </div>
+
+        <div class="cell mt-40">
+            <input class="field w-100 target right" placeholder="이체할 금액을 입력하세요" value="0">
+        </div>
+
         <div class="cell">
-             <input class="field w-100 display" placeholder="이체할 금액을 입력하세요">
-
-        <div class="cell flex-area" style="flex-wrap: wrap;">
-            <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('10000000')">
-                    천만
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('1000000')">
-                    백만
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('100000')">
-                    십만
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('10000')">
-                    만
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('1000')">
-                    천
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('100')">
-                    백
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('10')">
-                    십
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberButton('1')">
-                    일
-                </button>
-            </div>
-             <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberDelete();">
-                    <i class="fa-solid fa-delete-left"></i>
-                </button>
-            </div>
-            <div class="outer">
-                <button type="button" class="btn btn-neutral w-100" onclick="numberClear();">
-                    <i class="fa-solid fa-eraser"></i>
-                </button>
-            </div>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10000000);">천만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1000000);">백만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(100000);">십만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10000);">만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1000);">천</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(100);">백</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10);">십</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1);">일</button>
+            <button type="button" class="btn btn-negative" onclick="deleteOne();">
+                <i class="fa-solid fa-delete-left"></i>
+            </button>
+            <button type="button" class="btn btn-negative" onclick="deleteAll();">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
         </div>
+
         <div class="cell mt-50" style="font-size: 24px;">
-            결제하시려는 총 금액은 <span class="total-amount">0</span>원 입니다
+            이체하시려는 금액은 총 <span class="display">0</span>원 입니다.
         </div>
-    
     </div>
-
-
-   </div>
 </body>
 </html>
