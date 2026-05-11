@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function checkBoardTitle() {
+            var tag = document.querySelector("[name=boardTitle]");
+            var valid = tag.value.length > 0;
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "sucess" : "fail");
+            return valid;
+        }
+        function checkBoardHead() {
+            var tag = document.querySelector("[name=boardHead]");
+            var regex = /^(공지|유머|자유|정보)$/;
+            var valid = tag.value.length == 0 || regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+            return valid;
+        }
+        function checkBoardContent() {
+            var tag = document.querySelector("[name=boardContent]");
+            var valid = tag.value.length > 0 && tag.value.length <= 1000;
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "sucess" : "fail");
+            return valid;
+        }
+
+        function checkForm() {
+            var boardTitleValid = checkBoardTitle();
+            var boardHeadValid = checkBoardHead();
+            var boardContentValid = checkBoardContent();
+            return boardTitleValid && boardHeadValid && boardContentValid;
+            // return checkBoardTitle() && checkBoardHead() && checkBoardContent();//안됨!
+        }
+
+        // 글자수 계산
+        function calculateBoardContent() {
+            var tag = document.querySelector("[name=boardContent]");
+            var size = tag.value.length;
+
+            var span = tag.nextElementSibling.children[0];
+            span.textContent = size;
+            
+            var valid = size <= 1000;
+            if(valid) {
+                span.classList.remove("red");
+            }
+            else {
+                span.classList.add("red");
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <form action="" method="post" autocomplete="off" onsubmit="return checkForm();">
+
+    <div class="container w-800 mt-50 mb-50">
+        <div class="cell center">
+            <h1>게시글 작성</h1>
+            <p>무분별한 비방글은 경고 없이 삭제될 수 있습니다</p>
+        </div>
+
+        <div class="cell mt-40">
+            <label>제목 <i class="fa-solid fa-asterisk red"></i></label>
+            <input type="text" name="boardTitle" class="field w-100" onblur="checkBoardTitle();">
+            <div class="fail-feedback">제목은 필수 작성 항목입니다</div>
+        </div>
+
+        <div class="cell mb-0">
+            <label>구분</label>
+        </div>
+        <div class="cell mt-0">
+            <select name="boardHead" class="field" oninput="checkBoardHead();">
+                <option value="">선택 안함</option>
+                <option>공지</option>
+                <option>정보</option>
+                <option>유머</option>
+                <option>자유</option>
+            </select>
+        </div>
+        
+        <div class="cell">
+            <label>내용 <i class="fa-solid fa-asterisk red"></i></label>
+            <textarea name="boardContent" rows="10" class="field w-100"
+                    onblur="checkBoardContent();" oninput="calculateBoardContent();"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+            <div class="fail-feedback">내용은 필수 항목이며 1000글자 이내로 작성해야 합니다</div>
+        </div>
+
+        <div class="cell mt-50 right">
+            <a href="#" class="btn btn-neutral">
+                <i class="fa-solid fa-list"></i>
+                <span>목록으로 이동</span>
+            </a>
+            <button type="submit" class="btn btn-positive">
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>글 등록하기</span>
+            </button>
+        </div>
+
+    </div>
+
+    </form>
+
+</body>
+</html>

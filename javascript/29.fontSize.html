@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+
+        window.addEventListener("load", function(){
+            // 더하기 버튼과 빼기 버튼은 절대로 한번에 처리할 수 없습니다 ( 작업이 다름 )
+            // -> 자바스크립트는 대부분의 함수를 콜백 함수로 처리함
+
+            var fontSize = 16;
+            var btnMinus = document.querySelector(".btn-minus");
+            btnMinus.addEventListener("click", function(){ //콜백 함수
+                //this 는 minus 버튼
+                if(fontSize == 12)return;
+                fontSize --;
+                var target = document.querySelector(".target");
+                target.style.fontSize = fontSize +"px";
+
+                var span = document.querySelector(".current");
+                span.textContent = fontSize;
+
+            });
+
+            var btnPlus = document.querySelector(".btn-plus");
+            btnPlus.addEventListener("click", function(){ //콜백 함수
+                //this 는 plus 버튼
+                if(fontSize == 32) return;
+                 fontSize ++;
+                var target = document.querySelector(".target");
+                target.style.fontSize = fontSize +"px";
+
+                var span = document.querySelector(".current");
+                span.textContent = fontSize;
+
+            });
+            
+
+        });
+
+           
+
+        
+      
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt50 md-50">
+        <div class="cell center">
+            <button type="button" class="btn btn-minus">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="current">?px</span>
+            <button type="button" class="btn btn-plus">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="cell center target">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel faucibus lectus. Sed a felis id lectus 
+            venenatis scelerisque interdum sit amet massa. Donec dapibus, tortor ultrices consequat tempus, dolor nisi tempus dolor, 
+            id viverra elit libero a elit. Nunc condimentum dui non porttitor mattis. Sed vestibulum porta sem eget malesuada. Class aptent 
+            taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec at tempor nisl, id laoreet odio. Cras tristique 
+            eros nec elementum iaculis. Curabitur auctor neque vel erat faucibus elementum. Donec est augue, dignissim quis metus nec, aliquam facilisis ante.
+        </div>
+
+
+   </div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {
+            box-shadow: 0 0 0 1px gray;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        //[1]
+        // window.addEventListener("load", function(){
+        //     var buttons = document.querySelectorAll(".btn");
+        //     buttons[0].addEventListener("click", function(){
+        //         var img = document.querySelector("img");
+        //         img.width = 150;
+        //     });
+        // });
+        // window.addEventListener("load", function(){
+        //     var buttons = document.querySelectorAll(".btn");
+        //     buttons[1].addEventListener("click", function(){
+        //         var img = document.querySelector("img");
+        //         img.width = 300;
+        //     });
+        // });
+        // window.addEventListener("load", function(){
+        //     var buttons = document.querySelectorAll(".btn");
+        //     buttons[2].addEventListener("click", function(){
+        //         var img = document.querySelector("img");
+        //         img.width = 450;
+        //     });
+        // });
+
+        //[2]
+        // window.addEventListener("load", function () {
+        //     var btn = document.querySelector(".small");
+        //     btn.addEventListener("click", function () {
+        //         var target = document.querySelector("img");
+        //         target.width = 150;
+        //     })
+        // });
+
+        // window.addEventListener("load", function () {
+        //     var btn = document.querySelector(".normal");
+        //     btn.addEventListener("click", function () {
+        //         var target = document.querySelector("img");
+        //         target.width = 300;
+        //     })
+        // });
+
+        // window.addEventListener("load", function () {
+        //     var btn = document.querySelector(".big");
+        //     btn.addEventListener("click", function () {
+        //         var target = document.querySelector("img");
+        //         target.width = 450;
+        //     })
+        // });
+
+        //[3]
+        window.addEventListener("load", function () {
+            //화면 전체에 영향을 주는 데이터 (상태 데이터)
+            var size = 300;
+
+            var span = document.querySelector(".current");
+
+            var btnSmall = document.querySelector(".small");
+            btnSmall.addEventListener("click", function(){
+                var img = document.querySelector("img");
+                size -=50;
+                img.width = size;
+
+                var span = document.querySelector(".current");
+                span.textContent = "현재" +size+"px";
+            });
+
+             var btnBig = document.querySelector(".big");
+            btnBig.addEventListener("click", function(){
+                var img = document.querySelector("img");
+                size +=50;
+                img.width = size;
+
+                
+                var span = document.querySelector(".current");
+                span.textContent = "현재" +size+"px";
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="container w-600 mt-50 md-50">
+        <div class="cell center">
+            <h1>이미지 크기조절 예제</h1>
+        </div>
+        <div class="cell center">
+            <button class="btn small">작게</button>
+            <!-- <button class="btn btn-neutral normal">보통</button> -->
+            <span class="current"></span>
+            <button class="btn big">크게</button>
+        </div>
+
+        <div class="cell center">
+            <img src="https://picsum.photos/500" width="300">
+        </div>
+
+    </div>
+</body>
+
+</html>

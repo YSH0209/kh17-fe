@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {
+            box-shadow: 0 0 0 1px gray;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+
+        window.addEventListener("load", function () {
+            var buttons = document.querySelectorAll(".btn");
+
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].addEventListener("click", function () {
+                    var target = document.querySelector(".target");
+                    var size =this.dataset.size;
+                    target.style.fontSize = size;
+                });
+            }
+            // var target = document.querySelector(".target");
+            // buttons[0].addEventListener("click", function () {
+            //     //dataset.size 는 태그에 적힌 data-size의 값을 불러오라는 의미
+            //     var size = this.dataset.size;
+            //     target.style.fontSize = size;
+            // });
+            // buttons[1].addEventListener("click", function () {
+            //      var size = this.dataset.size;
+            //     target.style.fontSize = size;
+            // });
+            // buttons[2].addEventListener("click", function () {
+            //      var size = this.dataset.size;
+            //     target.style.fontSize = size;
+            // });
+        });
+
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <div class="container w-600 mt-50 md-50">
+        <div class="cell center">
+            <!-- 
+            데이터 셋 ( dataset) : 필요에 의해 태그에 저장해두는 커스텀 데이터
+                - 반드시 'data-'로 시작해야 한다 
+            -->
+            <button type="button" class="btn" data-size="12px">
+                작게
+            </button>
+            <button type="button"  class="btn" data-size="16px">
+                보통
+            </button>
+            <button type="button"  class="btn" data-size="20px">
+                크게
+            </button>
+            <button type="button"  class="btn" data-size="50px">
+                아주 크게
+            </button>
+        </div>
+
+        <div class="cell center target">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel faucibus lectus. Sed a felis id lectus
+            venenatis scelerisque interdum sit amet massa. Donec dapibus, tortor ultrices consequat tempus, dolor nisi
+            tempus dolor,
+            id viverra elit libero a elit. Nunc condimentum dui non porttitor mattis. Sed vestibulum porta sem eget
+            malesuada. Class aptent
+            taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec at tempor nisl, id
+            laoreet odio. Cras tristique
+            eros nec elementum iaculis. Curabitur auctor neque vel erat faucibus elementum. Donec est augue, dignissim
+            quis metus nec, aliquam facilisis ante.
+        </div>
+
+
+    </div>
+</body>
+
+</html>
