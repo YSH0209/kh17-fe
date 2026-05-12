@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        window.addEventListener("load", function(){
+            var countryNameValid = false;
+
+            //입력창 검사
+            document.querySelector("[name=countryName]").addEventListener("blur",function(){
+                //this == 입력창
+                var regex = /^[가-힣]{1,10}$/;
+                var valid = regex.test(this.value);
+                this.classList.remove("success", "fail");
+                this.classList.add(valid ? "success" : "fail");
+                //return valid;; 의미없는 코드(내가 부르는게 아니라 얻어낼 수 없음)
+                countryNameValid = valid; //외부 변수에 보관(set)
+
+            });
+
+            //폼 검사
+            document.querySelector(".form-check").addEventListener("submit", function(e){
+                if(countryNameValid == false){
+                    e.preventDefault();
+                }
+            });
+        });
+
+     </script>
+</head>
+<body>
+    <form action="" method="post" autocomplete="off" class="form-check">
+
+
+        <div class="container w-600 mt-50 md-50">
+            <div class="cell center">
+                <h1>입력폼 검사</h1>
+            </div>
+            
+            <div class="cell"> 
+                <label>국가명 <i class="fa-solid fa-asterist red"></i></label>
+                <input type="text" name="countryName" class="field w-100">
+                <div class="success-feedback">올바른 형식의 이름입니다</div>
+                <div class="fail-feedback">한글로만 작성 가능합니다</div>
+            </div>
+            
+            <div class="cell">
+                <button type="submit" class="btn btn-positive w-100">등록하기</button>
+            </div>
+        </div>
+    </form>
+</html>

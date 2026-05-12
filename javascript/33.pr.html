@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {
+            box-shadow: 0 0 0 1px gray;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function () {
+            //목표 : 모든 .field-answer에 입력이 발생할 경우 글자수 계산 후 출력
+            var fields = document.querySelectorAll(".field-answer");
+            for(var i=0; i<fields.length; i++){
+                fields[i].addEventListener("input", function(){
+                    //this는 입력이 발생한 textarea
+                    var size = this.value.length;
+
+                    //출력 대상은 무조건 상대경로로 찾아야한다
+                    var span = this.nextElementSibling.children[0];
+                    span.textContent = size;
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container w-600 mt-50 md-50">
+        <div class="cell center">
+            <h1>자기소개서</h1>
+        </div>
+        <div class="cell left">
+            (Q) 1번질문
+        </div>
+        <div class="cell">
+            <textarea class="field w-100 field-answer" rows="10" style="font-size: 14px;"></textarea>
+            </div>
+
+            <div class="cell right">
+            <span>0</span>/1000
+        </div>
+
+        <div class="cell left">
+            (Q) 2번질문
+        </div>
+        <div class="cell">
+            <textarea class="field w-100 field-answer" rows="10" style="font-size: 14px;"></textarea>
+        </div>
+
+        <div class="cell right">
+            <span>0</span>/1000
+        </div>
+
+        <div class="cell left">
+            (Q) 3번질문
+        </div>
+        <div class="cell">
+            <textarea class="field w-100 field-answer" rows="10" style="font-size: 14px;"></textarea>
+        </div>
+
+        <div class="cell right">
+            <span>0</span>/1000
+        </div>
+
+    </div>
+
+    </div>
+</body>
+
+</html>
