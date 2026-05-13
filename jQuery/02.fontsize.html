@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //class 가 btn-size 인 태그(3개)를 선택하여 이벤트를 일괄 설정
+            $(".btn-size").on("click", function(){
+                //this는 클릭한 버튼
+                // JS : var size = this.dataset.size;
+                // jQuery : var size = $(this).data("size");
+
+                var size = $(this).data("size"); //현재 버튼에 설정된 data-size를 불러온다
+                $(".target").css("font-size",size);
+            });
+        });
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt-50 md-50">
+        <div class="cell center">
+            <h1>글자 크기 변경 문제</h1>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn btn-neutral btn-size" data-size="12px">작게</button>
+            <button type="button" class="btn btn-neutral btn-size" data-size="16px">보통</button>
+            <button type="button" class="btn btn-neutral btn-size" data-size="20px">크게</button>
+        </div>
+        <div class="cell center target">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Suspendisse nec vulputate nisl. Vivamus vulputate lacus urna, in sagittis dolor ultricies at. 
+            Donec eu tellus erat. Quisque quis placerat nisi. Donec eget augue enim. Nullam erat nisi, 
+            lacinia laoreet ipsum vitae, ornare posuere diam. Etiam urna leo, eleifend at turpis ut, 
+            scelerisque venenatis nulla. Maecenas non turpis metus. Donec congue quam nibh, 
+            at hendrerit nisl tristique ut. Aenean mi est, mattis at odio non, commodo porttitor ipsum. 
+            Nulla facilisi. Proin quis hendrerit quam. Praesent tristique sem et velit eleifend, quis pretium lorem rhoncus. 
+            Pellentesque ut odio lorem. Aenean malesuada dui sem, eu placerat libero imperdiet et.
+        </div>
+
+
+   </div>
+</body>
+</html>

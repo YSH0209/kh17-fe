@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+        </style>
+
+
+    <!-- jQuery CDN -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+
+        //벌써부터 느껴지는 jQuery의 장점
+        //1. 짧고 간결하고 명확하다
+        //2. 개수 제한이 없다 (1개일 때와 여러개일 때의 코드가 같다)
+
+        //jQuery는 무조건 $부터 시작 ($대신 jQuery라고 써도 됨)
+        //문법 : $(대상) + 명령호출
+        // 우리가 사용하는 jQuery는 처음부터 이 모양이 아니였음
+        // 화면이 로드된다고 사용할 수 있는것은 또 아님
+
+
+        $(function(){
+
+            //$를 이용해서 class="btn"을 선택한 뒤 click 이벤트 설정
+            //$(".btn").on("click", function(){}); 
+            //$(".btn").("click", function(){});
+            // 둘은 같지만 위에것을 사용
+
+
+
+            $(".btn").on("click",function(){
+
+                //$를 이용해서 class="target"을 선택한 뒤 css변경을 지시
+                // - css, val(value), textContent, attribute 등 다양한 변경 지시가 가능                
+                $(".target").css("color","red");
+            });
+        });
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt-50 md-50">
+        <div class="cell center">
+            <h1>jQuery 샘플</h1>
+        </div>
+        
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">클릭하세요</button>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery</h2>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery</h2>
+        </div>
+   </div>   
+
+   </div>
+</body>
+</html>
