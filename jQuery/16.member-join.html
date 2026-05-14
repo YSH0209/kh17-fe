@@ -106,14 +106,29 @@
         state.memberContactValid = valid;
     });
 
-    // 우편번호 검사
-    $("[name=memberPost]").on("blur", function () {
-        var regex = /^[0-9]{5,6}$/;
-        var value = $(this).val();
-        var valid = value.length === 0 || regex.test(value);
-        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+    // // 우편번호 검사
+    // $("[name=memberPost]").on("blur", function () {
+    //     var regex = /^[0-9]{5,6}$/;
+    //     var value = $(this).val();
+    //     var valid = value.length === 0 || regex.test(value);
+    //     $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+    //     state.memberPostValid = valid;
+    // });
+
+    $("[name=memberAddress2]".on("blur", function(){
+        var memberPost = $("[name=memberPost]".val());
+        var memberAddress1 = $("[name=memberAddress1]".val());
+        var memberAddress2 = $("[name=memberAddress2]".val());
+
+        var empty = memberPost.length == 0 && memberAddress1.length == 0 && memberAddress2.length == 0;
+        var full = mebmerPost.length > 0 && memberAddress1.length > 0 && memberAddress2.length > 0;
+        var valid = empty || full;
+
+        $("[name=memberPost], [name=memberAddress1], [name=memberAddress2]")
+        .removeClass("success fail").addClass(valid ? "success" : "fail");
         state.memberPostValid = valid;
-    });
+
+    }));
 
     // 폼 검사 
     $(".form-check").on("submit", function () {
@@ -192,7 +207,7 @@
             <div class="cell mb-0">
                 <label>주소</label>
             </div>
-            <div class="cell mt-0">
+            <div class="cell mt-0 flex-area">
                 <input type="text" inputmode="numeric" name="memberPost" class="field" size="6" maxlength="6"
                     placeholder="우편번호">
                 <!--이 버튼은 전송버튼이 아니므로 type을 명시 -->
