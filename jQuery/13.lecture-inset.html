@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 강좌 등록</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+    </style>
+
+    <script>
+        $(function () {
+            // [1] 상태 객체
+            var state = {
+                lectureTitleValid: false,
+                lectureCategoryValid: false,
+                lectureDurationValid: false,
+                lecturePriceValid: false,
+                lectureTypeValid: false,
+                ok: function () {
+                    return Object.values(this)
+                        .filter(v => typeof v === "boolean")
+                        .every(v => v === true);
+                }
+            };
+
+            // [2] 개별 입력창 검사
+            $("[name=lectureTitle]").on("blur", function () {
+                var valid = $(this).val().length > 0;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.lectureTitleValid = valid;
+            });
+
+            $("[name=lectureCategory]").on("input", function () {
+                var regex = /^(이론|실습|시험)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.lectureCategoryValid = valid;
+            });
+
+            $("[name=lectureDuration]").on("blur", function () {
+                var value = $(this).val();
+                var duration = parseInt(value);
+                // 30시간 단위이면서 0보다 크고 300 이하인 경우
+                var valid = !isNaN(duration) && duration > 0 && duration <= 300 && duration % 30 == 0;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.lectureDurationValid = valid;
+            });
+
+            $("[name=lecturePrice]").on("blur", function () {
+                var value = $(this).val();
+                var price = parseInt(value);
+                var valid = !isNaN(price) && price >= 0 && price <= 1000000000;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.lecturePriceValid = valid;
+            });
+
+            $("[name=lectureType]").on("input", function () {
+                var value = $(this).val();
+                var regex = /^(온라인|오프라인|혼합)$/;
+                var valid = regex.test(value);
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.lectureTypeValid = valid;
+            });
+
+            // [3] 숫자 입력 제어 (숫자 이외의 문자 제거)
+            $("[inputmode=numeric]").on("input", function () {
+                var regex = /[^0-9]+/g;
+                var replacement = $(this).val().replace(regex, "");
+                $(this).val(replacement);
+            });
+
+            // [4] 폼 전송 검사
+            $(".form-check").on("submit", function () {
+                // 전체 필드 강제 트리거 (검사 실행)
+                $("[name=lectureTitle], [name=lectureDuration], [name=lecturePrice]").trigger("blur");
+                $("[name=lectureCategory], [name=lectureType]").trigger("input");
+
+                return state.ok();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <form action="" method="post" enctype="multipart/form-data" class="form-check">
+            <div class="cell center">
+                <h1>강좌 정보 등록</h1>
+            </div>
+
+            <div class="cell">
+                <label>강좌명 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="lectureTitle" placeholder="e.g., 정보처리 산업기사" class="field w-100">
+                <div class="fail-feedback">필수 항목 입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>카테고리 <i class="fa-solid fa-asterisk red"></i></label>
+                <select name="lectureCategory" class="field w-100">
+                    <option value="">선택하세요</option>
+                    <option>이론</option>
+                    <option>실습</option>
+                    <option>시험</option>
+                </select>
+                <div class="fail-feedback">필수 선택 항목 입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>강의시간 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="lectureDuration" class="field w-100" value="0">
+                <div class="fail-feedback">필수 항목이며 30시간 단위로만 설정 가능합니다 (최대 300시간)</div>
+            </div>
+
+            <div class="cell">
+                <label>수강료 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="lecturePrice" value="0" class="field w-100">
+                <div class="fail-feedback">수강료는 0 이상으로 설정해야 합니다</div>
+            </div>
+
+            <div class="cell">
+                <label>강의형태 <i class="fa-solid fa-asterisk red"></i></label>
+                <select name="lectureType" class="field w-100">
+                    <option value="">선택하세요</option>
+                    <option>온라인</option>
+                    <option>오프라인</option>
+                    <option>혼합</option>
+                </select>
+                <div class="fail-feedback">필수 선택 항목 입니다</div>
+            </div>
+
+            <div class="cell mt-30">
+                <label>미리보기</label>
+                <input type="file" name="attach" accept=".png, .jpg" multiple class="field w-100">
+            </div>
+
+            <div class="cell mt-40">
+                <button type="submit" class="btn btn-positive w-100">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>신규 강좌 개설하기</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
