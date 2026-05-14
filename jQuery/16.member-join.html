@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="./preview.js"></script>
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {
+            box-shadow: 0 0 0 1px gray;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+       $(function () {
+    var state = {
+        memberIdValid: false,
+        memberPasswordValid: false, // 오타 수정 (Vald -> Valid)
+        memberPasswordConfirmValid: false, // 비밀번호 확인 상태 추가
+        memberEmailValid: false,
+        memberNicknameValid: false,
+        memberBirthValid: true,
+        memberContactValid: true,
+        memberPostValid: true,
+        memberAddress1Valid: true,
+        memberAddress2Valid: true,
+        memberMessageValid: true,
+        ok: function () {
+            return Object.values(this)
+                .filter(v => typeof v === "boolean")
+                .every(v => v === true);
+        }
+    };
+
+    // 아이디 검사
+    $("[name=memberId]").on("blur", function () {
+        var regex = /^[a-z][a-z0-9]{4,19}$/;
+        var valid = regex.test($(this).val());
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+        state.memberIdValid = valid;
+    });
+
+    // 비밀번호 검사
+    $("[name=memberPassword]").on("blur", function () {
+        var regex = /^[A-Za-z0-9!@#$%^&*]{8,16}$/;
+        var valid = regex.test($(this).val());
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail"); // = 제거
+        state.memberPasswordValid = valid;
+        // 비밀번호가 변경되면 확인창도 다시 검사하도록 트리거
+        $("#password-confirm").trigger("blur");
+    });
+
+    // 비밀번호 확인 검사 (id나 별도 클래스 부여 추천)
+    $("#password-confirm").on("blur", function(){
+        var pw1 = $("[name=memberPassword]").val();
+        var pw2 = $(this).val();
+        var valid = pw1.length > 0 && pw1 === pw2;
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+        state.memberPasswordConfirmValid = valid;
+    });
+
+    // 이메일 검사
+    $("[name=memberEmail]").on("blur", function () {
+        var regex = /^[a-z][a-z0-9]{4,19}@[A-Za-z0-9.-]+\.[a-z]{2,3}$/;
+        var valid = regex.test($(this).val());
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+        state.memberEmailValid = valid;
+    });
+
+    // 닉네임 검사
+    $("[name=memberNickname]").on("blur", function () {
+        var regex = /^[가-힣A-Za-z0-9]{1,10}$/;
+        var valid = regex.test($(this).val());
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+        state.memberNicknameValid = valid;
+    });
+
+    // 생년월일 검사 (선택 사항일 경우 빈값 허용)
+    $("[name=memberBirth]").on("blur", function () {
+        var value = $(this).val();
+        var regex = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+        var valid = value.length === 0 || regex.test(value);
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+        state.memberBirthValid = valid;
+    });
+
+    // 연락처 검사
+    $("[name=memberContact]").on("blur", function () {
+        var regex = /^010[1-9][0-9]{7}$/;
+        var value = $(this).val();
+        var valid = value.length === 0 || regex.test(value);
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+        state.memberContactValid = valid;
+    });
+
+    // 우편번호 검사
+    $("[name=memberPost]").on("blur", function () {
+        var regex = /^[0-9]{5,6}$/;
+        var value = $(this).val();
+        var valid = value.length === 0 || regex.test(value);
+        $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+        state.memberPostValid = valid;
+    });
+
+    // 폼 검사 
+    $(".form-check").on("submit", function () {
+        // 모든 필드 강제 트리거
+        $("[name], #password-confirm").trigger("blur");
+        return state.ok(); 
+    });
+});
+    </script>
+</head>
+
+<body>
+    <form action="" method="post" enctype="multipart/form-data" autocomplete="off" class="form-check">
+
+        <div class="container w-600 mt-50">
+
+            <!--페이지 제목-->
+            <div class="cell center">
+                <h1>회원 가입 정보 입력</h1>
+            </div>
+
+            <!--아이디 입력창-->
+            <div class="cell">
+                <label>아이디 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="memberId" class="field w-100">
+                <div class="fail-feedback">영문 소문자로 시작하며 영문,숫자를 포함한 5~20 자 여야 합니다</div>
+            </div>
+
+            <!--비밀번호 입력창-->
+            <div class="cell">
+                <label>
+                    비밀번호
+                    <i class="fa-solid fa-asterisk red"></i>
+                    <i class="fa-solid fa-eye-slash"></i>
+                </label>
+                <input type="password" name="memberPassword" class="field w-100">
+                <div class="fail-feedback">대문자, 숫자, 특수기호 를 포함한 8~16자 여야 합니다</div>
+            </div>
+
+            <!--비밀번호 확인 입력창 : name 부여 안함(전송x) -->
+            <div class="cell">
+                <label>비밀번호 확인 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="password" class="field w-100">
+                <div class="fail-feedback">비밀번호가 일치하지 않습니다</div>
+            </div>
+
+            <!--이메일 입력창-->
+            <div class="cell">
+                <label>이메일 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="email" name="memberEmail" class="field w-100">
+                <div class="fail-feedback">유요하지 않은 접근입니다</div>
+            </div>
+
+            <!--닉네임 입력창-->
+            <div class="cell">
+                <label>닉네임 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="memberNickname" class="field w-100">
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+
+            <!--생년월일 입력창-->
+            <div class="cell">
+                <label>생년월일</label>
+                <input type="date" name="memberBirth" class="field w-100">
+                <div class="fail-feedback">유요하지 않은 접근입니다</div>
+            </div>
+
+            <!--연락처 입력창-->
+            <div class="cell">
+                <label>연락처</label>
+                <input type="text" inputmode="tel" name="memberContact" class="field w-100">
+                <div class="fail-feedback">유요하지 않은 접근입니다</div>
+            </div>
+
+            <!--주소 입력창-->
+            <div class="cell mb-0">
+                <label>주소</label>
+            </div>
+            <div class="cell mt-0">
+                <input type="text" inputmode="numeric" name="memberPost" class="field" size="6" maxlength="6"
+                    placeholder="우편번호">
+                <!--이 버튼은 전송버튼이 아니므로 type을 명시 -->
+                <button type="button" class="btn btn-neutral">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div class="fail-feedback">유요하지 않은 접근입니다</div>
+            </div>
+            <div class="cell">
+                <input type="text" name="memberAddress1" class="field w-100" placeholder="기본주소">
+            </div>
+            <div class="cell">
+                <input type="text" name="memberAddress2" class="field w-100" placeholder="상세주소">
+            </div>
+
+            <!--상태메세지 입력창-->
+            <div class="cell">
+                <label>상태메세지</label>
+                <textarea name="memberMessage" class="field w-100" rows="5"></textarea>
+            </div>
+
+            <!--프로필이미지 선택창-->
+            <div class="cell">
+                <label>프로필 이미지</label>
+                <input type="file" name="attach" accept=".png, .jpg" class="field w-100 preview-input">
+            </div>
+            <div class="cell preview-area"></div>
+
+            <!--가입버튼-->
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>회원 가입하기</span>
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+
+
+    </div>
+</body>
+
+</html>
