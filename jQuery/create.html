@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        /* togglebox 디자인 */
+        .togglebox {
+            cursor: pointer;
+        }
+
+        .togglebox>[type=checkbox],
+        /*체크박스*/
+        .togglebox>[type=checkbox]~.fa-check,
+        /*평상시 체크박스 뒤 눈표시*/
+        .togglebox>[type=checkbox]:checked~.fa-x
+
+        /*체크되었을 때 눈가림 표시*/
+            {
+            display: none;
+        }
+
+        .togglebox>[type=checkbox]:checked~.fa-check,
+        /*체크되었을 때 눈 표시*/
+        .togglebox>[type=checkbox]~.fa-eye-x
+
+        /*평상시 체크박스 뒤 눈가림 표시*/
+            {
+            display: inline;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            var state = {
+                empDept : false,
+                empName : false,
+                empEmail : false,
+                empPhone : false,
+                empPosition : false,
+                empHireDate : false,
+                empUseYn : false,
+                ok : function(){
+                   return Object.values(this)
+                    .filter(v => typeof v === "boolean")
+                    .every(v => v === true);
+                }
+            };
+            $("[name=empDept]").on("input",function(){
+                var value = $(this).val();
+            });
+
+            $("[name=empName]").on("blur", function(){
+                var value = $(this).val();
+                var regex = /^[가-힣]{1,7}$/;
+                var valid = regex.test(value);
+
+               if(valid == false){
+                $(this).removeClass("success fail").addClass("fail").attr("data-error","1");
+                state.deptIdValid = false; 
+                 return;
+               }
+                $(this).removeClass("success fail").addClass("success").removeAttr("data-error");
+                state.deptIdValid = true;
+            });
+
+         $("[name=memberEmail]").on("blur", function () {
+                var regex = /^([a-z][a-z0-9]{4,19})@([A-Za-z0-9\-\.]{1,})(\.[a-z]{2,3})$/;
+                var valid = regex.test($("[name=memberEmail]").val());
+                if (valid == false) {
+                    $("[name=memberEmail]").removeClass("success fail").addClass("fail").attr("data-error", "1")
+                    state.memberEmailValid = false;
+                    return;
+                }
+            });
+
+            $("[name=empPhone]").on("blur", function () {
+                var regex = /^010[1-9][0-9]{7}$/;
+                var valid = $(this).val().length == 0 || regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.empPhone = valid;
+            });
+
+
+             $(".field.field-numeric").on("input", function () {
+            var regex = /[^0-9]/g;
+            var origin = $(this).val();
+             var replacement = origin.replace(regex, "");
+            $(this).val(replacement);
+             });
+
+    });
+
+     </script>
+</head>
+<body>
+   <form action="createComplete" method="post" autocomplete="off">
+	<div class="container w-400 mt-50">
+		<div class="cell center">
+			<h1>사원 등록 페이지</h1>
+		</div>
+		<div class="cell">
+			<label>부서명</label> <select class="field w-100" name="empDept">
+				<option></option>
+
+			</select>
+		</div>
+        <div class="cell">
+            <label>사원명</label>
+                <input type="text" class="field w-100 fail" name="empName"
+                    placeholder="성 : 1~2 | 이름 2 ~ 5">
+                <div class="success-feedback">사용 가능한 이름</div>
+                <div class="fail-feedback">사용 불가능한 이름</div>
+		</div>
+		<div class="cell">
+			<label>이메일</label> <input type="text" class="field w-100 fail"
+				inputtype="email" name="empEmail">
+                <div class="success-feedback">사용 가능한 이메일</div>
+            <div class="fail-feedback">사용 불가능한 이메일</div>
+		</div>
+		<div class="cell">
+			<label>연락처</label> <input type="text" class="field w-100 field-numeric fail"
+				inputtype="numeric" name="empPhone">
+                <div class="success-feedback">사용 가능한 연락처</div>
+            <div class="fail-feedback">사용 불가능한 연락처</div>
+		</div>
+		<div class="cell">
+			<label>직급</label> <select class="field w-100" name="empPosition">
+				<option value="">-선택하세요-</option>
+				<option>사원</option>
+				<option>대리</option>
+				<option>과장</option>
+				<option>차장</option>
+				<option>부장</option>
+			</select>
+		</div>
+		<div class="cell">
+			<label>입사일</label> <input type="date" class="field w-100" name="empHireDate">
+		</div>
+		<div class="cell">
+				<label>사원 활성화?</label>
+				 <label class="togglebox">
+                    <input type="checkbox" name="deptUseYn">
+                    <i class="fa-solid fa-check green"></i>
+                    <i class="fa-solid fa-x red"></i>
+                </label>
+			</div>
+
+		<button class="btn btn-neutral field w-100">입력 완료</button>
+
+	</div>
+   </div>
+</body>
+</html>
