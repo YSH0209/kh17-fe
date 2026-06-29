@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+
+    <!-- favicon -->
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- 국기 제작 CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.5.0/css/flag-icons.min.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+        <div class="row">
+            <div class="col">
+                <!-- <div class="p-4 bg-dark text-light rounded"> -->
+                <div class="p-4">
+                    <h1>국가 목록</h1>
+                    <p>등록된 국가의 목록을 확인하세요</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 검색창 -->
+        <div class="row mt-4">
+            <div class="col">
+                <div class="d-flex">
+                <!-- <div class="input-group"> -->
+                    <select name="column" class="form-select w-auto">
+                        <option>국가명</option> 
+                        <option>수도명</option>
+                        <option>대륙명</option>
+                    </select>
+                    <input type="text" name="keyword" class="form-control w-auto ms-2" placeholder="검색어">
+                    <button type="submit" class="btn btn-success text-nowrap ms-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span class="ms-2 d-none d-sm-inline">검색</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 표 -->
+        <div class="row mt-4">
+            <div class="col">
+                <div class="text-nowrap table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>국기</th>
+                                <th>번호</th>
+                                <th>국가명</th>
+                                <th>수도</th>
+                                <th>인구</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <!-- <img src="https://placehold.co/25x25"> -->
+                                    <span class="fi fi-kr"></span>
+                                </td>
+                                <td>1</td>
+                                <td>대한민국</td>
+                                <td>서울</td>
+                                <td>55,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <!-- <img src="https://placehold.co/25x25"> -->
+                                    <span class="fi fi-jp"></span>
+                                </td>
+                                <td>2</td>
+                                <td>일본</td>
+                                <td>도쿄</td>
+                                <td>127,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <!-- <img src="https://placehold.co/25x25"> -->
+                                    <span class="fi fi-us"></span>
+                                </td>
+                                <td>3</td>
+                                <td>미국</td>
+                                <td>워싱턴</td>
+                                <td>250,000,000</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <!-- <img src="https://placehold.co/25x25"> -->
+                                    <span class="fi fi-de"></span>
+                                </td>
+                                <td>4</td>
+                                <td>독일</td>
+                                <td>베를린</td>
+                                <td>70,000,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="row mt-4">
+            <div class="col">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled"><a href="#" class="page-link">&lt;</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">6</a></li>
+                    <li class="page-item"><a href="#" class="page-link">7</a></li>
+                    <li class="page-item"><a href="#" class="page-link">8</a></li>
+                    <li class="page-item"><a href="#" class="page-link">9</a></li>
+                    <li class="page-item"><a href="#" class="page-link">10</a></li>
+                    <li class="page-item"><a href="#" class="page-link">&gt;</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- JS를 Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        
+    </script>
+  </body>
+</html>
