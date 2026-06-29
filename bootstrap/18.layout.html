@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+
+    <!-- favicon -->
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력 -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet"
+        type="text/css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <!-- 헤더 -->
+    <div class="container-fluid my-5 d-none d-md-block">
+        <div class="row">
+            <div class="col-3 text-center">
+                <img src="https://placehold.co/200x50">
+            </div>
+            <div class="col-6 text-center">
+                <h2>KH정보교육원</h2>
+            </div>
+            <div class="col-3 text-center">
+                <h4>24시간상담</h4>
+                <div>1588-0000</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메뉴 -->
+    <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
+        <div class="container-fluid">
+
+            <!-- Brand 영역 : 메뉴의 가장 좌측에 나오는 글자 혹은 이미지 영역 -->
+            <a class="navbar-brand" href="#">KH정보교육원</a>
+
+            <!-- 
+                toggler(토글러) 버튼 : 폭이 좁은 경우 메뉴를 접었다 펼쳤다 하도록 만드는 버튼 
+                - aria 관련 속성은 리더기를 이용하여 읽어낼 수 있는 접근성 향상을 위한 속성
+                - data-bs-toggle은 이 버튼으로 유발시킬 작업의 종류를 의미
+                - data-bs-target은 제어 대상을 지정하기 위한 속성
+            -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 
+                collapse(콜랩스) 영역 : 좁은 화면에서 토글러 버튼에 의해서 접힘/펼침 처리되는 영역
+            -->
+            <div class="collapse navbar-collapse" id="main-menu">
+                <!-- 좌측 메뉴 -->
+                <ul class="navbar-nav me-auto">
+
+                    <!-- 드롭다운(dropdown) 메뉴 (Menu) -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">
+                            <i class="fa-solid fa-database"></i>
+                            <span>데이터</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-flag"></i>
+                                <span>국가정보</span>
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                                <span>강좌정보</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa-solid fa-book"></i>
+                                <span>도서정보</span>
+                            </a>
+                        </div>
+                    </li>
+
+                    <!-- 하위 항목이 없는 메뉴 (Menu Item) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>게시판</span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- 우측 메뉴 -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>회원가입</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <span>로그인</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid my-5">
+        <!-- 제목 부분을 점보트론(jumbotron)이라고 부른다 -->
+        <div class="row">
+            <div class="col">
+                <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-ride="carousel"
+                    data-bs-interval="3000" data-bs-touch="false">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://picsum.photos/id/1/800/300" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://picsum.photos/id/2/800/300" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://picsum.photos/id/3/800/300" class="d-block w-100">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button"
+                        data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button"
+                        data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col">
+                <div class="p-4 text-center bg-white">
+                    <h3 class="text-secondary">KH정보교육원과 AI와 함께하는</h3>
+                    <h3 class="text-primary">프로개발자·정보보안 전문가의 미래로 초대합니다.</h3>
+
+                    <div class="mt-4">
+                        <button type="button" class="btn btn-info btn-lg rounded-pill p-3">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span class="ms-2">개강일정 확인하기</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: rgba(0, 0, 0, 0.025);">
+            <div class="col">
+                <div class="p-5 text-center">
+                    <h2 class="fw-bold">왜 KH정보교육원일까요?</h2>
+                </div>
+                <div class="p-5 d-flex flex-column flex-md-row text-center">
+                    <div class="w-100 p-2">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>국비지원 부트캠프</span>
+                        <span class="fw-bold">누적 수강생</span>
+                        <h3 class="fw-bold mt-3">
+                            <span>17,000</span>
+                            <small>+</small>
+                        </h3>
+                    </div>
+                    <div class="w-100 p-2 border-secondary border-start border-end">
+                        <i class="fa-solid fa-pen"></i>
+                        <span>포트폴리오</span>
+                        <span class="fw-bold">완성률</span>
+                        <h3 class="fw-bold mt-3">
+                            <span>95</span>
+                            <small>%</small>
+                        </h3>
+                    </div>
+                    <div class="w-100 p-2">
+                        <i class="fa-solid fa-handshake"></i>
+                        <span class="fw-bold">협약기업 수</span>
+                        <h3 class="fw-bold mt-3">
+                            <span>2,800</span>
+                            <small>+</small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="background-color: rgba(0, 0, 0, 0.025);">
+            <div class="col-sm-4 p-2">
+                <div class="shadow bg-white p-4 rounded-3">
+                    <h6 class="text-info">체계적인 실무교육 제공</h6>
+                    <h4 class="mt-4">트렌드에 발맞추는</h4>
+                    <h4>AI 전환,융합,특화 캠퍼스</h4>
+                    
+                    <p class="mt-4 text-secondary">
+                        산업 현장의 최신 동향이 즉각 반영된<br>
+                        살아있는 실무 교육을 제공합니다.
+                    </p>
+
+                    <div class="mt-4 p-4">
+                        <img src="https://picsum.photos/id/8/500/500" width="100%">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-2">
+                <div class="shadow bg-white p-4 rounded-3">
+                    <h6 class="text-info">단계별 성장</h6>
+                    <h4 class="mt-4">기초 문법부터</h4>
+                    <h4>프레임워크 배포 AI융합까지</h4>
+                    
+                    <p class="mt-4 text-secondary">
+                        클라우드 평가 시스템,<br>
+                        멘토링으로 끝까지 성장을 이끌어줍니다.
+                    </p>
+
+                    <div class="mt-4 p-4">
+                        <img src="https://picsum.photos/id/60/500/500" width="100%">
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 p-2">
+                <div class="shadow bg-white p-4 rounded-3">
+                    <h6 class="text-info">포트폴리오</h6>
+                    <h4 class="mt-4">포트폴리오의 격을 높이는 기업</h4>
+                    <h4>연계 실무 프로젝트</h4>
+                    
+                    <p class="mt-4 text-secondary">
+                        IT 파트너사들의 니즈를 반영한 프로젝트로 <br>
+                        나만의 차별화된 포트폴리오 완성!
+                    </p>
+
+                    <div class="mt-4 p-4">
+                        <img src="https://picsum.photos/id/24/500/500" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 bg-black text-light">
+            <div class="col text-center fw-bold p-5">
+                <h2>KH수강생들의 작품을</h2>
+                <h2>최고까지 끌어올립니다</h2>
+            </div>
+        </div>
+
+        <div class="row bg-white text-black">
+            <div class="col text-center fw-bold p-5">
+                <h2>KH정보교육원은 수강생</h2>
+                <h2>한 분 한 분 맞춤 커리큘럼을 제공합니다</h2>
+            </div>
+        </div>
+
+        <div class="row bg-white text-black">
+            <div class="col text-center fw-bold p-5">
+                <h2>여러분의 성공적인 취업을 위해</h2>
+                <h2>취업 전문 멘토가 함께합니다</h2>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col fw-bold text-center">
+                <h2 class="text-black">3대 취업성공 Know-How!</h2>
+                <h2 class="text-info">3개의 취업 열쇠 꾸러미</h2>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="offset-sm-1 col-sm-4">
+                <img src="https://placehold.co/500x300?text=IMG" width="100%">
+            </div>
+            <div class="offset-sm-1 col-sm-6 d-flex align-items-center">
+                <div>
+                    <h5 class="text-info fw-bold">KEY 01</h5>
+                    <h3 class="my-4">전담 운영매니저</h3>
+                    <div class="mt-4">흔들림 없는 완주</div>
+                    <div class="mt-1">취업 성공을 위한 1:1 페이스 메이커</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="offset-sm-1 col-sm-6 d-flex align-items-center">
+                <div>
+                    <h5 class="text-info fw-bold">KEY 02</h5>
+                    <h3 class="my-4">면접 Coordinator 제공</h3>
+                    <div class="mt-4">스피치,표정,실력을</div>
+                    <div class="mt-1">말로 바꾸는 매직</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <img src="https://placehold.co/500x300?text=IMG" width="100%">
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="offset-sm-1 col-sm-4">
+                <img src="https://placehold.co/500x300?text=IMG" width="100%">
+            </div>
+            <div class="offset-sm-1 col-sm-6 d-flex align-items-center">
+                <div>
+                    <h5 class="text-info fw-bold">KEY 03</h5>
+                    <h3 class="my-4">AI가 찾아주는<br>최적의 입사지원 도우미</h3>
+                    <div class="mt-4">2,800여 개의 협약업체와</div>
+                    <div class="mt-1">구인기업의 Network</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 bg-primary text-white p-4">
+            <div class="col p-5 text-center fw-bold">
+                <h2>AI와 함께 성장하는</h2>
+                <h2>개발자·정보보안 전문가를 응원합니다.</h2>
+
+                <div class="rounded-3 mt-5 bg-white p-5 text-black">
+                    <h3>간편상담문의</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- JS를 Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".carousel").carousel();
+        });
+    </script>
+</body>
+
+</html>
