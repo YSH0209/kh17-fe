@@ -1,0 +1,36 @@
+<script type=""text/javascript">
+
+    //(Q) data에 들어있는 값을 이용해서 다음 결과를 만들어 내세요
+    //1. 홀수만 필터링
+    //2. 1번에서 필터링 된 결과 데이터를 각각 제곱
+    //3. 2번의 결과를 20 이하만 필터링
+    //4. 3번의 결과를 출력
+    
+    //추가로 알아야 할 함수 : map
+
+    const data = [5, 3, 2, 7, 8, 1, 6];
+
+
+    const quiz1 = data.filter((number) => (number % 2 != 0));
+
+    console.log(quiz1);
+
+    const quiz2 = quiz1.map(x => x*x);
+
+    console.log(quiz2);
+    
+    const quiz3 = quiz2.filter((number) => (number <=20));
+
+    console.log(quiz3);
+
+    quiz3.forEach((number)=>console.log(number));
+    
+    console.log("-------------------")
+
+    data.filter(n=>n%2!=0)
+        .map(n=>n*n)
+        .filter(n=>n<=20)
+        .sort((a,b)=>a-b)
+        .forEach(n=>console.log(n));
+
+</script>
