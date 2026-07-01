@@ -2,6 +2,7 @@ import './App.css'
 import Jumbotron from "./components/Jumbotron" //jsx생략
 import Exam01 from "./components/Exam01"
 import Exam02 from "./components/Exam02"
+import Exam02_1 from "./components/Exam02_1"
 
 
 function App() {
@@ -14,6 +15,10 @@ function App() {
     <hr/>
    
     <Exam02/>
+
+    <hr/>
+
+    <Exam02_1/>
    </div>
   )
 }
