@@ -9,12 +9,16 @@ import Exam04 from './components/Exam04'
 import Exam05 from './components/Exam05'
 
 
+import { Bounce, ToastContainer } from "react-toastify";
+
+
+
 function App() {
 
 
   return (
-   <div className="container my-5">
-    <Exam01/>
+    <div className="container my-5">
+      {/* <Exam01/>
 
     <hr/>
    
@@ -32,15 +36,38 @@ function App() {
 
     <Exam03_1/>
 
-    <hr/>
+    <hr/> */}
 
-    <Exam04/>
+      <Exam04 />
 
-    <hr/>
+      <hr />
 
-    <Exam05/>
+      <Exam05 />
 
-   </div>
+      {/* React Toasify Container */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
+
+      {/* React SweetAlert2 Container */}
+            
+        
+
+
+
+
+
+    </div>
   )
 }
 

@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState } from "react";
 import Jumbotron from "./Jumbotron";
-
+import axios from "axios";
+import { toast } from "react-toastify";
+import Swal from 'sweetalert2'
 
 
 function Exam05() {
@@ -75,6 +77,7 @@ function Exam05() {
     }, [book.bookAuthor, result]);
 
     const checkbookPublisher = useCallback(() => {
+        const valid = book.bookPublisher.length > 0;
         setResult({
             ...result,
             bookPublisher: valid ? "is-valid" : "is-invalid"
@@ -115,6 +118,50 @@ function Exam05() {
         });
     }, [book.bookGenre, result]);
 
+    //등록을 위한 데이터 전송
+    const send = useCallback(() => {
+        axios({
+            url: "http://localhost:8080/api/book/insert",
+            method: "post",
+            data: book,
+        })
+            .then(response => {
+                Swal.fire({
+                    title: "Custom width, padding, color, background.",
+                    width: 600,
+                    padding: "3em",
+                    color: "#716add",
+                    background: "#fff url(/images/trees.png)",
+                    backdrop: `
+                                    rgba(0,0,123,0.4)
+                                    url("https://media.tenor.com/rI_0O_9AJ5sAAAAj/nyan-cat-poptart-cat.gif")
+                                    left top
+                                    no-repeat
+                            `
+                });
+
+
+                setBook({
+                    bookTitle: "",
+                    bookAuthor: "",
+                    bookPublisher: "",
+                    bookPublicationDate: "",
+                    bookPrice: "",
+                    bookPageCount: "",
+                    bookGenre: ""
+                })
+                setResult({
+                    bookTitle: "",
+                    bookAuthor: "",
+                    bookPublisher: "",
+                    bookPublicationDate: "",
+                    bookPrice: "",
+                    bookPageCount: "",
+                    bookGenre: ""
+                })
+            });
+    }, [book]);
+
     return (
         <>
             <Jumbotron title="신규 도서 등록" />
@@ -144,7 +191,7 @@ function Exam05() {
                 <label className="col-sm-3 col-form-label">출판사</label>
                 <input type="text" name="bookPublisher" value={book.bookPublisher}
                     onChange={changeStringValue}
-                    // onBlur={checkbookPublisher}
+                    onBlur={checkbookPublisher}
                     className={`form-control ${result.bookPublisher}`}
                 ></input>
             </div>
@@ -202,7 +249,7 @@ function Exam05() {
             <div className="row mt-5">
                 <div className="col">
                     <button type="button" className="btn btn-success w-100"
-                        disabled={valid === false}>
+                        disabled={valid === false} onClick={send}>
                         등록하기
                     </button>
                 </div>

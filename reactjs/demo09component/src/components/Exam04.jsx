@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Jumbotron from "./Jumbotron";
+//axios 라는 라이브러리에서 제공하는 기본 JS파일을 불러와서 axios 라는 이름으로 쓰겠다
+import axios from "axios";
+import { toast } from "react-toastify";
+import Swal from 'sweetalert2'
 
 
 function Exam04() {
@@ -44,14 +48,14 @@ function Exam04() {
         const { name, value } = e.target;
         const regex = /[^0-9]/g;
         const replacement = value.replace(regex, "");
-        
+
         const result = parseInt(replacement);
         setLecture({
             ...lecture,
             [name]: result
         });
     }, [lecture]);
-    
+
     //검사후 결과갱신 함수
     const checkLectureTitle = useCallback(() => {
         const valid = lecture.lectureTitle.length > 0;
@@ -74,10 +78,10 @@ function Exam04() {
         // const duration = parseInt(lecture.lectureDuration) > 0;
         // const valid = duration <= 300 && duration % 30 == 0;
 
-        const valid = lecture.lectureDuration !== "" 
-                        && lecture.lectureDuration % 30 === 0
-                        && lecture.lectureDuration <= 300
-                        && lecture.lectureDuration > 0;
+        const valid = lecture.lectureDuration !== ""
+            && lecture.lectureDuration % 30 === 0
+            && lecture.lectureDuration <= 300
+            && lecture.lectureDuration > 0;
         setResult({
             ...result,
             lectureDuration: valid ? "is-valid" : "is-invalid"
@@ -103,21 +107,76 @@ function Exam04() {
         });
     }, [lecture.lectureType, result]);
 
+
+    //- 등록을 위한 데이터 전송
+    const send = useCallback(() => {
+
+
+        axios({
+            url: "http://localhost:8080/api/lecture/insert",
+            method: "post",
+            data: lecture,
+        })
+            .then(response => {
+                //console.log("등록 완료!");
+                // window.alert("등록 완료!");
+
+                //react-toastify 생성코드
+                // toast("등록 완료!");
+                // toast.success("등록완료!");
+
+                //sweetalert2 생성코드
+                Swal.fire({
+                    title: "Custom width, padding, color, background.",
+                    width: 600,
+                    padding: "3em",
+                    color: "#716add",
+                    background: "#fff url(/images/trees.png)",
+                    backdrop: `
+                    rgba(0,0,123,0.4)
+                    url("/images/nyan-cat.gif")
+                    right bottom
+                    no-repeat
+            `
+                });
+
+                //입력값 정리
+                setLecture({
+                    lectureTitle: "",
+                    lectureCategory: "",
+                    lectureDuration: "",
+                    lecturePrice: "",
+                    lectureType: ""
+                })
+                //검사 결과 정리
+                setResult({
+                    lectureTitle: "",
+                    lectureCategory: "",
+                    lectureDuration: "",
+                    lecturePrice: "",
+                    lectureType: ""
+                })
+            });
+    }, [lecture]);
+
+
+
+
     //effect
-    useEffect(()=>{
-        if(lecture.lectureCategory === "" && result.lectureCategory === "")
+    useEffect(() => {
+        if (lecture.lectureCategory === "" && result.lectureCategory === "")
             return;
 
         checkLectureCategory();
-    },[lecture.lectureCategory, result.lectureCategory]);
+    }, [lecture.lectureCategory, result.lectureCategory]);
 
-    useEffect(()=>{
-        if(lecture.lectureType === "" && result.lectureType === "")
+    useEffect(() => {
+        if (lecture.lectureType === "" && result.lectureType === "")
             return;
 
         checkLectureType();
-    },[lecture.lectureType, result.lectureType]);
-    
+    }, [lecture.lectureType, result.lectureType]);
+
     //view
     return (
         <>
@@ -196,13 +255,13 @@ function Exam04() {
             </div>
 
             <div className="row mt-5">
-            <div className="col text-end">
-                <button type="button" className="btn btn-lg btn-success" 
-                        disabled={valid === false}>
-                    등록하기
-                </button>
+                <div className="col text-end">
+                    <button type="button" className="btn btn-lg btn-success"
+                        disabled={valid === false} onClick={send}>
+                        등록하기
+                    </button>
+                </div>
             </div>
-        </div>
 
 
 
