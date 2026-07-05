@@ -7,9 +7,10 @@ import Exam03 from './components/Exam03'
 import Exam03_1 from './components/Exam03_1'
 import Exam04 from './components/Exam04'
 import Exam05 from './components/Exam05'
-
-
+import Exam06 from './components/Exam06'
 import { Bounce, ToastContainer } from "react-toastify";
+import Exam07_1 from './components/Exam07_1'
+import Exam07 from './components/Exam07'
 
 
 
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="container my-5">
-      {/* <Exam01/>
+    <Exam01/>
 
     <hr/>
    
@@ -36,15 +37,15 @@ function App() {
 
     <Exam03_1/>
 
-    <hr/> */}
+    <hr/>
 
-      <Exam04 />
+    <Exam04 />
 
-      <hr />
+    <hr />
 
-      <Exam05 />
+    <Exam05 />
 
-      {/* React Toasify Container */}
+    {/* React Toasify Container */}
       <ToastContainer
         position="bottom-right"
         autoClose={5000}
@@ -59,9 +60,22 @@ function App() {
         transition={Bounce}
       />
 
-      {/* React SweetAlert2 Container */}
-            
+    {/* React SweetAlert2 Container */}
+
+    <hr/>
+
+
+    <Exam06/> 
+
+    <hr/>
+
+    <Exam07/>
+
+    <hr/>
+
+    <Exam07_1/>
         
+    <hr/>
 
 
 

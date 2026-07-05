@@ -3,6 +3,8 @@ import Jumbotron from "./Jumbotron";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2'
+import { FaAsterisk } from "react-icons/fa6";
+import { RingLoader } from "react-spinners";
 
 
 function Exam05() {
@@ -26,6 +28,10 @@ function Exam05() {
         bookPageCount: "",
         bookGenre: ""
     });
+
+    const [loading, setLoading] = useState(false);
+
+
 
     //memo
     const valid = useMemo(() => {
@@ -72,7 +78,7 @@ function Exam05() {
         const valid = book.bookAuthor.lenght == 0 || regex.test(book.bookAuthor);
         setResult({
             ...result,
-            bookAuthor: valid ? "is-valid" : "is-invalid"
+            bookAuthor: "is-valid"
         });
     }, [book.bookAuthor, result]);
 
@@ -112,6 +118,7 @@ function Exam05() {
     const checkBookGenre = useCallback(() => {
         const regex = /^(판타지|교양|소설|역사|과학|추리소설|자기계발|수험서)$/;
         const valid = regex.test(book.bookGenre);
+        // const valid = [판타지, 교양, 소설, 역사, 과학, 추리소설, 자기계발, 수험서].includes(book.bookGenre);
         setResult({
             ...result,
             bookGenre: valid ? "is-valid" : "is-invalid"
@@ -120,6 +127,9 @@ function Exam05() {
 
     //등록을 위한 데이터 전송
     const send = useCallback(() => {
+        // + 로딩 상태로 변경
+        setLoading(true);
+
         axios({
             url: "http://localhost:8080/api/book/insert",
             method: "post",
@@ -159,6 +169,9 @@ function Exam05() {
                     bookPageCount: "",
                     bookGenre: ""
                 })
+            })
+            .finally(()=>{ //성공|실패 관계없이 무조건 실행
+                setLoading(false);
             });
     }, [book]);
 
@@ -167,7 +180,7 @@ function Exam05() {
             <Jumbotron title="신규 도서 등록" />
 
             <div className="row mt-4">
-                <label className="col-sm-3 col-form-label">도서명 *</label>
+                <label className="col-sm-3 col-form-label">도서명 <FaAsterisk className="text-danger" /></label>
                 <input type="text" name="bookTitle" value={book.bookTitle}
                     onChange={changeStringValue}
                     onBlur={checkBookTitle}
@@ -178,7 +191,7 @@ function Exam05() {
             </div>
 
             <div className="row mt-4">
-                <label className="col-sm-3 col-form-label">지은이 *</label>
+                <label className="col-sm-3 col-form-label">지은이 <FaAsterisk className="text-danger" /></label>
                 <input type="text" name="bookAuthor" value={book.bookAuthor}
                     onChange={changeStringValue}
                     onBlur={checkBookAuthor}
@@ -226,7 +239,7 @@ function Exam05() {
             </div>
 
             <div className="row mt-4">
-                <label className="col-sm-3 col-form-label">장르 *</label>
+                <label className="col-sm-3 col-form-label">장르 <FaAsterisk className="text-danger" /></label>
                 <div className="col-sm-9">
                     <select name="bookGenre" value={book.bookGenre}
                         onChange={changeStringValue}
@@ -254,6 +267,18 @@ function Exam05() {
                     </button>
                 </div>
             </div>
+
+            {/* 로딩 상태 (loading === true) 일 때 보여질 화면 */}
+            {/* { loading === true ? <h1>로딩중</h1> : false } */}
+            {/* { loading === false && <h1>로딩중</h1> } */}
+            {loading === true && (
+                <div className="position-fixed top-0 start-0 
+                                w-100 h-100 bg-dark bg-opacity-50
+                                d-flex justify-content-center align-items-center">
+                    <RingLoader size={100} loading={loading}></RingLoader>
+                </div>
+            )}
+
 
 
         </>
