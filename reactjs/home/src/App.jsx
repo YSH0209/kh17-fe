@@ -1,28 +1,64 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import Home from "./components/Home"
-import Test01 from "./components/Test01"
-import Test02 from "./components/Test02"
-import NotFound from "./components/NotFound"
+import Header from "./templates/Header"
+import Menu from './templates/Menu'
+import Body from './templates/Body'
+import Footer from './templates/Footer'
+import Container from 'react-bootstrap/esm/Container'
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { ToastContainer, Bounce } from 'react-toastify'
+
 
 export default function App() {
 
   return (
-    <>
-    <h1>Hello~</h1>
+    <Container fluid>
+      {/* 헤더 */}
+      <Row className='d-none d-md-block my-4'>
+        <Col className="py-2">
+          <Header />
+        </Col>
+      </Row>
 
-    {/* 주소에 따라 나올 화면을 지정하는 영역 구성 */}
-    <Routes>
-      {/* 홈화면은 맨 앞에, fallback 화면은 맨 뒤에 와야함 */}
-      <Route path="/" index element={<Home/>}></Route>
-      {/* /test1 주소일 경우, Test01 화면이 나와야 합니다 */}
-      <Route path="/test1" element={<Test01/>}></Route>
-      {/* /test2 주소일 경우, Test02 화면이 나와야 합니다 */}
-      <Route path="/test2" element={<Test02/>}></Route>
-      {/* 위에서 해당되는 주소가 없을 때, NotFound 화면이 나와야 합니다 (=fallback 화면 이라고 함)*/}
-      <Route path="*" element={<NotFound/>}></Route>
-    </Routes>
-    </>
+      {/* 메뉴 */}
+      <Menu />
+
+      {/* 본문 */}
+      <Row className="my-4"
+        style={
+          {
+            minHeight: 450
+          }
+        }>
+        <Col>
+          <Body />
+        </Col>
+      </Row>
+
+      <hr />
+      <Row className="mt-4">
+        <Col>
+          <Footer />
+        </Col>
+      </Row>
+
+      {/* React Toasify Container */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Bounce}
+      />
+
+    </Container>
   )
 }
 
