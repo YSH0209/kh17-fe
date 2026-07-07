@@ -1,12 +1,15 @@
-import Jumbotron from "../../templates/Jumbotron";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+//axios라는 라이브러리에서 제공하는 기본 JS 파일을 불러와서 axios라는 이름으로 쓰겠다
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2'
-import { useCallback, useEffect, useMemo, useState } from "react";
+import Jumbotron from "../../templates/Jumbotron";
 import { useNavigate } from "react-router-dom";
 
 export default function LectureAdd() {
     const navigate = useNavigate();
+
     //state
     const [lecture, setLecture] = useState({
         lectureTitle: "",
@@ -77,25 +80,35 @@ export default function LectureAdd() {
     }, [lecture, result]);
 
     //- 데이터 전송(등록)
-    const send = useCallback(() => {
-        axios({
-            url: "http://localhost:8080/api/lecture/insert",
-            method: "post",
-            data: lecture
-        })
-            .then(response => { // -> [ data ] <- [ lectureDto ] 이렇게 DB에서 받아온 정보가 들어있음
-                //sweetalert2 생성 코드
-                Swal.fire({
-                    title: "강좌 생성 완료",
-                    icon: "success",
-                    confirmButtonText: "확인"
-                })
-                .then(result=>{
-                    //목록 또는 상세로 이동
-                    navigate(`/lecture/datail/${response.data.lectureNo}`);
-                });
+    // const send = useCallback(() => {
+    //     axios({
+    //         url: "http://localhost:8080/api/lecture/insert",
+    //         method: "post",
+    //         data: lecture
+    //     })
+    //     .then(response => {
+    //         Swal.fire({
+    //             title: "강좌 생성 완료",
+    //             icon: "success",
+    //             confirmButtonText:"확인"
+    //         })
+    //         .then(result=>{
+    //             //목록 또는 상세로 이동
+    //             //navigate("/lecture/list");
+    //             navigate(`/lecture/detail/${response.data.lectureNo}`);
+    //         });
+    //     });
+    // }, [lecture]);
 
-            });
+    const send = useCallback(async () => {
+        const response = await axios.post("http://localhost:8080/api/lecture/insert", lecture);
+        const result = await Swal.fire({
+            title: "강좌 생성 완료",
+            icon: "success",
+            confirmButtonText:"확인"
+        });
+        //navigate("/lecture/list");
+        navigate(`/lecture/detail/${response.data.lectureNo}`);
     }, [lecture]);
 
     //memo
@@ -120,10 +133,12 @@ export default function LectureAdd() {
         checkLectureType();
     }, [lecture.lectureType, result.lectureType]);
 
-    return (<>
-        <Jumbotron title="신규 강좌 등록" />
+    //view
+    return (
+        <>
+            <Jumbotron title="강좌 정보 등록 화면" content="수업 실습 예제" />
 
-         <div className="row mt-4">
+            <div className="row mt-4">
                 <label className="col-sm-3 col-form-label">강좌명</label>
                 <div className="col-sm-9">
                     <input type="text" name="lectureTitle" value={lecture.lectureTitle}
@@ -194,6 +209,6 @@ export default function LectureAdd() {
                     </button>
                 </div>
             </div>
-
-    </>)
+        </>
+    )
 }

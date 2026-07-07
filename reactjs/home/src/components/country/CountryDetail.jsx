@@ -26,43 +26,30 @@ export default function CountryDetail() {
     //countryNo가 정상적인 숫자인 경우의 처리내용 작성
     const [country, setCountry] = useState(null);
     useEffect(() => {
-        axios({
-            url: "http://localhost:8080/api/country/detail",
-            method: "get",
-            params: { countryNo: countryNo }
-        })
-            .then(response => {
-                setCountry(response.data);
-            });
+        loadData();
     }, []);
 
-     const deleteCountry = useCallback(()=>{
-        // const choice = window.confirm("정말 삭제하시겠습니까?\n삭제 후에는 복구가 안됩니다");
-        // if(choice === false) return;
-        Swal.fire({
-            title:"정말 삭제하시겠습니까?",
-            text:"삭제한 데이터는 복구하실 수 없습니다",
-            icon:"warning",
-            showCancelButton:true,
-            confirmButtonText:"삭제",
-            cancelButtonText:"취소",
-            confirmButtonColor:"#d63031",
-            cancelButtonColor:"#b2bec3"
-        })
-        .then(result=>{
-            if(result.isConfirmed) {
-                axios({
-                    url:"http://localhost:8080/api/country/delete",
-                    method:"get",
-                    params:{ countryNo : countryNo }
-                })
-                .then(response=>{
-                    toast.error("국가 삭제가 완료되었습니다");
-                    navigate("/country/list");
-                });
-            }
+    const loadData = useCallback(async () => {
+        const response = await axios.get(`http://localhost:8080/api/country/${countryNo}`)
+        setCountry(response.data);
+    }, []);
+
+    const deleteCountry = useCallback(async () => {
+        const result = await Swal.fire({
+            title: "정말 삭제하시겠습니까?",
+            text: "삭제한 데이터는 복구하실 수 없습니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "삭제",
+            cancelButtonText: "취소",
+            confirmButtonColor: "#d63031",
+            cancelButtonColor: "#b2bec3"
         });
-        
+        if (result.isConfirmed == false) return;
+        const response = await axios.delete(`http://localhost:8080/api/country/${countryNo}`);
+        toast.error("국가 삭제가 완료되었습니다");
+        navigate("/country/list");
+
     }, [countryNo]);
 
     return (<>

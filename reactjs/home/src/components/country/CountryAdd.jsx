@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaAsterisk, FaPlus } from "react-icons/fa6";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function CountryAdd() {
     //state - 역동적인 화면을 만들기 위한 핵심데이터
@@ -100,26 +101,10 @@ export default function CountryAdd() {
 
     //데이터 전송 함수
     // callback은 연관항목이 재설정 될때만 불러짐(자원을 아낄수 있음)
-    const send = useCallback(() => {
-        axios({
-            url: "http://localhost:8080/api/country/insert",
-            method: "post",
-            data: country
-        })
-            .then(response => {
-                //과거 예제에서는 등록이 완료되면 알림창 + 입력 데이터 및 클래스 청소를 했었다
-                //지금은 페이지가 분활되어 있기 때문에 알림창 + 페이지 이동을 하면 된다
-                toast.success("국가 등록이 완료되었습니다");
-
-                //리액트에서는 이동을 location.href로 할 수 없다(되는데 안하는게 좋음)
-                //상단에 useNavigate()를 이용해서 도구를 생성하고, 그 도구를 사용하여 이동하도록 한다
-                // navigate("이동할 페이지")
-                navigate("/country/list");
-
-            // 필요하면 사용 가능
-            //.catch(err=>{})
-            //.finally(()=>{})
-            })
+    const send = useCallback(async () => {
+        const response = await axios.post("http://localhost:8080/api/country/", country);
+        toast.success("국가 등록이 완료되었습니다");
+        navigate("/country/list");
     }, [country]);
 
     return (<>

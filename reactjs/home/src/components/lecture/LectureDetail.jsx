@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import Jumbotron from "../../templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -8,56 +8,68 @@ import { toast } from "react-toastify";
 import Swal from 'sweetalert2'
 
 
-export default function LectureDetail(){
+export default function LectureDetail() {
     const { lectureNo } = useParams();
 
-    if(/^[0-9]+$/.test(lectureNo) === false){
+    if (/^[0-9]+$/.test(lectureNo) === false) {
         return <Navigate to="/lecture/list" replace />
     }
 
+    
     const navigate = useNavigate();
-
-    const [ lecture, setLecture ] = useState(null);
-    useEffect(()=> {
-        axios({
-            url : "http://localhost:8080/api/lecture/detail",
-            mothod : "get",
-            params : { lectureNo : lectureNo }
-        })
-        .then(response=>{
-            setLecture(response.data);
-        });
+    const [lecture, setLecture] = useState(null);
+    useEffect(() => {
+        useLoaderData();
     }, []);
 
-    const deleteLecture = useCallback(()=>{
-        Swal.fire({
-            title:"정말 삭제하시겠습니까?",
-            text:"삭제한 데이터는 복구하실 수 없습니다",
-            icon:"warning",
-            showCancelButton:true,
-            confirmButtonText:"삭제",
-            cancelButtonText:"취소",
-            confirmButtonColor:"#d63031",
-            cancelButtonColor:"#b2bec3"
-        })
-        .then(result=>{
-            if(result.isConfirmed){
-                axios({
-                    url : "http://localhost:8080/api/lecture/delete",
-                    method : "get",
-                    params : { lectureNo : lectureNo }
-                })
-                .then(response=>{
-                    toast.error("강좌 삭제가 완료되었습니다");
-                    navigate("/lecture/list");
-                });
-            }
-        })
+    // [1] 일반 함수에서 비동기 작업을 호출 : .then() 으로 후속작업을 지정
+    // const loadData = useCallback(()=>{
+    //     axios({
+    //         // url : `http://localholst:8080/api.lecture/detail/${lectureNo}`, //경로변수일때
+    //         url : `http://localhost:8080/api/lecture/detail`, //쿼리스트링일때 ( + params 사용 )
+    //         method : "get",
+    //         params : { lectureNo : lectureNo }
+    //     })
+    //     .then(response=>{
+    //         setLecture(response.data);
+    //     });
+    // },[])
+
+    // [2] 비동기 함수를 사용 (함수 앞에 async 키워드를 추가)
+    // then 대신 await 키워드 사용 가능
+    const loadData = useCallback(async () => {
+        // const response = await axios({
+        //     url : `http://localholst:8080/api.lecture/detail/${lectureNo}`,
+        //      method : "get"
+        // });
+        const response = await axios.get(`http://localholst:8080/api/lecture/detail/${lectureNo}`)
+        setLecture(response.data);
+    }, []);
+
+
+
+    //삭제함수 (async + awiat)
+    const deleteLecture = useCallback(async () => {
+        const result = await Swal.fire({
+            title: "정말 삭제하시겠습니까?",
+            text: "삭제한 데이터는 복구하실 수 없습니다",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "삭제",
+            cancelButtonText: "취소",
+            confirmButtonColor: "#d63031",
+            cancelButtonColor: "#b2bec3"
+        });
+        if(result.isConfirmed === false) return;
+
+        const response = await axios.get(`http://localhost:8080/api/lecture/deleta/${lectureNo}`);
+        toast.error("강좌 삭제가 완료되었습니다");
+        navigate("/lecture/list");
     }, [lectureNo]);
 
     return (<>
-    <Jumbotron title="강좌 상세"/>
-    
+        <Jumbotron title="강좌 상세" />
+
         {lecture === null ? (
             <h1>로딩중 입니다...</h1>
         ) : (<>
@@ -101,9 +113,9 @@ export default function LectureDetail(){
                     {lecture.lectureType}
                 </Col>
             </Row>
-            
 
-            <hr/>
+
+            <hr />
 
             <Row className="mt-5">
                 <Col className="text-end">
@@ -122,7 +134,7 @@ export default function LectureDetail(){
                     </Button>
                 </Col>
             </Row>
-           
+
         </>)}
 
     </>)
