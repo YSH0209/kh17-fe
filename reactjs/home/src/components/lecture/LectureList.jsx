@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 import Jumbotron from "../../templates/Jumbotron";
 
 export default function LectureList() {
-    
-    const [ lectureList, setLectureList ] = useState([]);
-    const [ last, setLast ] = useState(false);
-    const [ size, setSize ] = useState(10);
-    const [ loading, setLoading ] = useState(false);
 
-    useEffect(()=>{
+    const [lectureList, setLectureList] = useState([]);
+    const [last, setLast] = useState(false);
+    const [size, setSize] = useState(10);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
         loadMoreList();
     }, []);
 
@@ -56,7 +56,7 @@ export default function LectureList() {
                 </Form.Select>
             </Col>
             <Col xs={6} className="text-end">
-                <Button as={Link} to="lecture/add" variant="success">
+                <Button as={Link} to="/lecture/add" variant="success">
                     <FaPlus />
                     <span className="ms-2">신규 등록</span>
                 </Button>
@@ -73,14 +73,18 @@ export default function LectureList() {
                             <th>강좌카테고리</th>
                             <th>강좌시간</th>
                             <th>강좌가격</th>
-                            <th>강좌타입</th>
+                            <th className="text-end">강좌타입</th>
                         </tr>
                     </thead>
                     <tbody>
                         {lectureList.map(lecture => (
                             <tr key={lecture.lectureNo}>
                                 <td>{lecture.lectureNo}</td>
-                                <td>{lecture.lectureTitle}</td>
+                                <td>
+                                    <Link to={`/lecture/detail/${lecture.lectureNo}`}>
+                                        {lecture.lectureTitle}
+                                    </Link>
+                                </td>
                                 <td>{lecture.lectureCategory}</td>
                                 <td>{lecture.lectureDuration}</td>
                                 <td>{lecture.lecturePrice}</td>

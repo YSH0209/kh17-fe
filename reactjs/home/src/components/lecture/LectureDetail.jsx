@@ -1,9 +1,11 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Jumbotron from "../../templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import { Button, Col, Row, Toast } from "react-bootstrap";
+import { FaList, FaPenToSquare, FaTrash, FaTruckMedical } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { Row } from "react-bootstrap";
+import Swal from 'sweetalert2'
 
 
 export default function LectureDetail(){
@@ -63,25 +65,61 @@ export default function LectureDetail(){
                 <Col sm={3} className="text-primary fw-bold">
                     강좌명
                 </Col>
+                <Col sm={9}>
+                    {lecture.lectureTitle}
+                </Col>
             </Row>
             <Row className="mt-4 fs-2">
                 <Col sm={3} className="text-primary fw-bold">
                     강좌 카테고리
+                </Col>
+                <Col sm={9}>
+                    {lecture.lectureCategory}
                 </Col>
             </Row>
             <Row className="mt-4 fs-2">
                 <Col sm={3} className="text-primary fw-bold">
                     강좌 시간
                 </Col>
+                <Col sm={9}>
+                    {lecture.lectureDuration}
+                </Col>
             </Row>
             <Row className="mt-4 fs-2">
                 <Col sm={3} className="text-primary fw-bold">
                     강좌 가격
                 </Col>
+                <Col sm={9}>
+                    {lecture.lecturePrice}
+                </Col>
             </Row>
             <Row className="mt-4 fs-2">
                 <Col sm={3} className="text-primary fw-bold">
                     강좌 타입
+                </Col>
+                <Col sm={9}>
+                    {lecture.lectureType}
+                </Col>
+            </Row>
+            
+
+            <hr/>
+
+            <Row className="mt-5">
+                <Col className="text-end">
+                    <Button className="ms-2" variant="warning">
+                        <FaPenToSquare className="me-2" />
+                        <span>수정하기</span>
+                    </Button>
+                    <Button className="ms-2" variant="danger" onClick={deleteLecture}>
+                        <FaTrash className="me-2" />
+                        <span>삭제하기</span>
+                    </Button>
+                    <Button className="ms-2" variant="primary"
+                        as={Link} to="/lecture/list">
+                        <FaList className="me-2" />
+                        <span>목록으로</span>
+                    </Button>
                 </Col>
             </Row>
            

@@ -6,6 +6,9 @@ import Home from '../components/Home'
 import NotFound from '../Error/NotFound'
 import CountryAdd from '../components/country/CountryAdd'
 import CountryDetail from '../components/country/CountryDetail'
+import LectureAdd from '../components/lecture/LectureAdd'
+import LectureDetail from '../components/lecture/LectureDetail'
+
 
 export default function Body() {
 
@@ -19,6 +22,8 @@ export default function Body() {
             <Route path="/country/detail/:countryNo" element={<CountryDetail/>}></Route>
 
             <Route path="/lecture/list" element={<LectureList />}></Route>
+            <Route path="/lecture/add" element={<LectureAdd />}></Route>
+            <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}></Route>
 
             <Route path="/book/list" element={<BookList />}></Route>
 
