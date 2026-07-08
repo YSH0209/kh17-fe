@@ -1,5 +1,5 @@
 import { Row, Col, Form, Button } from "react-bootstrap";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaAsterisk, FaPlus } from "react-icons/fa6";
 import axios from "axios";

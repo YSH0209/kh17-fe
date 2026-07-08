@@ -5,7 +5,7 @@ import { useNavigate, useParams, Navigate, Link } from "react-router-dom";
 import { FaCheck, FaList, FaPenToSquare, FaSquarePen, FaTrash, FaTruckMedical, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2'
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { FaAsterisk, FaPlus } from "react-icons/fa6";
 
 export default function CountryEdit() {
