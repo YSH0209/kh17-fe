@@ -17,7 +17,7 @@ export default defineConfig({
       "@src":path("./src"),
       "@assets":path("./src/assets"),
       "@components":path("./src/components"),
-      "@errors":path("./src/error"),
+      "@error":path("./src/error"),
       "@templates":path("./src/templates")
     }
   }
