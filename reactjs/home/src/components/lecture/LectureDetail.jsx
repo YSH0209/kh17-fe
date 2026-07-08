@@ -22,18 +22,6 @@ export default function LectureDetail() {
         useLoaderData();
     }, []);
 
-    // [1] 일반 함수에서 비동기 작업을 호출 : .then() 으로 후속작업을 지정
-    // const loadData = useCallback(()=>{
-    //     axios({
-    //         // url : `http://localholst:8080/api.lecture/detail/${lectureNo}`, //경로변수일때
-    //         url : `http://localhost:8080/api/lecture/detail`, //쿼리스트링일때 ( + params 사용 )
-    //         method : "get",
-    //         params : { lectureNo : lectureNo }
-    //     })
-    //     .then(response=>{
-    //         setLecture(response.data);
-    //     });
-    // },[])
 
     // [2] 비동기 함수를 사용 (함수 앞에 async 키워드를 추가)
     // then 대신 await 키워드 사용 가능

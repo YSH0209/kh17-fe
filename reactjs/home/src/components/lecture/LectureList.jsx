@@ -18,31 +18,6 @@ export default function LectureList() {
         loadMoreList();
     }, []);
     
-    //callback
-    // const loadMoreList = useCallback(()=>{
-    //     //이미 로딩중이면 차단
-    //     if(loading === true) return;
-    //     setLoading(true);
-
-    //     const dataSize = lectureList.length;
-    //     const lastLectureNo = dataSize === 0 ? 
-    //                         0 : lectureList[dataSize-1].lectureNo;
-
-    //     axios({
-    //         url:"http://localhost:8080/api/lecture/listForReact",
-    //         method:"get",
-    //         params: {//GET방식일 때
-    //             lastLectureNo: lastLectureNo,
-    //             size : size
-    //         }
-    //     })
-    //     .then(response=>{
-    //         //덮어쓰기가 아니라 추가(이어쓰기)가 필요
-    //         setLectureList([...lectureList, ...response.data.list]);
-    //         setLast(response.data.last);
-    //     })
-    //     .finally(()=>setLoading(false));
-    // }, [lectureList, size]);
     const loadMoreList = useCallback(async ()=>{
         //이미 로딩중이면 차단
         if(loading === true) return;
