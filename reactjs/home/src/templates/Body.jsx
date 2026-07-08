@@ -1,5 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 import BookList from '@components/book/BookList'
+import BookAdd from '@components/book/BookAdd'
+import BookDetail from '@components/book/BookDetail'
+import BookEdit from '@components/book/BookEdit'
 import CountryList from '@components/country/CountryList'
 import LectureList from '@components/lecture/LectureList'
 import Home from '@components/Home'
@@ -28,6 +31,9 @@ export default function Body() {
             <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}></Route>
 
             <Route path="/book/list" element={<BookList />}></Route>
+            <Route path="/book/add" element={<BookAdd />}></Route>
+            <Route path="/book/detail/:bookId" element={<BookDetail />}></Route>
+            <Route path="/book/edit/:bookId" element={<BookEdit />}></Route>
 
             {/* fallback route */}
             <Route path="*" element={<NotFound />} />

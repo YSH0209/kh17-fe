@@ -83,10 +83,10 @@ export default function CountryDetail() {
         });
     },[country]);
 
-    //국가명만 변경하는 함수
+    //국가명만 변경하는 함수 -> 국가 정보를 변경해주는 함수
     const updateCountry = useCallback(async (field) => {
         const response = await axios.patch(
-            `http://localhost:8080/api/country/${countryNo}`,
+            `/api/country/${countryNo}`,
             { [field]: country[field] }
         );
 
