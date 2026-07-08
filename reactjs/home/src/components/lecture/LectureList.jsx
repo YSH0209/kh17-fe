@@ -52,7 +52,7 @@ export default function LectureList() {
         const lastLectureNo = dataSize === 0 ? 
                             0 : lectureList[dataSize-1].lectureNo;
 
-        const response = await axios.get("http://localhost:8080/api/lecture/listForReact",{
+        const response = await axios.get("/api/lecture/listForReact",{
             params: {//GET방식일 때
                 lastLectureNo: lastLectureNo,
                 size : size

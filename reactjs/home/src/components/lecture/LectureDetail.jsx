@@ -62,7 +62,7 @@ export default function LectureDetail() {
         });
         if(result.isConfirmed === false) return;
 
-        const response = await axios.get(`http://localhost:8080/api/lecture/deleta/${lectureNo}`);
+        const response = await axios.get(`/api/lecture/deleta/${lectureNo}`);
         toast.error("강좌 삭제가 완료되었습니다");
         navigate("/lecture/list");
     }, [lectureNo]);
