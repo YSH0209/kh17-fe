@@ -11,8 +11,9 @@ import CountryAdd from '@components/country/CountryAdd'
 import CountryDetail from '@components/country/CountryDetail'
 import LectureAdd from '@components/lecture/LectureAdd'
 import LectureDetail from '@components/lecture/LectureDetail'
-import CountryEdit from '@components/country/CountryEdit'
 
+import CountryEdit from '@components/country/CountryEdit'
+import CountrySearch from '@components/country/CountrySearch'
 
 export default function Body() {
 
@@ -25,6 +26,7 @@ export default function Body() {
             {/* 제일 마지막에 적혀있는 값을 countryNo라는 이름으로 관리하겠다 */}
             <Route path="/country/detail/:countryNo" element={<CountryDetail/>}></Route>
             <Route path="/country/edit/:countryNo" element={<CountryEdit/>}/>
+            <Route path="/country/search" element={<CountrySearch/>}></Route>
 
             <Route path="/lecture/list" element={<LectureList />}></Route>
             <Route path="/lecture/add" element={<LectureAdd />}></Route>
