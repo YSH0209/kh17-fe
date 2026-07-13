@@ -1,8 +1,9 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
-import { Col, Form, ListGroup, Row } from "react-bootstrap";
+import { Button, Col, Form, ListGroup, Row, Table } from "react-bootstrap";
 import axios from "axios";
 import { throttle, debounce } from "lodash-es";
+import { FaChevronDown } from "react-icons/fa6";
 
 
 export default function CountrySearch() {
@@ -65,11 +66,70 @@ export default function CountrySearch() {
             </Col>
         </Row>
 
+        <hr/>
         <Row className="mt-4">
-            <Col>
-                <h2>결과가 표시될 영역</h2>
+            <Col xs={6}>
+                <Form.Select value={size} onChange={e => setSize(parseInt(e.target.value))}
+                    className="w-auto">
+                    <option value="5">5개씩 보기</option>
+                    <option value="10">10개씩 보기</option>
+                    <option value="20">20개씩 보기</option>
+                    <option value="50">50개씩 보기</option>
+                </Form.Select>
+            </Col>
+            <Col xs={6} className="text-end">
+                <Button as={Link} to="/country/add" variant="success">
+                    <FaPlus />
+                    <span className="ms-2">신규등록</span>
+                </Button>
             </Col>
         </Row>
+
+        <Row className="mt-4">
+            <Col>
+                <Table responsive striped hover className="text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>국가</th>
+                            <th>대륙</th>
+                            <th>수도</th>
+                            <th className="text-end">인구</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {countryList.map(country => (
+                            <tr key={country.countryNo}>
+                                <td>{country.countryNo}</td>
+                                <td>
+                                    <Link to={`/country/detail/${country.countryNo}`}>
+                                        {country.countryName}
+                                    </Link>
+                                </td>
+                                <td>{country.countryRegion}</td>
+                                <td>{country.countryCapital}</td>
+                                <td className="text-end">{country.countryPopulation.toLocaleString()}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </Col>
+        </Row>
+
+        {/* 더보기 버튼 */}
+        {last === false && (
+            <Row className="mt-2">
+                <Col>
+                    <Button variant="outline-success" size="lg"
+                        onClick={loadMoreList} className="w-100">
+                        <FaChevronDown />
+                        <span className="mx-2">더보기</span>
+                        <FaChevronDown />
+                    </Button>
+                </Col>
+            </Row>
+        )}
+
 
     </>)
 }

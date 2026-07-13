@@ -14,6 +14,7 @@ import LectureDetail from '@components/lecture/LectureDetail'
 
 import CountryEdit from '@components/country/CountryEdit'
 import CountrySearch from '@components/country/CountrySearch'
+import CountryComplexSearch from '@components/country/CountryComplexSearch'
 
 export default function Body() {
 
@@ -27,6 +28,8 @@ export default function Body() {
             <Route path="/country/detail/:countryNo" element={<CountryDetail/>}></Route>
             <Route path="/country/edit/:countryNo" element={<CountryEdit/>}/>
             <Route path="/country/search" element={<CountrySearch/>}></Route>
+            <Route path="/country/complex" element={<CountryComplexSearch/>}></Route>
+            
 
             <Route path="/lecture/list" element={<LectureList />}></Route>
             <Route path="/lecture/add" element={<LectureAdd />}></Route>
