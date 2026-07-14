@@ -4,6 +4,9 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaAsterisk, FaMagnifyingGlass, FaPlus, FaUserPlus, FaXmark } from "react-icons/fa6";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { RiEye2Line } from "react-icons/ri";
+import { RiEyeCloseLine } from "react-icons/ri";
 
 export default function AccountJoin() {
     //state
@@ -22,11 +25,12 @@ export default function AccountJoin() {
     });
 
     const [result, setResult] = useState({
-        accountId: null,
+        // accountId: null,
+        accountId: { valid: null, code: null },
         accountPassword: null,
         accountPassword2: null,
-        accountEmail: null,
-        accountNickname: null,
+        accountEmail: { valid: null, code: null },
+        accountNickname: { valid: null, code: null },
         accountBirth: null,
         accountContact: null,
         accountPost: null,
@@ -34,6 +38,12 @@ export default function AccountJoin() {
         accountAddress2: null,
         accountMessage: null
     });
+
+    const [visible, setVisible] = useState({
+        accountPassword: false,
+        accountPassword2: false,
+    });
+
 
     //callback
     //- 입력
@@ -47,13 +57,24 @@ export default function AccountJoin() {
 
     //- 검사
     //아이디 검사
-    const checkAccountId = useCallback(e => {
+    const checkAccountId = useCallback(async e => {
         const regex = /^[a-z][a-z0-9]{4,19}$/;
         const valid = regex.test(account.accountId);
-        const clazz = valid ? "is-valid" : "is-invalid";
+        if (valid === false) { //아이디 형식 오류
+            setResult(prev => ({
+                ...prev,
+                accountId: { clazz: "is-invalid", code: "format" }
+
+            }));
+            return;
+        }
+        //형식은 통과
+        const response = await axios.get(`/api/account/check-id/${account.accountId}`)
+        const clazz = response.data === true ? "is-valid" : "is-invalid";
+        const code = response.data === true ? null : "duplicate";
         setResult(prev => ({
             ...prev,
-            accountId: clazz
+            accountId: { clazz: clazz, code: code }
         }));
     }, [account]);
 
@@ -76,25 +97,37 @@ export default function AccountJoin() {
     }, [account]);
 
     //닉네임 검사
-    const checkAccountNickname = useCallback(e => {
+    const checkAccountNickname = useCallback(async e => {
         const regex = /^[가-힣A-Za-z0-9]{1,10}$/;
         const valid = regex.test(account.accountNickname);
-        const clazz = valid ? "is-valid" : "is-invalid";
+        if (valid === false) { //형식 위반
+            setResult(prev => ({
+                ...prev,
+                accountNickName: { clazz: "is-invalid", code: "format" }
+            }));
+            return;
+        } //형식 통과 -> 중복검사
+        const { data } = await axios.get(`/api/account/check-nickname${account.accountNickname}`)
+        const clazz = data ? "is-valid" : "is-invalid";
+        const code = data ? null : "duplicate";
         setResult(prev => ({
             ...prev,
-            accountNickname: clazz
+            accountNickname: { clazz: clazz, code: code }
         }));
     }, [account]);
 
     //이메일 검사
-    const checkAccountEmail = useCallback(e => {
+    const checkAccountEmail = useCallback(async e => {
         const regex = /^([a-z][a-z0-9]{4,19})@([A-Za-z0-9\-\.]{1,})(\.[a-z]{2,3})$/;
         const valid = regex.test(account.accountEmail);
-        const clazz = valid ? "is-valid" : "is-invalid";
         setResult(prev => ({
             ...prev,
             accountEmail: clazz
         }));
+
+        const response = await axios.get(`/api/account/check-email`)
+        const clazz = valid ? "is-valid" : "is-invalid";
+
     }, [account]);
 
     const checkAccountBirth = useCallback(e => {
@@ -132,31 +165,31 @@ export default function AccountJoin() {
         }));
     }, [account]);
 
-    const checkAccountMessage = useCallback(e=>{
-        setResult(prev=>({
+    const checkAccountMessage = useCallback(e => {
+        setResult(prev => ({
             ...prev,
-            accountMessage : "is-valid"
+            accountMessage: "is-valid"
         }));
-    },[account]);
+    }, [account]);
 
-    const allValid = useMemo(()=>{
+    const allValid = useMemo(() => {
         //필수항목
-        if(result.accountId !== "is-valid") return false;
-        if(result.accountPassword !== "is-valid") return false;
-        if(result.accountPassword2 !== "is-valid") return false;
-        if(result.accountNickname !== "is-valid") return false;
-        if(result.accountEmail !== "is-valid") return false;
+        if (result.accountId.clazz !== "is-valid") return false;
+        if (result.accountPassword !== "is-valid") return false;
+        if (result.accountPassword2 !== "is-valid") return false;
+        if (result.accountNickname.clazz !== "is-valid") return false;
+        if (result.accountEmail.clazz !== "is-valid") return false;
 
         //선택항목
-        if(result.accountBirth !== "is-invalid") return false;
-        if(result.accountContact !== "is-invalid") return false;
-        if(result.accountPost !== "is-invalid") return false;
-        if(result.accountAddress1 !== "is-invalid") return false;
-        if(result.accountAddress2 !== "is-invalid") return false;
-        if(result.accountMessage !== "is-invalid") return false;
+        if (result.accountBirth !== "is-invalid") return false;
+        if (result.accountContact !== "is-invalid") return false;
+        if (result.accountPost !== "is-invalid") return false;
+        if (result.accountAddress1 !== "is-invalid") return false;
+        if (result.accountAddress2 !== "is-invalid") return false;
+        if (result.accountMessage !== "is-invalid") return false;
 
         return true;
-    },[result]);
+    }, [result]);
 
 
 
@@ -181,9 +214,16 @@ export default function AccountJoin() {
                     value={account.accountId} onChange={changeStringValue}
                     placeholder="알파벳 소문자 시작, 숫자 포함 5~20자 이내"
                     onBlur={checkAccountId}
-                    className={result.accountId} />
+                    className={result.accountId.clazz} />
                 <div className="valid-feedback">아이디 설정이 완료되었습니다</div>
-                <div className="invalid-feedback">형식오류 or 사용중</div>
+                <div className="invalid-feedback">
+                    {result.accountId.code === "format" && (<>
+                        아이디는 영문소문자로 시작하며 숫자 포함 5~20 글자로 작성해야 합니다
+                    </>)}
+                    {result.accountId.code === "duplicate" && (<>
+                        아이디가 이미 사용중 입니다. 다른 아이디를 작성하세요
+                    </>)}
+                </div>
             </Col>
         </Row>
 
@@ -191,9 +231,25 @@ export default function AccountJoin() {
             <Form.Label column sm={3}>
                 <span>비밀번호</span>
                 <FaAsterisk className="text-danger" />
+
+                {visible.accountPassword === true ? (
+                    <RiEye2Line className="text-danger ms-4" onClick={e => {
+                        setVisible(prev => ({
+                            ...prev,
+                            accountPassword: false
+                        }));
+                    }} />
+                ) : (
+                    <RiEyeCloseLine className="text-info ms-4" onClick={e => {
+                        setVisible(prev => ({
+                            ...prev,
+                            accountPassword: true
+                        }));
+                    }} />
+                )}
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" name="accountPassword"
+                <Form.Control type={visible.accountPassword ? "type" : "password"} name="accountPassword"
                     value={account.accountPassword} onChange={changeStringValue}
                     placeholder="대문자, 소문자, 숫자, 특수문자 포함 8~16자 이내"
                     onBlur={checkAccountPassword}
@@ -207,9 +263,25 @@ export default function AccountJoin() {
             <Form.Label column sm={3}>
                 <span>비밀번호 확인</span>
                 <FaAsterisk className="text-danger" />
+
+                {visible.accountPassword2 === true ? (
+                    <RiEye2Line className="text-danger ms-4" onClick={e => {
+                        setVisible(prev => ({
+                            ...prev,
+                            accountPassword2: false
+                        }));
+                    }} />
+                ) : (
+                    <RiEyeCloseLine className="text-info ms-4" onClick={e => {
+                        setVisible(prev => ({
+                            ...prev,
+                            accountPassword2: true
+                        }));
+                    }} />
+                )}
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" name="accountPassword2"
+                <Form.Control type={visible.accountPassword2 ? "text" : "password"} name="accountPassword2"
                     value={account.accountPassword2} onChange={changeStringValue}
                     placeholder="비밀번호를 한번 더 입력하세요"
                     onBlur={checkAccountPassword}
@@ -227,13 +299,20 @@ export default function AccountJoin() {
                 <FaAsterisk className="text-danger" />
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" inputMode="email" name="accountNickname"
-                    value={account.accountNickname} onChange={changeStringValue}
-                    placeholder="대충 닉네임 설정 하세요란 글"
+                <Form.Control type="text" inputMode="email" name="accountNickname.clazz"
+                    value={account.accountNickname.clazz} onChange={changeStringValue}
+                    placeholder="한글, 영문, 숫자 10자 이내"
                     onBlur={checkAccountNickname}
-                    className={result.accountNickname} />
+                    className={result.accountNickname.clazz} />
                 <div className="valid-feedback">훌륭한 닉네임 입니다!</div>
-                <div className="invalid-feedback">사용할 수 없는 닉네임 입니다</div>
+                <div className="invalid-feedback">
+                    {result.accountNickname.code === "format" && (<>
+                        한글, 영어, 숫자, 10글자 이내로 작성해야 합니다
+                    </>)}
+                    {result.accountNickname.code === "duplicate" && (<>
+                        이미 사용중인 닉네임 입니다
+                    </>)}
+                </div>
             </Col>
         </Row>
 
@@ -341,8 +420,8 @@ export default function AccountJoin() {
 
         <Row className="mt-5">
             <Col>
-                <Button type="button" variant="success"  className="w-100"
-                    onClick={send} disabled = {allValid === false} >
+                <Button type="button" variant="success" className="w-100"
+                    onClick={send} disabled={allValid === false} >
                     <FaUserPlus className="me-2" />
                     <span>가입하기</span>
                 </Button>
