@@ -1,4 +1,4 @@
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { FaChevronDown, FaPlus } from "react-icons/fa6";
@@ -18,6 +18,31 @@ export default function LectureList() {
         loadMoreList();
     }, []);
     
+    //callback
+    // const loadMoreList = useCallback(()=>{
+    //     //이미 로딩중이면 차단
+    //     if(loading === true) return;
+    //     setLoading(true);
+
+    //     const dataSize = lectureList.length;
+    //     const lastLectureNo = dataSize === 0 ? 
+    //                         0 : lectureList[dataSize-1].lectureNo;
+
+    //     axios({
+    //         url:"http://localhost:8080/api/lecture/listForReact",
+    //         method:"get",
+    //         params: {//GET방식일 때
+    //             lastLectureNo: lastLectureNo,
+    //             size : size
+    //         }
+    //     })
+    //     .then(response=>{
+    //         //덮어쓰기가 아니라 추가(이어쓰기)가 필요
+    //         setLectureList([...lectureList, ...response.data.list]);
+    //         setLast(response.data.last);
+    //     })
+    //     .finally(()=>setLoading(false));
+    // }, [lectureList, size]);
     const loadMoreList = useCallback(async ()=>{
         //이미 로딩중이면 차단
         if(loading === true) return;
@@ -25,13 +50,11 @@ export default function LectureList() {
 
         const dataSize = lectureList.length;
         const lastLectureNo = dataSize === 0 ? 
-                            0 : lectureList[dataSize-1].lectureNo;
+                            null : lectureList[dataSize-1].lectureNo;
 
-        const response = await axios.get("/api/lecture/listForReact",{
-            params: {//GET방식일 때
-                lastLectureNo: lastLectureNo,
-                size : size
-            }
+        const response = await axios.post("/api/lecture/list-more",{
+            lastNo: lastLectureNo,
+            size : size
         });
         //덮어쓰기가 아니라 추가(이어쓰기)가 필요
         setLectureList([...lectureList, ...response.data.list]);

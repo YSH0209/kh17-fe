@@ -6,15 +6,18 @@ import BookEdit from '@components/book/BookEdit'
 import CountryList from '@components/country/CountryList'
 import LectureList from '@components/lecture/LectureList'
 import Home from '@components/Home'
-import NotFound from '@error/NotFound'
-import CountryAdd from '@components/country/CountryAdd'
-import CountryDetail from '@components/country/CountryDetail'
 import LectureAdd from '@components/lecture/LectureAdd'
 import LectureDetail from '@components/lecture/LectureDetail'
 
+import CountryAdd from '@components/country/CountryAdd'
+import CountryDetail from '@components/country/CountryDetail'
 import CountryEdit from '@components/country/CountryEdit'
 import CountrySearch from '@components/country/CountrySearch'
 import CountryComplexSearch from '@components/country/CountryComplexSearch'
+
+import AccountJoin from '@components/account/AccountJoin'
+
+import NotFound from '@error/NotFound'
 
 export default function Body() {
 
@@ -39,6 +42,10 @@ export default function Body() {
             <Route path="/book/add" element={<BookAdd />}></Route>
             <Route path="/book/detail/:bookId" element={<BookDetail />}></Route>
             <Route path="/book/edit/:bookId" element={<BookEdit />}></Route>
+
+            <Route path="/account/join" element={<AccountJoin />}></Route>
+
+
 
             {/* fallback route */}
             <Route path="*" element={<NotFound />} />

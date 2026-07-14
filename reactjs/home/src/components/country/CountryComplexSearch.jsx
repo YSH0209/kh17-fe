@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import { toast } from "react-toastify";
 
 export default function CountryComplexSearch() {
+
     //state
     const [condition, setCondition] = useState({
         countryRegions : [],
@@ -22,7 +23,9 @@ export default function CountryComplexSearch() {
             // "country_name asc",
         ]
     });
+
     const [countryList, setCountryList] = useState([]);
+
     const [last, setLast] = useState(true);
 
     //callback
@@ -33,6 +36,7 @@ export default function CountryComplexSearch() {
             [name] : value
         }));
     }, []);
+    
     const changeNumericValue = useCallback(e=>{
         const { name, value } = e.target;
         const replacement = value.replace(/[^0-9]+/g, "");
@@ -53,6 +57,7 @@ export default function CountryComplexSearch() {
         if(countryList.length === 0) return null;
         return countryList[countryList.length-1].countryNo;
     }, [countryList]);
+
     const loadMoreList = useCallback(async ()=>{
         const response = await axios.post(
             "/api/country/complexSearch", 
@@ -69,6 +74,7 @@ export default function CountryComplexSearch() {
         const { checked, value } = e.target;
 
         const clone = [...condition.countryRegions];
+
         const clone2 = checked ? [...clone, value] : clone.filter(region=> region !== value);
 
         setCondition({ ...condition, countryRegions:clone2 });
@@ -133,6 +139,7 @@ export default function CountryComplexSearch() {
         //→ 현재 위치(index)가 아닌 곳에 dest와 항목만 같고 정렬방식이 다른 값이 존재하는지를 확인
         //→ 만약 [2]에 country_population desc를 선택했는데 [0]에 country_population asc가 있으면 안됨
         const destParts = dest.split(" ");
+
         const duplicateIndex = clone.findIndex((order, idx)=>{
             if(idx === index) return false;//같은 위치는 제외
             const orderParts = order.split(" ");
