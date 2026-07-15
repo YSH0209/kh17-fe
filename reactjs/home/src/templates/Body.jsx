@@ -18,6 +18,7 @@ import CountryComplexSearch from '@components/country/CountryComplexSearch'
 import AccountJoin from '@components/account/AccountJoin'
 import AccountJoinSuccess from '@components/account/AccountJoinSuccess'
 import AccountJoinFail from '@components/account/AccountJoinFail'
+import AccountLogin from '@components/account/AccountLogin'
 
 import TestMain from "@components/session/TestMain";
 
@@ -51,6 +52,7 @@ export default function Body() {
             <Route path="/account/join" element={<AccountJoin />}></Route>
             <Route path="/account/joinSuccess" element={<AccountJoinSuccess />}></Route>
             <Route path="/account/joinFail" element={<AccountJoinFail />}></Route>
+            <Route path="/account/login" element={<AccountLogin />}></Route>
 
             {/* 세션 테스트 */}
             <Route path="/session/test" element={<TestMain/>}/>
