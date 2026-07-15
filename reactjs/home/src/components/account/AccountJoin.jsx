@@ -1,7 +1,7 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { FaAsterisk, FaMagnifyingGlass, FaPlus, FaUserPlus, FaXmark } from "react-icons/fa6";
+import { Button, Col, Form, Row, Toast } from "react-bootstrap";
+import { FaAsterisk, FaCheck, FaMagnifyingGlass, FaPaperPlane, FaPlus, FaUserPlus, FaXmark } from "react-icons/fa6";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -125,19 +125,19 @@ export default function AccountJoin() {
     const checkAccountEmail = useCallback(async e => {
         const regex = /^([a-z][a-z0-9]{4,19})@([A-Za-z0-9\-\.]{1,})(\.[a-z]{2,3})$/;
         const valid = regex.test(account.accountEmail);
-        if(valid === false){
+        if (valid === false) {
             setResult(prev => ({
                 ...prev,
-                accountEmail: { clazz : "is-invalid" , code : "format" }
+                accountEmail: { clazz: "is-invalid", code: "format" }
             }));
         }
         //형식 통과 -> 중복검사
         const { data } = await axios.get(`/api/account/check-email/${account.accountEmail}`)
         const clazz = data ? "is-valid" : "is-invalid";
         const code = data ? null : "nuplicate";
-        setResult(prev=>({
+        setResult(prev => ({
             ...prev,
-            accountEmail : { clazz : clazz, code : code }
+            accountEmail: { clazz: clazz, code: code }
         }));
     }, [account]);
 
@@ -169,9 +169,12 @@ export default function AccountJoin() {
     const address2ref = useRef();
 
     //우편번호 처리
-    const addressSearch = useCallback(()=>{
+    const addressSearch = useCallback((e) => {
+        const { tagName, value } = e.target;
+        if (tagName === "INTPUT" && value.length !== "") return;
+
         open({
-            onComplete : (data)=>{
+            onComplete: (data) => {
                 // console.log(data);
                 //- userSelectedType : 선택한 주소의 유형 (R or J)
                 //- roadAddress : 도로명 주소(신주소)
@@ -182,13 +185,13 @@ export default function AccountJoin() {
 
 
                 //주소 변경
-                setAccount(prev=>({
+                setAccount(prev => ({
                     ...prev,
-                    accountPost : zonecode,
-                    accountAddress1 : address,
-                    accountAddress2 : "",
+                    accountPost: zonecode,
+                    accountAddress1: address,
+                    accountAddress2: "",
                 }));
-                
+
                 //상세주소창에 포커를 줄 수 있나?
                 //기존코드
                 // document.querySelector("[name = accountAddress2]").focus();
@@ -198,9 +201,9 @@ export default function AccountJoin() {
 
             }
         });
-    },[]);
+    }, []);
 
-    
+
 
     const checkAccountAddress = useCallback(e => {
         const empty = account.accountPost === "" && account.accountAddress1 === "" && account.accountAddress2 === "";
@@ -223,14 +226,27 @@ export default function AccountJoin() {
     }, [account]);
 
 
+    //주소삭제
+    const closeButton = useCallback(e => {
+        // console.log(e.currnetTarget.style.opacity); //기존 this와 완전히 같은 역활
+        if (parseInt(e.currentTarget.style.opacity) === "0") return;
 
-    const closeButton = useCallback(e=>{
-        setAccount({
+        //입력값 초기화
+        setAccount(prev => ({
+            ...prev,
             accountPost: "",
             accountAddress1: "",
             accountAddress2: "",
-        });
-    },[account]);
+        }));
+        //검사결과 초기화
+        setResult(prev => ({
+            ...prev,
+            accountPost: null,
+            accountAddress1: null,
+            accountAddress2: null
+        }));
+
+    }, []);
 
 
 
@@ -261,6 +277,51 @@ export default function AccountJoin() {
         Navigate("/");
 
     }, [account]);
+
+    //주소 삭제 버튼이 나와야되는지 판정하기 위한 memo
+    const isAddressWritten = useMemo(() => {
+        if (account.accountPost !== "") return true;
+        if (account.accountAddress1 !== "") return true;
+        if (account.accountAddress2 !== "") return true;
+        return false;
+    }, [
+        account.accountPost,
+        account.accountAddress1,
+        account.accountAddress2
+    ]);
+
+    //이메일 인증 관련 기능들
+    const sendCert = useCallback(async()=>{
+        try{
+
+            const response = await axios.post(
+                "/service/cert/send", 
+                {certEmail : account.accountEmail}
+            );
+            console.log("이메일 발송 완료");
+        }
+        catch(e){
+            toast.error("이메일 발송 오류");
+        }
+    },[account.accountEmail]);
+
+
+    //인증번호
+    const [ certNumber, setCertNumber ] = useState("");
+    //숫자가 아닌 글자를 쳐냄
+    const changeCertNumber = useCallback(e=>{
+        const replacement = e.target.value.replace(/[^0-9]+/g, "");
+        setCertNumber(replacement);
+    },[]);
+
+
+    const checkCert = useCallback(async ()=>{
+        const { data } = await axios.post(
+            "/service/cert/check",
+            { certEmail : account.accountEmail, certNumber : certNumber }
+        );
+        console.log("결과 : ", data.valid);
+    }, [account.accountEmail, certNumber]);
 
 
     return (<>
@@ -379,21 +440,50 @@ export default function AccountJoin() {
         </Row>
 
 
+
+        {/* 이메일은 인증번호 처리가 추가로 필요 */}
         <Row className="mt-4">
             <Form.Label column sm={3}>
                 <span>이메일</span>
                 <FaAsterisk className="text-danger" />
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" name="accountEmail"
-                    value={account.accountEmail} onChange={changeStringValue}
-                    placeholder="대충 이메일을 설정하란 글"
-                    onBlur={checkAccountEmail}
-                    className={result.accountEmail} />
-                <div className="valid-feedback">이메일 설정이 완료되었습니다</div>
-                <div className="invalid-feedback">형식오류 or 사용중</div>
+                <div className="d-flex flex-wrap">
+
+                    <Form.Control type="text" name="accountEmail"
+                        value={account.accountEmail} onChange={changeStringValue}
+                        placeholder="대충 이메일을 설정하란 글"
+                        onBlur={checkAccountEmail}
+                        className={`${result.accountEmail} w-auto d-inline-block`} />
+                    <div className="valid-feedback">이메일 설정이 완료되었습니다</div>
+                    {/* 인증번호 발송 버튼 */}
+                    <Button variant="info" className="ms-2" onClick={sendCert}>
+                        <FaPaperPlane />
+                        <span className="ms-2 d-none d-sm-inline">인증번호 보내기</span>
+                    </Button>
+                    <div className="valid-feedback">이메일 설정이 완료되었습니다</div>
+                    <div className="invalid-feedback">형식오류 or 사용중</div>
+                </div>
             </Col>
         </Row>
+
+        <Row className="mt-2">
+            <Col sm={ {span:9, offset:3} }>
+                    <div className="d-flex">
+                <Form.Control type="text" placeholder="인증번호"
+                    value={certNumber} onChange={changeCertNumber}
+                     className="w-auto"/>
+                        <Button variant="success" className="ms-2" onClick={checkCert}>
+                            <FaCheck />
+                            <span className="ms-2 d-none d-sm-inline">인증번호 확인</span>
+                        </Button>
+                        <div className="valid-feedback">인증번호 확인이 완료되었습니다</div>
+                        <div className="invalid-feedback">인증번호가 일치하지 않습니다</div>
+                    </div>
+            </Col>
+        </Row>
+
+
 
         <Row className="mt-4">
             <Form.Label column sm={3}>
@@ -434,27 +524,38 @@ export default function AccountJoin() {
                 <div className="d-flex">
                     {/* 우편번호 입력창 */}
                     <Form.Control type="text" inputMode="rumeric" name="accountPost"
-                        value={account.accountPost} 
+                        value={account.accountPost}
                         readOnly onClick={addressSearch}
                         placeholder="우편번호"
                         className={`${result.accountPost} w-auto d-inline-block`} onBlur={checkAccountAddress} />
                     {/* 주소검색 버튼 */}
-                    <Button variant="success" className="ms-2" onClick={addressSearch}>
+                    <Button variant="success" className="ms-2 d-sm-inline" onClick={addressSearch}>
                         <FaMagnifyingGlass />
+                        <span>주소검색</span>
                     </Button>
-                    <Button variant="danger" className="ms-2" onClick={closeButton}>
+                    {/* x버튼 */}
+                    <Button variant="danger" className="ms-2 d-sm-inline" onClick={closeButton}
+                        style={
+                            {
+                                opacity: isAddressWritten === true ? 100 : 0,
+                                transition: "opacity 0.1s ease-out",
+                            }
+                        }>
                         <FaXmark />
+                        <span>주소 삭제</span>
                     </Button>
                 </div>
             </Col>
         </Row>
+
+
         <Row className="mt-2">
             {/* <Col sm={9} className="offset-sm-3"> */}
             <Col sm={{ span: 9, offset: 3 }}>
                 <Form.Control type="text" inputMode="rumeric" name="accountAddress1"
-                    value={account.accountAddress1} 
+                    value={account.accountAddress1}
                     readOnly onClick={addressSearch}
-                    className={result.accountAddress1} 
+                    className={result.accountAddress1}
                     placeholder="기본주소" />
             </Col>
         </Row>
@@ -462,12 +563,12 @@ export default function AccountJoin() {
         <Row className="mt-2">
             {/* <Col sm={9} className="offset-sm-3"> */}
             <Col sm={{ span: 9, offset: 3 }}>
-                <Form.Control type="text"  name="accountAddress2"
-                    value={account.accountAddress2} 
+                <Form.Control type="text" name="accountAddress2"
+                    value={account.accountAddress2}
                     onChange={changeStringValue}
-                    className={result.accountAddress2} 
-                    placeholder="상세주소" 
-                    ref={address2ref}/>
+                    className={result.accountAddress2}
+                    placeholder="상세주소"
+                    ref={address2ref} />
                 <div className="invalid-feedback">주소는 비우거나 모두 작성해야 합니다</div>
             </Col>
         </Row>
