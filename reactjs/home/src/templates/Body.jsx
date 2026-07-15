@@ -16,6 +16,11 @@ import CountrySearch from '@components/country/CountrySearch'
 import CountryComplexSearch from '@components/country/CountryComplexSearch'
 
 import AccountJoin from '@components/account/AccountJoin'
+import AccountJoinSuccess from '@components/account/AccountJoinSuccess'
+import AccountJoinFail from '@components/account/AccountJoinFail'
+
+import TestMain from "@components/session/TestMain";
+
 
 import NotFound from '@error/NotFound'
 
@@ -44,7 +49,11 @@ export default function Body() {
             <Route path="/book/edit/:bookId" element={<BookEdit />}></Route>
 
             <Route path="/account/join" element={<AccountJoin />}></Route>
+            <Route path="/account/joinSuccess" element={<AccountJoinSuccess />}></Route>
+            <Route path="/account/joinFail" element={<AccountJoinFail />}></Route>
 
+            {/* 세션 테스트 */}
+            <Route path="/session/test" element={<TestMain/>}/>
 
 
             {/* fallback route */}
