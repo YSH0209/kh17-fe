@@ -4,17 +4,17 @@ import { Button } from "react-bootstrap";
 import TestLeft from "./TestLeft";
 import TestRight from "./TestRight";
 import { useAtom } from "jotai";
-import { countState } from "@src/utils/storage";
+import { countState } from "@utils/storage";
 
-export default function TestMain(){
+export default function TestMain() {
     //state
     // const [ count, setCount ] = useState(0); //component 단위로 작동하는 react state
-    const [ count, setCount ] = useAtom(countState); //storage에 만든 jotai state
+    const [count, setCount] = useAtom(countState); //storage에 만든 jotai state
 
 
 
-    return(<>
-        <Jumbotron title="통합 저장소(jotai)의 필요성"/>
+    return (<>
+        <Jumbotron title="통합 저장소(jotai)의 필요성" />
 
         <h1>Count : {count} </h1>
 

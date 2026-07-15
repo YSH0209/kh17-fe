@@ -18,7 +18,8 @@ export default defineConfig({
       "@assets":path("./src/assets"),
       "@components":path("./src/components"),
       "@error":path("./src/error"),
-      "@templates":path("./src/templates")
+      "@templates":path("./src/templates"),
+      "@utils" : path("./src/utils"),
     }
   }
 })
