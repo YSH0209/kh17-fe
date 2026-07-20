@@ -18,7 +18,8 @@ export default function MyPage(){
     },[]);
 
     const loadData = useCallback(async()=>{
-        const { data } = await axios.get(`/api/account/${accountId}`);
+        // const { data } = await axios.get(`/api/account/${accountId}`);
+        const { data } = await axios.get(`/api/account/me`);
         setAccount(data);
     },[accountId]);
 
