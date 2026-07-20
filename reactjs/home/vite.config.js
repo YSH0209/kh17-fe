@@ -20,6 +20,7 @@ export default defineConfig({
       "@error":path("./src/error"),
       "@templates":path("./src/templates"),
       "@utils" : path("./src/utils"),
+      "@guard" : path("./src/guard"),
     }
   }
 })

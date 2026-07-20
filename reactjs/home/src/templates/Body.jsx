@@ -23,7 +23,8 @@ import MyPage from '@components/account/MyPage'
 
 import TestMain from "@components/session/TestMain";
 
-import NotFound from '@error/NotFound'
+import NotFound from '@error/NotFound';
+import Private from '@guard/Private';
 
 export default function Body() {
 
@@ -53,7 +54,7 @@ export default function Body() {
             <Route path="/account/joinSuccess" element={<AccountJoinSuccess />}></Route>
             <Route path="/account/joinFail" element={<AccountJoinFail />}></Route>
             <Route path="/account/login" element={<AccountLogin />}></Route>
-            <Route path="/account/mypage" element={<MyPage />}></Route>
+            <Route path="/account/mypage" element={<Private><MyPage /></Private>}></Route>
 
             {/* 세션 테스트 */}
             <Route path="/session/test" element={<TestMain/>}/>
