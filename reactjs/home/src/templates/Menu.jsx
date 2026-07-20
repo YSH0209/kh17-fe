@@ -3,8 +3,22 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link } from "react-router-dom";
+import { loginUserState } from "@utils/storage";
+import { useAtom } from 'jotai';
+import { useCallback, useMemo } from 'react';
 
 export default function Menu() {
+    //메뉴에서는 로그인 상태 데이터가 필요하다
+    const [ loginUser, setLoginUser ] = useAtom(loginUserState);
+    //로그인 상태인지 판정
+    const isLogin = useMemo(()=>{
+        return loginUser !== null;
+    },[loginUser]);
+    //로그아웃 함수
+    const logout = useCallback(()=>{
+        setLoginUser(null);
+    },[]);
+
 
     return (<>
         <Navbar expand="md" className="bg-body-tertiary sticky-top"
@@ -39,8 +53,14 @@ export default function Menu() {
                          <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
-                        <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
+                        { isLogin === true &&(<>
+                            <Nav.Link as={Link} to="">내정보</Nav.Link>
+                            <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                        </>) }
+                        { isLogin !== true &&(<>
+                            <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
+                            <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
+                        </>) }
                     </Nav>
                 </Navbar.Collapse>
             </Container>

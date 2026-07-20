@@ -7,16 +7,23 @@
 
 import { atom } from "jotai";
 
+import { atomWithStorage } from "jotai/utils";
+
 //- TestMain, TestLeft, TestRight 에서 공유할 count라는 이름의 통합상태(atom)을 생성
 
 //const [ count, setCount ] = useState(0);
 export const countState = atom(0);
 
-//- 로그인 결과를 저장할 통합상태 생성
-export const loginState = atom(null);
+//로그인 결과를 저장할 통합상태 생성
+// - 새로고침이 되더라도 데이터가 유지될 필요가 있음
+// - sessionStorage에 저장하면 현재 화면에서만 유효
+// - localStorage에 저장하면 껐다 켜도 유효(데이터 유지)
 
+// export const loginUserState = atom(null); //새로고침 시 데이터 사라짐
+export const loginUserState = atomWithStorage("loginUserState", "", window.sessionStorage); //세선 스토리지에 저장됨
+// export const loginUserState = atomWithStorage("loginUserState", "", window.LocalStorage); //로컬 스토리지에 저장됨
 
 
 //마지막에 개발자 도구에 표시될 라벨을 설정(위치 무관)
 countState.debugLabel = "연습용 카운트";
-loginState.debugLabel = "loginState";
+loginUserState.debugLabel = "loginUserState";
