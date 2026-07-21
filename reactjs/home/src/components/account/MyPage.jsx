@@ -4,6 +4,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { loginUserState } from "@utils/storage";
+import { apiClient } from "@utils/reaxios";
 
 export default function MyPage(){
     //jotai state 에 저장된 내 정보를 가져와서 서버에 나머지 정보를 요청해야함
@@ -19,7 +20,8 @@ export default function MyPage(){
 
     const loadData = useCallback(async()=>{
         // const { data } = await axios.get(`/api/account/${accountId}`);
-        const { data } = await axios.get(`/api/account/me`);
+        // const { data } = await axios.get(`/api/account/me`);
+        const { data } = await apiClient.get("/account/me");
         setAccount(data);
     },[accountId]);
 

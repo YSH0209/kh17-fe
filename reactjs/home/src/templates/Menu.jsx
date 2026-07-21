@@ -9,7 +9,9 @@ import { useCallback, useMemo } from "react";
 import { RESET } from "jotai/utils";
 import { isLoginState, isAdminState } from "@utils/storage";
 import { logoutActionState } from "@utils/storage";
-import axios from 'axios';
+import axios from "axios";
+import { loginActionState } from "@utils/storage";
+import { authClient } from "@utils/reaxios";
 
 export default function Menu() {
     //메뉴에서는 로그인 상태 데이터가 필요하다
@@ -19,21 +21,37 @@ export default function Menu() {
     //const [isLogin] = useAtom(isLoginState);
     const isLogin = useAtomValue(isLoginState);
     const isAdmin = useAtomValue(isAdminState);
-
+    
+    const loginAction = useSetAtom(loginActionState);
     const logoutAction = useSetAtom(logoutActionState);
 
     //서버에 로그아웃 요청 및 Jotai 저장소 초기화 요청을 수행하는 함수
-    const logout = useCallback(async()=>{
-        try{
-            await axios.delete("/service/auth/logout"); //쿠키 삭제 요청
+    const logout = useCallback(async ()=>{
+        try {
+            // await axios.delete("/service/auth/logout");//쿠키 삭제 요청
+            await authClient.delete("/logout");
         }
         catch(e){
             console.error(e);
         }
         finally {
-            logoutAction(); //에러여부와 관계없이 화면상의 데이터는 삭제
+            logoutAction();//에러여부와 관계없이 화면상의 데이터는 삭제
         }
-    },[]);
+    }, []);
+
+    //토큰 갱신 요청을 보내는 연습용 함수
+    const refresh = useCallback(async ()=>{
+        try {
+            // const {data} = await axios.post("/service/auth/refresh");
+           const { data } = await authClient.post("/refresh");
+            //갱신이 된 경우(200 ok)
+            loginAction(data);
+        }
+        catch(e) {
+            //갱신이 안된 경우(401 unauthorized)
+            logoutAction();
+        }
+    }, []);
 
     return (<>
         <Navbar expand="md" className="bg-body-tertiary sticky-top"
@@ -83,6 +101,9 @@ export default function Menu() {
                         <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
                         <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
                         </>) }
+
+                        {/* 연습용 Refresh 버튼 (향후 삭제가 필요) */}
+                        <Nav.Link onClick={refresh}>갱신(Refresh)</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { loginUserState } from "@utils/storage";
 import { useNavigate } from "react-router-dom";
 import { loginActionState } from "../../utils/storage";
+import { authClient } from "../../utils/reaxios";
 
 export default function AccountLogin() {
     //state
@@ -42,7 +43,8 @@ export default function AccountLogin() {
         }
 
         try {
-            const {data} = await axios.post("/service/auth/login", account);
+            // const {data} = await axios.post("/service/auth/login", account);
+            const { data } = await authClient.post("/login",account);
             //로그인 성공 → data를 jotai storage에 저장하자!
             //console.log(data);
             // setLoginUser(data);//jotai storage에 저장 완료
