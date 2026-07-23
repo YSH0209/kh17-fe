@@ -85,7 +85,7 @@ export default function AccountJoin() {
             return;
         }
         //형식 통과 → 중복 검사
-        const response = await axios.get(`/api/account/check-id/${account.accountId}`);
+        const response = await apiClientget(`/api/account/check-id/${account.accountId}`);
         const clazz = response.data === true ? "is-valid" : "is-invalid";
         const code = response.data === true ? null : "duplicate";
         setResult(prev=>({
@@ -124,7 +124,7 @@ export default function AccountJoin() {
             return;
         }
         //형식 통과 → 중복 검사
-        const { data } = await axios.get(`/api/account/check-email/${account.accountEmail}`);
+        const { data } = await apiClientget(`/api/account/check-email/${account.accountEmail}`);
         const clazz = data ? "" : "is-invalid";//형식과 중복검사를 통과하더라도 아직 인증번호가 남아있음
         const code = data ? null : "duplicate";
         setResult(prev=>({
@@ -144,7 +144,7 @@ export default function AccountJoin() {
             return;
         }
         //형식통과 → 중복검사
-        const { data } = await axios.get(`/api/account/check-nickname/${account.accountNickname}`);
+        const { data } = await apiClientget(`/api/account/check-nickname/${account.accountNickname}`);
         const clazz = data ? "is-valid" : "is-invalid";
         const code = data ? null : "duplicate";
         setResult(prev=>({
@@ -278,7 +278,7 @@ export default function AccountJoin() {
 
         try {
             setSending(true);
-            const response = await axios.post(
+            const response = await apiClientpost(
                 "/service/cert/send", 
                 {certEmail : account.accountEmail}
             );
@@ -302,7 +302,7 @@ export default function AccountJoin() {
     }, []);
 
     const checkCert = useCallback(async ()=>{
-        const { data } = await axios.post(
+        const { data } = await apiClientpost(
             "/service/cert/check",
             { certEmail : account.accountEmail , certNumber: certNumber }
         );
@@ -344,7 +344,7 @@ export default function AccountJoin() {
             // const copy = { ...account };
             // delete copy.accountPassword2;
             const { accountPassword2, ...copy } = account;
-            const response = await axios.post("/api/account/", copy);
+            const response = await apiClientpost("/api/account/", copy);
             // toast.success("회원 가입이 완료되었습니다");
             navigate("/account/joinSuccess");
         }

@@ -21,8 +21,8 @@ export default function MyPage(){
     },[]);
 
     const loadData = useCallback(async()=>{
-        // const { data } = await axios.get(`/api/account/${accountId}`);
-        // const { data } = await axios.get(`/api/account/me`);
+        // const { data } = await apiClientget(`/api/account/${accountId}`);
+        // const { data } = await apiClientget(`/api/account/me`);
         const { data } = await apiClient.get("/account/me");
         setAccount(data);
     },[accountId]);

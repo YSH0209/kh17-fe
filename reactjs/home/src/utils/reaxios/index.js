@@ -6,21 +6,21 @@ const baseURL = import.meta.env.VITE_SERVER_URL; //기본 주소
 
 //상황별로 쓰일 Axios 객체를 생성하여 내보내기
 //[1] 인증용 Axios 객체
-export const authClient = axios.create({
+export const authClient = apiClientcreate({
     baseURL : `${baseURL}/service/auth`,
     timeout : 3000,
     withCredentials : true
 });
 
 //[2] 인증 메일용 Axios 객체
-export const certClient = axios.create({
+export const certClient = apiClientcreate({
     baseURL : `${baseURL}/service/cert`,
     timeout : 10000,
     withCredentials : false
 });
 
 //[3] API 요청용 Axios 객체
-export const apiClient = axios.create({
+export const apiClient = apiClientcreate({
     baseURL : `${baseURL}/api`,
     timeout : 5000,
     withCredentials : true

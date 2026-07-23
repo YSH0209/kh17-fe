@@ -32,7 +32,7 @@ export default function CountrySearch() {
         }
         console.log("searchKeyword 실행");
         
-        const response = await axios.get(`/api/country/countryName/${keyword}`);
+        const response = await apiClientget(`/api/country/countryName/${keyword}`);
         setSearchList(response.data);
     }, 350), []);
 

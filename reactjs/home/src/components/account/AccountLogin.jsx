@@ -43,7 +43,7 @@ export default function AccountLogin() {
         }
 
         try {
-            // const {data} = await axios.post("/service/auth/login", account);
+            // const {data} = await apiClientpost("/service/auth/login", account);
             const { data } = await authClient.post("/login",account);
             //로그인 성공 → data를 jotai storage에 저장하자!
             //console.log(data);
@@ -64,7 +64,7 @@ export default function AccountLogin() {
             <Form.Label column sm={3}>아이디</Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="accountId" value={account.accountId}
-                        onChange={changeStringValue} placeholder="User ID"/>
+                        onChange={changeStringValue} autoFocus placeholder="User ID"/>
             </Col>
         </Row>
         <Row className="mt-4">

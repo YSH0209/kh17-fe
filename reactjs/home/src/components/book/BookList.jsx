@@ -25,7 +25,7 @@ export default function BookList() {
         const dataSize = bookList.length;
         const lastBookId = dataSize === 0 ? 0 : bookList[dataSize - 1].bookId;
 
-        const response = await axios.post(
+        const response = await apiClientpost(
             `/api/book/list-more`,
             {
                 lastNo: lastBookId,

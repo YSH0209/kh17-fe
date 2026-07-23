@@ -28,7 +28,7 @@ export default function Menu() {
     //서버에 로그아웃 요청 및 Jotai 저장소 초기화 요청을 수행하는 함수
     const logout = useCallback(async ()=>{
         try {
-            // await axios.delete("/service/auth/logout");//쿠키 삭제 요청
+            // await apiClientdelete("/service/auth/logout");//쿠키 삭제 요청
             await authClient.delete("/logout");
         }
         catch(e){
@@ -42,7 +42,7 @@ export default function Menu() {
     // //토큰 갱신 요청을 보내는 연습용 함수
     // const refresh = useCallback(async ()=>{
     //     try {
-    //         // const {data} = await axios.post("/service/auth/refresh");
+    //         // const {data} = await apiClientpost("/service/auth/refresh");
     //        const { data } = await authClient.post("/refresh");
     //         //갱신이 된 경우(200 ok)
     //         loginAction(data);

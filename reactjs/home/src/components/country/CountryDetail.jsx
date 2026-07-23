@@ -30,7 +30,7 @@ export default function CountryDetail() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/country/${countryNo}`)
+        const response = await apiClientget(`/api/country/${countryNo}`)
         setCountry(response.data);
         setBackup(response.data);
     }, []);
@@ -47,7 +47,7 @@ export default function CountryDetail() {
             cancelButtonColor: "#b2bec3"
         });
         if (result.isConfirmed == false) return;
-        const response = await axios.delete(`/api/country/${countryNo}`);
+        const response = await apiClientdelete(`/api/country/${countryNo}`);
         toast.error("국가 삭제가 완료되었습니다");
         navigate("/country/list");
 
@@ -85,7 +85,7 @@ export default function CountryDetail() {
 
     //국가명만 변경하는 함수 -> 국가 정보를 변경해주는 함수
     const updateCountry = useCallback(async (field) => {
-        const response = await axios.patch(
+        const response = await apiClientpatch(
             `/api/country/${countryNo}`,
             { [field]: country[field] }
         );

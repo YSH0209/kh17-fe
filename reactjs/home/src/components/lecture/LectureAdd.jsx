@@ -81,7 +81,7 @@ export default function LectureAdd() {
 
 
     const send = useCallback(async () => {
-        const response = await axios.post("/api/lecture/insert", lecture);
+        const response = await apiClientpost("/api/lecture/insert", lecture);
         const result = await Swal.fire({
             title: "강좌 생성 완료",
             icon: "success",

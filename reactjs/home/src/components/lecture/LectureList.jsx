@@ -52,7 +52,7 @@ export default function LectureList() {
         const lastLectureNo = dataSize === 0 ? 
                             null : lectureList[dataSize-1].lectureNo;
 
-        const response = await axios.post("/api/lecture/list-more",{
+        const response = await apiClientpost("/api/lecture/list-more",{
             lastNo: lastLectureNo,
             size : size
         });

@@ -21,7 +21,7 @@ export default function BookDetail() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/book/${bookId}`)
+        const response = await apiClientget(`/api/book/${bookId}`)
         setBook(response.data);
         setBackup(response.data);
     }, []);
@@ -38,7 +38,7 @@ export default function BookDetail() {
             cancelButtonColor: "#b2bec3"
         });
         if (result.isConfirmed == false) return;
-        const response = await axios.delete(`/api/book/${bookId}`);
+        const response = await apiClientdelete(`/api/book/${bookId}`);
         toast.error("도서 삭제가 완료되었습니다");
         navigate(`/book/list`);
     }, [bookId]);
@@ -75,7 +75,7 @@ export default function BookDetail() {
     }, [book]);
 
     const updateBook = useCallback(async (field) => {
-        const response = await axios.patch(
+        const response = await apiClientpatch(
             `/api/book/${bookId}`,
             { [field]: book[field] }
         );

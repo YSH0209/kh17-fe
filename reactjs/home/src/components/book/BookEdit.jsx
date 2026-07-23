@@ -30,7 +30,7 @@ export default function BookEdit({ closeModal }) {
         loadData();
     },[]);
     const loadData = useCallback(async()=>{
-        const response = await axios.get(`/api/book/${bookId}`)
+        const response = await apiClientget(`/api/book/${bookId}`)
         setBook(response.data);
     },[]);
     
@@ -136,7 +136,7 @@ export default function BookEdit({ closeModal }) {
 
     //등록을 위한 데이터 전송
     const send = useCallback(async () => {
-        const response = await axios.put(`/api/book/${bookId}`, book);
+        const response = await apiClientput(`/api/book/${bookId}`, book);
         toast.success("도서 수정 완료");
         Navigate(`/book/detail/${bookId}`);
     }, [book]);
