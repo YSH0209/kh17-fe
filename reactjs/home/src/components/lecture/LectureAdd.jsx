@@ -4,8 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2'
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 export default function LectureAdd() {
     const navigate = useNavigate();
@@ -79,9 +80,29 @@ export default function LectureAdd() {
         setResult({ ...result, lectureType: clazz });
     }, [lecture, result]);
 
+    //- 데이터 전송(등록)
+    // const send = useCallback(() => {
+    //     axios({
+    //         url: "http://localhost:8080/api/lecture/insert",
+    //         method: "post",
+    //         data: lecture
+    //     })
+    //     .then(response => {
+    //         Swal.fire({
+    //             title: "강좌 생성 완료",
+    //             icon: "success",
+    //             confirmButtonText:"확인"
+    //         })
+    //         .then(result=>{
+    //             //목록 또는 상세로 이동
+    //             //navigate("/lecture/list");
+    //             navigate(`/lecture/detail/${response.data.lectureNo}`);
+    //         });
+    //     });
+    // }, [lecture]);
 
     const send = useCallback(async () => {
-        const response = await apiClientpost("/api/lecture/insert", lecture);
+        const response = await apiClient.post("/lecture/insert", lecture);
         const result = await Swal.fire({
             title: "강좌 생성 완료",
             icon: "success",

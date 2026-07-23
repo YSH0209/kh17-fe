@@ -1,116 +1,114 @@
 import Jumbotron from "@templates/Jumbotron";
-import axios from "axios";
 import { useAtom, useAtomValue } from "jotai";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { loginUserState } from "@utils/storage";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import axios from "axios";
 import { apiClient } from "@utils/reaxios";
-import { FaLock } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { FaLock } from "react-icons/fa6";
 
-export default function MyPage(){
-    //jotai state 에 저장된 내 정보를 가져와서 서버에 나머지 정보를 요청해야함
-    // const [ loginUser, setLoginUser ] = useAtom(loginUserState);
+export default function MyPage() {
+    //jotai state에 저장된 내 정보를 가져와서 서버에 나머지 정보를 요청해야함
+    //const [loginUser, setLoginUser] = useAtom(loginUserState);
     //const loginUser = useAtomValue(loginUserState);
-    const { accountId, accountNickname, accountLevel } = useAtomValue(loginUserState);
+    const { accountId, accountNickname, accoutLevel } = useAtomValue(loginUserState);
 
     const [ account, setAccount ] = useState(null);
 
     useEffect(()=>{
         loadData();
-    },[]);
+    }, []);
 
-    const loadData = useCallback(async()=>{
-        // const { data } = await apiClientget(`/api/account/${accountId}`);
-        // const { data } = await apiClientget(`/api/account/me`);
-        const { data } = await apiClient.get("/account/me");
+    const loadData = useCallback(async ()=>{
+        // const {data} = await axios.get(`/api/account/${accountId}`);
+        // const {data} = await axios.get(`/api/account/me`);
+        const {data} = await apiClient.get(`/account/me`);
         setAccount(data);
-    },[accountId]);
+    }, [accountId]);
 
     //주소를 완성해서 반환하는 메모
     const unionAddress = useMemo(()=>{
-        if(account === null) return "없음";
-        if(account.accountPost === null) return "없음";
-        if(account.accountAddress1 === null) return "없음";
-        if(account.accountAddress2 === null) return "없음";
-
+        if(account === null) return "";
+        if(account.accountPost === null) return "";
+        if(account.accountAddress1 === null) return "";
+        if(account.accountAddress2 === null) return "";
         return `[${account.accountPost}] ${account.accountAddress1} ${account.accountAddress2}`;
-    },[account]);
+    }, [account]);
 
     return (<>
-        <Jumbotron title={`${account?.accountNickname}님의 마이페이지`} content="개인정보 페이지 입니다"/>
-
+        <Jumbotron title={`${account?.accountNickname}님의 개인 정보`}/>
 
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">아이디</Col>
             <Col sm={9} className="text-secondary">{account?.accountId}</Col>
-        </Row>   
-
-        <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">이메일</Col>
-            <Col sm={9} className="text-secondary">{account?.accountEmail}</Col>
-        </Row>  
+        </Row>
 
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">닉네임</Col>
             <Col sm={9} className="text-secondary">{account?.accountNickname}</Col>
-        </Row> 
+        </Row>
 
         <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">생일</Col>
+            <Col sm={3} className="fw-bold text-info">이메일</Col>
+            <Col sm={9} className="text-secondary">{account?.accountEmail}</Col>
+        </Row>
+
+        <Row className="mt-4">
+            <Col sm={3} className="fw-bold text-info">생년월일</Col>
             <Col sm={9} className="text-secondary">{account?.accountBirth}</Col>
-        </Row>    
+        </Row>
 
         <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">전화번호</Col>
+            <Col sm={3} className="fw-bold text-info">연락처</Col>
             <Col sm={9} className="text-secondary">{account?.accountContact}</Col>
-        </Row>  
-
+        </Row>
 
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">주소</Col>
             <Col sm={9} className="text-secondary">{unionAddress}</Col>
-        </Row>  
+        </Row>
 
         <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">레벨</Col>
+            <Col sm={3} className="fw-bold text-info">등급</Col>
             <Col sm={9} className="text-secondary">{account?.accountLevel}</Col>
-        </Row>   
+        </Row>
+
+        <Row className="mt-4">
+            <Col sm={3} className="fw-bold text-info">포인트</Col>
+            <Col sm={9} className="text-secondary">
+                {account?.accountPoint.toLocaleString()} point
+            </Col>
+        </Row>
 
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">가입일</Col>
             <Col sm={9} className="text-secondary">{account?.accountJoin}</Col>
-        </Row>   
+        </Row>
 
         <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">최근로그인</Col>
+            <Col sm={3} className="fw-bold text-info">최종로그인</Col>
             <Col sm={9} className="text-secondary">{account?.accountLogin}</Col>
-        </Row>    
+        </Row>
 
         <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">비밀번호변경일</Col>
+            <Col sm={3} className="fw-bold text-info">최종변경일</Col>
             <Col sm={9} className="text-secondary">{account?.accountChange}</Col>
-        </Row>   
-         
-        <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">포인트</Col>
-            <Col sm={9} className="text-secondary">{account?.accountPoint} point</Col>
-        </Row>  
+        </Row>
 
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">상태메세지</Col>
             <Col sm={9} className="text-secondary">{account?.accountMessage}</Col>
-        </Row>    
+        </Row>
 
-
-        {/* 각종 다른기능으로 이동할 수 있는 링크들 */}
+        {/* 각종 다른 기능으로 이동할 수 있는 링크들 */}
         <Row className="mt-5">
             <Col>
-                <Button as={Link} to="/account/password" varinat="danger">
+                <Button as={Link} to="/account/password" variant="danger">
                     <FaLock/>
                     <span className="ms-2">비밀번호 변경</span>
                 </Button>
             </Col>
         </Row>
-        </>
-        )}
+    </>)
+}

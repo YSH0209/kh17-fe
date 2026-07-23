@@ -1,5 +1,5 @@
 import Jumbotron from "@templates/Jumbotron";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { FaLock } from "react-icons/fa6";
 import { apiClient } from "@utils/reaxios";
@@ -45,14 +45,6 @@ export default function() {
         navigate("/account/mypage");
     }, [result]);
 
-    // const inputRef = useRef(null);
-
-    // useEffect(()=>{
-    //     if(inputRef.current){
-    //         inputRef.current.focus();
-    //     }
-    // },[]);
-
     //view
     return (<>
         <Jumbotron title="비밀번호 변경" content="현재 비밀번호와 변경하실 비밀번호를 입력하세요"/>
@@ -73,9 +65,9 @@ export default function() {
         <Row className="mt-5">
             <Form.Label column sm={3}>현재 비밀번호</Form.Label>
             <Col sm={9}>
-                <Form.Control type="password" name="prevAccountPassword" autoFocus
+                <Form.Control type="password" name="prevAccountPassword"
                         value={account.prevAccountPassword}
-                        onChange={changeStringValue}/>
+                        onChange={changeStringValue} autoFocus/>
             </Col>
         </Row>
 

@@ -47,7 +47,7 @@ export default function CountryDetail() {
             cancelButtonColor: "#b2bec3"
         });
         if (result.isConfirmed == false) return;
-        const response = await apiClientdelete(`/api/country/${countryNo}`);
+        const response = await apiClient.delete(`/api/country/${countryNo}`);
         toast.error("국가 삭제가 완료되었습니다");
         navigate("/country/list");
 
@@ -85,7 +85,7 @@ export default function CountryDetail() {
 
     //국가명만 변경하는 함수 -> 국가 정보를 변경해주는 함수
     const updateCountry = useCallback(async (field) => {
-        const response = await apiClientpatch(
+        const response = await apiClient.patch(
             `/api/country/${countryNo}`,
             { [field]: country[field] }
         );

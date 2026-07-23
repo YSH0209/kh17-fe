@@ -27,7 +27,7 @@ export default function CountryList() {
         const dataSize = countryList.length;
         const lastCountryNo = dataSize === 0 ? 0 : countryList[dataSize - 1].countryNo;
 
-        const response = await apiClientpost(
+        const response = await apiClient.post(
             //"http://localhost:8080/api/country/list-more",
             `/api/country/list-more`,
             { lastNo : lastCountryNo , 

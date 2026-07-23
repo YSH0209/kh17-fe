@@ -30,7 +30,7 @@ export default function CountryEdit() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await apiClientget(`/api/country/${countryNo}`)
+        const response = await apiClient.get(`/api/country/${countryNo}`)
         setCountry(response.data);
     }, []);
 
@@ -113,7 +113,7 @@ export default function CountryEdit() {
 
     //데이터 전송 함수
     const send = useCallback(async () => {
-        const response = await apiClientput(`/api/country/${countryNo}`, country);
+        const response = await apiClient.put(`/api/country/${countryNo}`, country);
         toast.success("국가 정보 변경이 완료되었습니다");
         // navigate("/country/list");
         Navigate(`/country/detail/${countryNo}`);

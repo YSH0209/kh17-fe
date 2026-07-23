@@ -5,6 +5,7 @@ import { FaChevronDown, FaPlus } from "react-icons/fa6";
 import { ClockLoader } from "react-spinners";
 import { Row, Col, Form, Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 export default function LectureList() {
     //state
@@ -52,7 +53,7 @@ export default function LectureList() {
         const lastLectureNo = dataSize === 0 ? 
                             null : lectureList[dataSize-1].lectureNo;
 
-        const response = await apiClientpost("/api/lecture/list-more",{
+        const response = await apiClient.post("/lecture/list-more",{
             lastNo: lastLectureNo,
             size : size
         });

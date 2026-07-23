@@ -7,8 +7,8 @@ import { FaRightToBracket } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { loginUserState } from "@utils/storage";
 import { useNavigate } from "react-router-dom";
-import { loginActionState } from "../../utils/storage";
-import { authClient } from "../../utils/reaxios";
+import { loginActionState } from "@utils/storage";
+import { authClient } from "@utils/reaxios";
 
 export default function AccountLogin() {
     //state
@@ -20,7 +20,7 @@ export default function AccountLogin() {
     //const [loginUser, setLoginUser] = useAtom(loginUserState);
 
     //쓰기 전용 atom
-    // const [_, loginAction] = useAtom(loginActionState);
+    //const [_, loginAction] = useAtom(loginActionState);
     const loginAction = useSetAtom(loginActionState);
 
     //navigate
@@ -43,12 +43,12 @@ export default function AccountLogin() {
         }
 
         try {
-            // const {data} = await apiClientpost("/service/auth/login", account);
-            const { data } = await authClient.post("/login",account);
+            //const {data} = await axios.post("/service/auth/login", account);
+            const {data} = await authClient.post("/login", account);
             //로그인 성공 → data를 jotai storage에 저장하자!
             //console.log(data);
-            // setLoginUser(data);//jotai storage에 저장 완료
-            loginAction(data); //jotai setter atom 사용
+            //setLoginUser(data);//jotai storage에 저장 완료
+            loginAction(data);//jotai setter atom 사용
             navigate("/");
         }
         catch(e){
@@ -64,7 +64,8 @@ export default function AccountLogin() {
             <Form.Label column sm={3}>아이디</Form.Label>
             <Col sm={9}>
                 <Form.Control type="text" name="accountId" value={account.accountId}
-                        onChange={changeStringValue} autoFocus placeholder="User ID"/>
+                        onChange={changeStringValue} placeholder="User ID"
+                        autoFocus/>
             </Col>
         </Row>
         <Row className="mt-4">

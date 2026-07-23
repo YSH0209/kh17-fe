@@ -102,7 +102,7 @@ export default function CountryAdd() {
     //데이터 전송 함수
     // callback은 연관항목이 재설정 될때만 불러짐(자원을 아낄수 있음)
     const send = useCallback(async () => {
-        const response = await apiClientpost("/api/country/", country);
+        const response = await apiClient.post("/api/country/", country);
         toast.success("국가 등록이 완료되었습니다");
         navigate("/country/list");
     }, [country]);

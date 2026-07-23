@@ -28,8 +28,8 @@ export default function Menu() {
     //서버에 로그아웃 요청 및 Jotai 저장소 초기화 요청을 수행하는 함수
     const logout = useCallback(async ()=>{
         try {
-            // await apiClientdelete("/service/auth/logout");//쿠키 삭제 요청
-            await authClient.delete("/logout");
+            //await axios.delete("/service/auth/logout");//쿠키 삭제 요청
+            await authClient.delete("/logout");//쿠키 삭제 요청
         }
         catch(e){
             console.error(e);
@@ -39,11 +39,11 @@ export default function Menu() {
         }
     }, []);
 
-    // //토큰 갱신 요청을 보내는 연습용 함수
+    //토큰 갱신 요청을 보내는 연습용 함수
     // const refresh = useCallback(async ()=>{
     //     try {
-    //         // const {data} = await apiClientpost("/service/auth/refresh");
-    //        const { data } = await authClient.post("/refresh");
+    //         // const {data} = await axios.post("/service/auth/refresh");
+    //         const {data} = await authClient.post("/refresh");
     //         //갱신이 된 경우(200 ok)
     //         loginAction(data);
     //     }
@@ -101,6 +101,9 @@ export default function Menu() {
                         <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
                         <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
                         </>) }
+
+                        {/* 연습용 Refresh 버튼 (향후 삭제가 필요) */}
+                        {/* <Nav.Link onClick={refresh}>갱신(Refresh)</Nav.Link> */}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -126,7 +126,7 @@ export default function BookAdd() {
 
     //등록을 위한 데이터 전송
     const send = useCallback(async () => {
-        const response = await apiClientpost("/api/book/", book);
+        const response = await apiClient.post("/api/book/", book);
         toast.success("도서 등록 완료");
         navigate("/book/list");
     }, [book]);
