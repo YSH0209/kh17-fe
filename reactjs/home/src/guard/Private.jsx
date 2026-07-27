@@ -6,7 +6,7 @@
 
 import { useAtom, useAtomValue } from "jotai";
 import { isAdminState, isLoginState } from "@utils/storage";
-import NeedPermission from "../Error/NeedPermisstion";
+import NeedPermission from "../Error/NeedPermission";
 import NotAuthorized from "../Error/NotAuthorized";
 
 

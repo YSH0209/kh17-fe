@@ -1,71 +1,74 @@
-import { Route, Routes } from 'react-router-dom'
-import BookList from '@components/book/BookList'
-import BookAdd from '@components/book/BookAdd'
-import BookDetail from '@components/book/BookDetail'
-import BookEdit from '@components/book/BookEdit'
-import CountryList from '@components/country/CountryList'
-import LectureList from '@components/lecture/LectureList'
-import Home from '@components/Home'
-import LectureAdd from '@components/lecture/LectureAdd'
-import LectureDetail from '@components/lecture/LectureDetail'
+import { Route, Routes } from "react-router-dom";
+import Home from "@components/Home";
+import NotFound from "@error/NotFound";
 
-import CountryAdd from '@components/country/CountryAdd'
-import CountryDetail from '@components/country/CountryDetail'
-import CountryEdit from '@components/country/CountryEdit'
-import CountrySearch from '@components/country/CountrySearch'
-import CountryComplexSearch from '@components/country/CountryComplexSearch'
+import CountryList from "@components/country/CountryList";
+import CountryAdd from "@components/country/CountryAdd";
+import CountryDetail from "@components/country/CountryDetail";
+import CountryEdit from "@components/country/CountryEdit";
+import CountrySearch from "@components/country/CountrySearch";
+import CountryComplexSearch from "@components/country/CountryComplexSearch";
 
-import AccountJoin from '@components/account/AccountJoin'
-import AccountJoinSuccess from '@components/account/AccountJoinSuccess'
-import AccountJoinFail from '@components/account/AccountJoinFail'
-import AccountLogin from '@components/account/AccountLogin'
-import AccountPassword from '@components/account/AccountPassword'
-import AccountChange from '@components/account/AccountChange'
-import MyPage from '@components/account/MyPage'
+import LectureList from "@components/lecture/LectureList";
+import LectureAdd from "@components/lecture/LectureAdd";
+import LectureDetail from "@components/lecture/LectureDetail";
+
+import BookList from "@components/book/BookList";
+import BookSpa from "@components/book/BookSpa";
+
+import AccountJoin from "@components/account/AccountJoin";
+import AccountJoinSuccess from "@components/account/AccountJoinSuccess";
+import AccountJoinFail from "@components/account/AccountJoinFail";
+import AccountLogin from "@components/account/AccountLogin";
+import AccountPassword from "@components/account/AccountPassword";
+import AccountChange from "@components/account/AccountChange";
+import MyPage from "@components/account/MyPage";
+
+import AdminUsers from "@components/admin/AdminUsers";
 
 import TestMain from "@components/session/TestMain";
 
-import NotFound from '@error/NotFound';
-import Private from '@guard/Private';
+import Private from "@guard/Private";
+import Admin from "@guard/Admin";
 
 export default function Body() {
 
-    return (<>
-        <Routes>
-            <Route path="/" element={<Home />} />
+    return (
+    <Routes>
+        <Route path="/" element={<Home/>}/>
+        
+        <Route path="/country/list" element={<CountryList/>}/>
+        <Route path="/country/add" element={<CountryAdd/>}/>
+        {/* 제일 마지막에 적혀있는 값을 countryNo라는 이름으로 관리하겠다 */}
+        <Route path="/country/detail/:countryNo" element={<CountryDetail/>}/>
+        <Route path="/country/edit/:countryNo" element={<CountryEdit/>}/>
+        <Route path="/country/search" element={<CountrySearch/>}/>
+        <Route path="/country/complex" element={<CountryComplexSearch/>}/>
+        
+        <Route path="/lecture/list" element={<LectureList/>}/>
+        <Route path="/lecture/add" element={<LectureAdd/>}/>
+        <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}/>
+        
+        <Route path="/book/list" element={<BookList/>}/>
+        <Route path="/book/spa" element={<BookSpa/>}/>
 
-            <Route path="/country/list" element={<CountryList />}></Route>
-            <Route path="/country/add" element={<CountryAdd />}></Route>
-            {/* 제일 마지막에 적혀있는 값을 countryNo라는 이름으로 관리하겠다 */}
-            <Route path="/country/detail/:countryNo" element={<CountryDetail/>}></Route>
-            <Route path="/country/edit/:countryNo" element={<CountryEdit/>}/>
-            <Route path="/country/search" element={<CountrySearch/>}></Route>
-            <Route path="/country/complex" element={<CountryComplexSearch/>}></Route>
-            
+        {/* 회원 관련 */}
+        <Route path="/account/join" element={<AccountJoin/>}/>
+        <Route path="/account/joinSuccess" element={<AccountJoinSuccess/>}/>
+        <Route path="/account/joinFail" element={<AccountJoinFail/>}/>
+        <Route path="/account/login" element={<AccountLogin/>}/>
+        <Route path="/account/mypage" element={<Private><MyPage/></Private>}/>
+        <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
+        <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
 
-            <Route path="/lecture/list" element={<LectureList />}></Route>
-            <Route path="/lecture/add" element={<LectureAdd />}></Route>
-            <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}></Route>
+        {/* 관리자 기능 */}
+        <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
 
-            <Route path="/book/list" element={<BookList />}></Route>
-            <Route path="/book/add" element={<BookAdd />}></Route>
-            <Route path="/book/detail/:bookId" element={<BookDetail />}></Route>
-            <Route path="/book/edit/:bookId" element={<BookEdit />}></Route>
+        {/* 세션테스트 */}
+        <Route path="/session/test" element={<TestMain/>}/>
 
-            <Route path="/account/join" element={<AccountJoin />}></Route>
-            <Route path="/account/joinSuccess" element={<AccountJoinSuccess />}></Route>
-            <Route path="/account/joinFail" element={<AccountJoinFail />}></Route>
-            <Route path="/account/login" element={<AccountLogin />}></Route>
-            <Route path="/account/mypage" element={<Private><MyPage /></Private>}></Route>
-            <Route path="/account/password" element={<Private><AccountPassword /></Private>}></Route>
-            <Route path="/account/change" element={<Private><AccountChange /></Private>}></Route>
-
-            {/* 세션 테스트 */}
-            <Route path="/session/test" element={<TestMain/>}/>
-
-
-            {/* fallback route */}
-            <Route path="*" element={<NotFound />} />
-        </Routes>
-    </>)
+        {/* fallback route */}
+        <Route path="*" element={<NotFound/>}/>
+    </Routes>
+    )
 }
