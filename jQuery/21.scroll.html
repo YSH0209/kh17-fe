@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트</title>
+
+    <link rel="icon" href="/kh.png" type="image/png">
+    
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    
+    <!-- jQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <style>
+        div {box-shadow: 0 0 0 1px gray;}
+
+        body {
+            height : 5000px;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+     <script>
+        $(function(){
+            //scroll, resize 등은 window에 설정해야 함
+            $(window).on("scroll",function(){
+
+                console.log("스크롤 움직임 감지!");
+                
+                //비율, 위치등을 알고싶다면?
+                //- scrollY, scrollTop은 현재 화면의 최상단이 어느정도 위치인지를 알려주는 요소
+                // console.log(window.scrollY, document.documentElement.scrollTop);
+                //- scrollHight, clientHeight 등은 현재 화면의 높이를 알려주는 요소
+                //- scrollHeight 는 스코릴이 가능한 전체 높이를 반환
+                //- clinetHeight 는 현재 보여지는 화면의 높이를 반환
+                //- 이 두개를 이용해서 scrollY / scrollTop의 최대치를 알아내야함
+                // console.log(
+                    // document.documentElement.scrollHeight,
+                    // document.documentElement.clientHeight
+                // );
+                const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
+                
+                const currentScrollY = window.scrollY || scrollTop;
+                const maxScrollY = parseInt(scrollHeight - clientHeight);
+                const percent = currentScrollY * 100 / maxScrollY;
+
+                console.log(currentScrollY, maxScrollY, percent);
+            });
+        });
+
+     </script>
+</head>
+<body>
+   <div class="container w-600 mt-50 md-50">
+        <div class="cell center">
+            <h1>제목</h1>
+        </div>
+
+
+   </div>
+</body>
+</html>
