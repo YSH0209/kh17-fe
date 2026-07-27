@@ -9,6 +9,7 @@ import { throttle } from 'lodash-es';
 import { ko } from "date-fns/locale";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./AdminUsersScroll.css";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -113,6 +114,9 @@ export default function AdminUsersScroll() {
 
     //검색
     const sendSearch = useCallback(async e => {
+        if(loading.current === true) return; //이미 로딩중이면 하지마
+        loading.current = true; //로딩 시작
+
         e.preventDefault();//기본 form 전송 차단
 
         // const { data } = await apiClient.post("/account/search", condition);
@@ -125,9 +129,17 @@ export default function AdminUsersScroll() {
         setList(data.list);//덮어쓰기
         // setList(prev=>[...prev, ...data.list]);//이어쓰기
         last.current = data.last;
+
+        loading.current = false;; //로딩 끝
     }, [condition, lastAccountId, size]);
 
     const sendMore = useCallback(async e => {
+        console.log("더보기 실행 대기중");
+         if(loading.current === true) return; //이미 로딩중이면 하지마
+        loading.current = true; //로딩 시작
+
+        console.log("더보기 실행");
+
         const copy = {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
@@ -137,6 +149,8 @@ export default function AdminUsersScroll() {
         // setList(data.list);//덮어쓰기
         setList(prev => [...prev, ...data.list]);//이어쓰기
         last.current = data.last;
+
+         loading.current = false;; //로딩 끝
     }, [condition, lastAccountId, size]);
 
     const getScrollPercent = useCallback(() => {
@@ -154,6 +168,11 @@ export default function AdminUsersScroll() {
         //비율을 계산해서 반환
         return current * 100 / max;
     }, []);
+
+    //로딩 중 상태를 표시하기 위한 데이터 값
+    // const [loading, setLoading] = useState(false); //실행 빈도가 낮을 때
+    const loading = useRef(false); //실행 빈도가 매우 높을 때 (ex : scroll, resize)
+    
 
     //화면이 시작되면 스크롤 이벤트를 설정 + 화면이 사라지면 스크롤 이벤트를 제거
     // → 클린업 함수를 포함하여 useEffect 훅을 작성해야함
