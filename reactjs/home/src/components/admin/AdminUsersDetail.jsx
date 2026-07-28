@@ -202,7 +202,7 @@ export default function AdminUserDetail() {
         <Row className="mt-5">
             <Col className="text-end">
                 {/* 차단/해제 버튼 : account.accountBlock 상태에 따라 달라짐 */}
-                <Button variant="danger" className="w-md-auto" onClick={block}>
+                <Button variant="danger" className="w-md-auto mb-2 md-auto me-md-2" onClick={block}>
                     {account?.accountBlock === "Y" ? (<>
                         <FaUnlock/>
                         <span className="ms-2">차단 해제하기</span>
@@ -213,7 +213,8 @@ export default function AdminUserDetail() {
                 </Button>
 
                 {/* 임시 비밀번호 발급 */}
-                <Button variant="warning" className="w-md-auto" onClick={createTempPassword}>
+                <Button variant="warning" className="w-md-auto" onClick={createTempPassword}
+                        disabled={sending === true} >
                     {sending === false && (<>
                         <MdOutlinePassword />
                         <span className="ms-2">임시 비밀번호 설정하기</span>
