@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import { Link, Navigate } from "react-router-dom";
 dayjs.locale("ko");//한국어로 설정
 
 //등급을 미리 정의 (갱신의 여지가 없고 화면의 변화와 관계가 없으므로 바깥에 만듦)
@@ -116,7 +117,7 @@ export default function AdminUsers() {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
         };
-        const { data } = await apiClient.post("/account/search", copy);
+        const { data } = await apiClient.post("/admin/search", copy);
 
         setList(data.list);//덮어쓰기
         // setList(prev=>[...prev, ...data.list]);//이어쓰기
@@ -128,12 +129,14 @@ export default function AdminUsers() {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
         };
-        const { data } = await apiClient.post("/account/search", copy);
+        const { data } = await apiClient.post("/admin/search", copy);
 
         // setList(data.list);//덮어쓰기
         setList(prev=>[...prev, ...data.list]);//이어쓰기
         setLast(data.last);
     }, [condition, lastAccountId, size]);
+
+   
 
     //view
     return (<>
@@ -439,8 +442,12 @@ export default function AdminUsers() {
                     </thead>
                     <tbody>
                         {list.map(account=>(
-                        <tr key={account.accountId}>
-                            <td>{account.accountId}</td>
+                        <tr key={account.accountId} >
+                            <td>
+                                <Link to={`/admin/usersDetail/${account.accountId}`}>
+                                {account.accountId}
+                                </Link>
+                                </td>
                             <td>{account.accountNickname}</td>
                         </tr>
                         ))}
@@ -448,7 +455,7 @@ export default function AdminUsers() {
                 </Table>
             </Col>
         </Row>
-
+                        
         {/* 더보기 */}
         {last === false && (
         <Row className="mt-4">

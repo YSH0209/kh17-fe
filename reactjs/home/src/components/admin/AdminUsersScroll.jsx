@@ -13,6 +13,7 @@ import "./AdminUsersScroll.css";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import { Link } from "react-router-dom";
 dayjs.locale("ko");//한국어로 설정
 
 //등급을 미리 정의 (갱신의 여지가 없고 화면의 변화와 관계가 없으므로 바깥에 만듦)
@@ -114,7 +115,7 @@ export default function AdminUsersScroll() {
 
     //검색
     const sendSearch = useCallback(async e => {
-        if(loading.current === true) return; //이미 로딩중이면 하지마
+        if (loading.current === true) return; //이미 로딩중이면 하지마
         loading.current = true; //로딩 시작
 
         e.preventDefault();//기본 form 전송 차단
@@ -124,7 +125,7 @@ export default function AdminUsersScroll() {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
         };
-        const { data } = await apiClient.post("/account/search", copy);
+        const { data } = await apiClient.post("/admin/search", copy);
 
         setList(data.list);//덮어쓰기
         // setList(prev=>[...prev, ...data.list]);//이어쓰기
@@ -135,7 +136,7 @@ export default function AdminUsersScroll() {
 
     const sendMore = useCallback(async e => {
         console.log("더보기 실행 대기중");
-         if(loading.current === true) return; //이미 로딩중이면 하지마
+        if (loading.current === true) return; //이미 로딩중이면 하지마
         loading.current = true; //로딩 시작
 
         console.log("더보기 실행");
@@ -144,13 +145,13 @@ export default function AdminUsersScroll() {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
         };
-        const { data } = await apiClient.post("/account/search", copy);
+        const { data } = await apiClient.post("/admin/search", copy);
 
         // setList(data.list);//덮어쓰기
         setList(prev => [...prev, ...data.list]);//이어쓰기
         last.current = data.last;
 
-         loading.current = false;; //로딩 끝
+        loading.current = false;; //로딩 끝
     }, [condition, lastAccountId, size]);
 
     const getScrollPercent = useCallback(() => {
@@ -172,7 +173,7 @@ export default function AdminUsersScroll() {
     //로딩 중 상태를 표시하기 위한 데이터 값
     // const [loading, setLoading] = useState(false); //실행 빈도가 낮을 때
     const loading = useRef(false); //실행 빈도가 매우 높을 때 (ex : scroll, resize)
-    
+
 
     //화면이 시작되면 스크롤 이벤트를 설정 + 화면이 사라지면 스크롤 이벤트를 제거
     // → 클린업 함수를 포함하여 useEffect 훅을 작성해야함
@@ -184,40 +185,40 @@ export default function AdminUsersScroll() {
     //- 갱신이 스스로 안된다
     //- [1번 해결책] 사용되는 데이터를 Ref로 변경 (하책)
     //- [2번 해결책] 사용되는 함수를 Ref로 변경 (상책..?)
-    
-    const sednMoreRef = useRef(null);
-    useEffect(()=>{
-        sednMoreRef.current = sendMore;
-    },[sendMore]);
 
-    useEffect(()=>{
+    const sednMoreRef = useRef(null);
+    useEffect(() => {
+        sednMoreRef.current = sendMore;
+    }, [sendMore]);
+
+    useEffect(() => {
         // console.log("화면 시작");
-        const listener = throttle(()=>{
+        const listener = throttle(() => {
 
             // console.log("스크롤 움직임");
             const percent = getScrollPercent();
             console.log("현재 스크롤 위치 : " + percent.toFixed(2) + "&");
 
             //useRef로 만든 데이터는 연관항목에 없어도 마음대로 접근할 수 있다
-            if(last.current === false && percent === 100){
-                if(sednMoreRef.current){
+            if (last.current === false && percent === 100) {
+                if (sednMoreRef.current) {
                     console.log("더보기 실행");
                     sednMoreRef.current();
                 }
             }
 
-        },250);
+        }, 250);
 
 
         window.addEventListener("scroll", listener);
 
 
         //클린업(clean-up)함수
-        return ()=>{
+        return () => {
             // console.log("화면 끝");
             window.removeEventListener("scroll", listener);
         };
-    },[]);
+    }, []);
 
     //view
     return (<>
@@ -524,7 +525,9 @@ export default function AdminUsersScroll() {
                     <tbody>
                         {list.map(account => (
                             <tr key={account.accountId}>
-                                <td>{account.accountId}</td>
+                                <td> <Link to={`/admin/usersDetail/${account.accountId}`}>
+                                    {account.accountId}
+                                </Link></td>
                                 <td>{account.accountNickname}</td>
                             </tr>
                         ))}

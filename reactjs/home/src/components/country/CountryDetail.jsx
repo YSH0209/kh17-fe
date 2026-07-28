@@ -30,7 +30,7 @@ export default function CountryDetail() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await apiClientget(`/api/country/${countryNo}`)
+        const response = await apiClient.get(`/api/country/${countryNo}`)
         setCountry(response.data);
         setBackup(response.data);
     }, []);

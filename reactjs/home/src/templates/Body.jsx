@@ -26,6 +26,7 @@ import MyPage from "@components/account/MyPage";
 
 import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
+import AdminUsersDetail from "@components/admin/AdminUsersDetail";
 
 import TestMain from "@components/session/TestMain";
 
@@ -65,6 +66,7 @@ export default function Body() {
         {/* 관리자 기능 */}
         <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
         <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
+        <Route path="/admin/usersDetail/:accountId" element={<Admin><AdminUsersDetail/></Admin>}></Route>
 
         {/* 세션테스트 */}
         <Route path="/session/test" element={<TestMain/>}/>
