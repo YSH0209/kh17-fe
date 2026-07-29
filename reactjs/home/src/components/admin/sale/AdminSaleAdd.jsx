@@ -4,6 +4,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaPlus, FaXmark } from "react-icons/fa6";
 import { apiClient } from "@utils/reaxios";
 import { toast } from "react-toastify";
+import Editor from "react-simple-wysiwyg";
+import NoImage from "@assets/images/no-image.png";
 
 export default function AdminSaleAdd() {
     //state
@@ -36,6 +38,21 @@ export default function AdminSaleAdd() {
         //태그를 직접 제어하는 방향으로 우회 처리한다 (ref 사용)
         thumbnailRef.current.value = "";
     }, [thumbnail]);
+
+    //상세이미지 관련 도구들
+    const [ detailImages, setDetailImages ] = useState([]);
+    const detailImagesRef = useRef();
+    const changeDetailImages = useCallback(e=>{
+        setDetailImages(e.target.files);
+    },[]);
+    const clearDetailImages = useCallback(e=>{
+        setDetailImages([]);
+    },[]);
+    useEffect(()=>{
+        if(detailImages.length > 0) return; //이미지 있으면 pass
+        detailImagesRef.current.value = ""; //실제 태그 초기화
+    },[detailImages]);
+
 
     //callback
     const changeStringValue = useCallback((e)=>{
@@ -74,10 +91,10 @@ export default function AdminSaleAdd() {
         //- <form> 대신 FormData를 쓰고, <input> 대신 append를 이용해서 key=value를 추가
         //- copy를 FormData로 변환한 뒤 전송하면 파일도 이곳에 첨부가 가능하다
 
-        //[1] 데이터와 파일을 같은 레벨로 담아서 전송 -> Spring 에서 @ModelAttribute로 이름 맞춰서 수신
-        //[2] 데이터 따로, 파일 따로 담아서 전송 -> Spring에서  @RequestPart로 수신
+        //[1] 데이터와 파일을 같은 레벨로 담아서 전송 → Spring에서 @ModelAttribute로 이름맞춰서 수신
+        //[2] 데이터 따로, 파일 따로 담아서 전송 → Spring에서 @RequestPart로 수신
 
-        //[1] 6+1 개의 데이터 전송
+        //[1] 6+1개의 데이터 전송
         // const form = new FormData();
         // form.append("saleName", copy.saleName);
         // form.append("saleCategory", copy.saleCategory);
@@ -90,13 +107,18 @@ export default function AdminSaleAdd() {
         // //썸네일을 form에 추가 (데이터와 파일을 같은레벨로 처리)
         // form.append("thumbnail", thumbnail);
 
-        //[2] 2개의 파트 데이터를 전송
+        // [2] 2개의 파트 데이터를 전송
         const form = new FormData();
-        form.append("sale", new Blob( (
-            [JSON.stringify(copy)] ,
-            {type : "application/json"}
-        ) )); //데이터 추가
+        form.append("sale", new Blob(
+            [ JSON.stringify(copy) ] ,
+            { type : "application/json" }
+        ));//데이터 추가
         form.append("thumbnail", thumbnail);//썸네일 추가
+
+        //같은 종류의 데이터가 여러개일 경우 같은 이름으로 계속 첨부 (배열을 한번에 첨부하는게 아님) -> List로 추출
+        detailImages.forEach(img=>{
+            form.append("detailImages", img);
+        });        
 
         const { data } = await apiClient.post("/sale/", form);
 
@@ -111,8 +133,8 @@ export default function AdminSaleAdd() {
             saleStock : ""
         });
         
-        console.log(data);
-    }, [sale, discount, thumbnail]);
+        //console.log(data);
+    }, [sale, discount, thumbnail, detailImages]);
 
     //할인을 해제하면 할인가를 삭제
     useEffect(()=>{
@@ -120,6 +142,26 @@ export default function AdminSaleAdd() {
             setSale(prev=>({...prev, saleDiscountPrice : ""}))
         }
     }, [discount]);
+
+    //미리보기에 넣을 src 데이터
+    const [previewSrc, setPreviewSrc] = useState(null);
+    //썸네일이 변경되면 미리보기를 갱신 (createObjectURL + revokeObjectURL)
+    useEffect(()=>{
+        if(thumbnail === null) {//이미지가 없으면
+            setPreviewSrc(null);//미리보기도 없음
+            return;
+        }
+        
+        //이미지 미리보기 주소 생성
+        const previewUrl = URL.createObjectURL(thumbnail);
+        setPreviewSrc(previewUrl);
+
+        //클린업 함수
+        return ()=>{
+            //생성된 미리보기 주소 제거
+            URL.revokeObjectURL(previewUrl);
+        };
+    }, [thumbnail]);
 
     //view
     return (<>
@@ -177,9 +219,22 @@ export default function AdminSaleAdd() {
         <Row className="mt-4">
             <Form.Label column sm={3}>상세설명</Form.Label>
             <Col sm={9}>
+                {/* 
                 <Form.Control as="textarea" rows={6} 
                         name="saleContent" value={sale.saleContent}
                         onChange={changeStringValue} placeholder="상품에 대한 설명 작성"/>
+                */}
+
+                <Editor name="saleContent" value={sale.saleContent} 
+                        onChange={changeStringValue}
+                        containerProps={ 
+                            { 
+                                style : {
+                                    resize : "none",//or vertical
+                                    minHeight : 250
+                                } 
+                            } 
+                        }/>
             </Col>
         </Row>
 
@@ -199,6 +254,29 @@ export default function AdminSaleAdd() {
                 </div>
             </Col>
         </Row>
+        <Row className="mt-2">
+            <Col>
+                <img src={previewSrc ?? NoImage} width={100} height={100}/>
+            </Col>
+        </Row>
+        
+        {/* 상세 이미지 */}
+                <Row className="mt-4">
+            <Form.Label column sm={3}>상세이미지</Form.Label>
+            <Col sm={9}>
+                <div className="d-flex">
+                    <Form.Control type="file" accept="image/*" multiple
+                        ref={detailImagesRef} 
+                        onInput={changeDetailImages}/>
+                    {detailImages.length > 0 && (
+                    <Button variant="danger" onClick={clearDetailImages} className="ms-2">
+                        <FaXmark/>                        
+                    </Button>
+                    )}
+                </div>
+            </Col>
+        </Row>
+
 
         <Row className="mt-5">
             <Col className="text-end">
