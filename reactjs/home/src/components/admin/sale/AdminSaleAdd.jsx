@@ -126,6 +126,7 @@ export default function AdminSaleAdd() {
 
         toast.success("상품 등록이 완료되었습니다");
 
+        //데이터 초기화
         setSale({
             saleName : "",
             saleCategory : "",
@@ -134,6 +135,9 @@ export default function AdminSaleAdd() {
             saleContent : "",
             saleStock : ""
         });
+        
+        clearThumbnail();
+        clearDetailImages();
         
         //console.log(data);
     }, [sale, discount, thumbnail, detailImages]);
