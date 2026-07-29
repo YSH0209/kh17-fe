@@ -116,7 +116,9 @@ export default function AdminSaleAdd() {
         form.append("thumbnail", thumbnail);//썸네일 추가
 
         //같은 종류의 데이터가 여러개일 경우 같은 이름으로 계속 첨부 (배열을 한번에 첨부하는게 아님) -> List로 추출
-        detailImages.forEach(img=>{
+        //-> FileList는 상황에 따라 배열 전용명령이 없을 수 있으므로 정상적인 배열로 변환하여 쓰십시오
+        // Array.from(FileList)
+        Array.from(detailImages).forEach(img=>{
             form.append("detailImages", img);
         });        
 
