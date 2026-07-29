@@ -23,11 +23,13 @@ import AccountJoinFail from "@components/account/AccountJoinFail";
 import AccountLogin from "@components/account/AccountLogin";
 import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
+import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
 import MyPage from "@components/account/MyPage";
 
 import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
 import AdminUsersDetail from "@components/admin/AdminUsersDetail";
+import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
 
 import TestMain from "@components/session/TestMain";
 
@@ -63,11 +65,13 @@ export default function Body() {
         <Route path="/account/mypage" element={<Private><MyPage/></Private>}/>
         <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
         <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
+        <Route path="/account/needUpdate" element={<Private><AccountNeedUpdate/></Private>}/>
 
         {/* 관리자 기능 */}
         <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
         <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
         <Route path="/admin/usersDetail/:accountId" element={<Admin><AdminUsersDetail/></Admin>}></Route>
+        <Route path="/admin/saleAdd" element={<Admin><AdminSaleAdd/></Admin>}></Route>
 
         {/* 세션테스트 */}
         <Route path="/session/test" element={<TestMain/>}/>
