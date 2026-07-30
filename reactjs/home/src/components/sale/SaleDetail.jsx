@@ -110,6 +110,11 @@ export default function SaleDetail() {
             </Col>
         </Row>
 
-
+        {/* 
+            관리자만 볼 수 있는 삭제버튼을 만들고 경고창 출력 후 
+            확인을 누르면 서버로 신호를 보내 삭제
+            그 후 목록으로 이동
+            서버주소 : /api/sale/{saleNo} [DELETE]
+        */}
     </>)
 }
