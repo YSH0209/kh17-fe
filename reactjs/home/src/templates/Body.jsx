@@ -33,6 +33,9 @@ import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
 
 import TestMain from "@components/session/TestMain";
 
+import SaleList from "@components/sale/SaleList";
+import SaleDetail from "@components/sale/SaleDetail";
+
 import Private from "@guard/Private";
 import Admin from "@guard/Admin";
 
@@ -56,6 +59,10 @@ export default function Body() {
         
         <Route path="/book/list" element={<BookList/>}/>
         <Route path="/book/spa" element={<BookSpa/>}/>
+
+        {/* 상품 관련 */}
+        <Route path="/sale/list" element={<SaleList/>}/>
+        <Route path="/sale/detail/:saleNo" element={<SaleDetail/>}/>
 
         {/* 회원 관련 */}
         <Route path="/account/join" element={<AccountJoin/>}/>

@@ -107,7 +107,7 @@ export default function AdminSaleAdd() {
         // //썸네일을 form에 추가 (데이터와 파일을 같은레벨로 처리)
         // form.append("thumbnail", thumbnail);
 
-        // [2] 2개의 파트 데이터를 전송
+        // [2] 각각의 파트 데이터별로 전송 
         const form = new FormData();
         form.append("sale", new Blob(
             [ JSON.stringify(copy) ] ,
