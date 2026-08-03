@@ -217,14 +217,14 @@ export default function AdminSaleEdit() {
         ).map(
             attach => attach.attachNo//전체 정보말고 번호만 추려라
         );
-        // console.log(detailNumbers);
+        //console.log(detailNumbers);
 
         await apiClient.post(`/sale/deleteDetailImages/${saleNo}`, detailNumbers);
         //화면갱신
-        //- loadData는 안되고 화면에서 요소를 직접 제거해야함(filter 사용)
+        //- loadData는 안되고 화면에서 요소를 직접 제거해야함 (filter 사용)
         toast.success("상세 이미지가 삭제되었습니다");
         setBeforeDetailImages(prev=>prev.filter(
-            attach=>!detailNumbers.includes(attach.attachNo)// 지운번호가 아닌 요소만 추출
+            attach => !detailNumbers.includes(attach.attachNo)//지운 번호가 아닌 요소만 추출
         ));
 
     }, [beforeDetailImages]);
@@ -308,7 +308,7 @@ export default function AdminSaleEdit() {
                         }/>
             </Col>
         </Row>
-
+        
         {/* 썸네일 이미지 표시 및 수정 */}
         <Row className="mt-4">
             <Form.Label column sm={3}>대표이미지</Form.Label>
@@ -335,17 +335,8 @@ export default function AdminSaleEdit() {
                 </div>
             </Col>
         </Row>
-        <Row className="mt-2">
-            <Col sm={{offset:3, span:9}}>
-                {/* 기존 이미지를 표시하고 제거, 변경 버튼을 추가 */}
-                {beforeThumbnail === null && (
-                <img src={NoImage} width={300} className="border"/>
-                ) }
-                {beforeThumbnail !== null && (
-                <img src={`${import.meta.env.VITE_SERVER_URL}/api/attach/${beforeThumbnail.attachNo}`} width={300} className="border"/>
-                ) }
-            </Col>
-        </Row>
+        
+  
 
         {/* position을 이용해서 버튼과 이미지를 합체 (모던 웹페이지 디자인) */}
         <Row className="mt-2">
