@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "@components/Home";
+
 import NotFound from "@error/NotFound";
 import AccountBlock from "@error/AccountBlock";
 
@@ -24,17 +25,20 @@ import AccountLogin from "@components/account/AccountLogin";
 import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
 import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
+
 import MyPage from "@components/account/MyPage";
 
 import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
-import AdminUsersDetail from "@components/admin/AdminUsersDetail";
-import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
+import AdminUserDetail from "@components/admin/AdminUsersDetail";
 
-import TestMain from "@components/session/TestMain";
+import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
+import AdminSaleEdit from "@components/admin/sale/AdminSaleEdit";
 
 import SaleList from "@components/sale/SaleList";
 import SaleDetail from "@components/sale/SaleDetail";
+
+import TestMain from "@components/session/TestMain";
 
 import Private from "@guard/Private";
 import Admin from "@guard/Admin";
@@ -60,10 +64,6 @@ export default function Body() {
         <Route path="/book/list" element={<BookList/>}/>
         <Route path="/book/spa" element={<BookSpa/>}/>
 
-        {/* 상품 관련 */}
-        <Route path="/sale/list" element={<SaleList/>}/>
-        <Route path="/sale/detail/:saleNo" element={<SaleDetail/>}/>
-
         {/* 회원 관련 */}
         <Route path="/account/join" element={<AccountJoin/>}/>
         <Route path="/account/joinSuccess" element={<AccountJoinSuccess/>}/>
@@ -77,8 +77,13 @@ export default function Body() {
         {/* 관리자 기능 */}
         <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
         <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
-        <Route path="/admin/usersDetail/:accountId" element={<Admin><AdminUsersDetail/></Admin>}></Route>
+        <Route path="/admin/detail/:accountId" element={<Admin><AdminUserDetail/></Admin>}></Route>
+
         <Route path="/admin/saleAdd" element={<Admin><AdminSaleAdd/></Admin>}></Route>
+        <Route path="/admin/saleEdit/:saleNo" element={<Admin><AdminSaleEdit/></Admin>}></Route>
+
+        <Route path="/sale/list" element={<SaleList/>}></Route>
+        <Route path="/sale/detail/:saleNo" element={<SaleDetail/>}></Route>
 
         {/* 세션테스트 */}
         <Route path="/session/test" element={<TestMain/>}/>
