@@ -43,6 +43,9 @@ import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
 import Admin from "@guard/Admin";
 
+import KakaopayBuyVersion1 from "../components/pay/v1/KakaopayBuyVersion";
+import KakaopayBuySuccessVersion1 from "../components/pay/v1/KakaopayBuySuccessVersion1";
+
 export default function Body() {
 
     return (
@@ -87,6 +90,10 @@ export default function Body() {
 
         {/* 세션테스트 */}
         <Route path="/session/test" element={<TestMain/>}/>
+
+        {/* 결제 관련 */}
+        <Route path="/pay/v1/buy" element={<KakaopayBuyVersion1/>}></Route>
+        <Route path="/pay/v1/buy/success" element={<KakaopayBuySuccessVersion1/>}></Route>
 
         {/* error */}
         <Route path="/account/block" element={<AccountBlock/>}/>
