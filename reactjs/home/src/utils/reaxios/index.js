@@ -1,11 +1,9 @@
 //Axios를 백엔드 인증 구조에 맞게 분할 및 개조하여 사용할 수 있도록 처리하여 제공하는 파일
 import axios from "axios";
-//jotai 에서 관리하는 통합 상태 저장소에 접근할 수 있는 명령(함수)가져오기
+//jotai에서 관리하는 통합 상태 저장소에 접근할 수 있는 명령(함수) 가져오기
 import { getDefaultStore } from "jotai";
 import { logoutActionState as logoutAction } from "@utils/storage";
-const store = getDefaultStore(); //저장소 불러오기
-
-
+const store = getDefaultStore();//저장소 불러오기
 
 //기본 정보 설정
 const baseURL = import.meta.env.VITE_SERVER_URL; //기본 주소
@@ -32,20 +30,22 @@ export const apiClient = axios.create({
     withCredentials : true
 });
 
-//요청에 대한 인터셉터
-// - 정상 요청의 경우 커스텀 헤더를 하나 생성해서 현재 페이지의 주소를 첨부하도록 구현
-apiClient.interceptors.request.use(
- config=>{
-    config.headers["X-Client-Page"] = window.location.href;
-    return config;
-  },
-  error=>error
-);
-
 
 //(추가) [3]번 API 요청용 Axios객체의 요청이 실패한 상황 중 응답코드가 401번인 경우 갱신 요청
 //- axios에는 interceptor라는 기능이 존재
 //- axios 공식 사이트에서 제공하는 interceptor 구문을 가져다가 수정
+
+// 요청에 대한 인터셉터
+// - 정상 요청의 경우 커스텀 헤더를 하나 생성해서 현재 페이지의 주소를 첨부하도록 구현
+apiClient.interceptors.request.use(
+  config=>{
+    //config.headers["X-Client-Page"] = window.location.href;//풀주소
+    const { origin, pathname } = window.location;
+    config.headers["X-Client-Page"] = origin + pathname;//파라미터 제거
+    return config;
+  },
+  error=>error
+);
 
 // 응답에 대한 인터셉터
 apiClient.interceptors.response.use(
@@ -94,7 +94,7 @@ apiClient.interceptors.response.use(
 //- origin 제외하고 /부터 작성
 //- HashRouter는 처리가 안됨
 function moveToLoginPage() {
-    store.set(logoutAction); //jotai의 logoutActionState를 호출
+    store.set(logoutAction);//jotai의 logoutActionState를 호출
 
     const url = "/account/login";
     window.location.replace(url);

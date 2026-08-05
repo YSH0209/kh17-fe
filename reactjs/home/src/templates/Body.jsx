@@ -30,7 +30,7 @@ import MyPage from "@components/account/MyPage";
 
 import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
-import AdminUserDetail from "@components/admin/AdminUsersDetail";
+import AdminUsersDetail from "@components/admin/AdminUsersDetail";
 
 import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
 import AdminSaleEdit from "@components/admin/sale/AdminSaleEdit";
@@ -43,17 +43,15 @@ import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
 import Admin from "@guard/Admin";
 
-import KakaopayBuyVersion1 from "../components/pay/v1/KakaopayBuyVersion";
-import KakaopayBuySuccessVersion1 from "../components/pay/v1/KakaopayBuySuccessVersion1";
+import KakaopayBuyVersion1 from "@components/pay/v1/KakaopayBuyVersion1";
+import KakaopayBuySuccessVersion1 from "@components/pay/v1/KakaopayBuySuccessVersion1";
 import KakaopayBuyCancelVersion1 from "@components/pay/v1/KakaopayBuyCancelVersion1";
 import KakaopayBuyFailVersion1 from "@components/pay/v1/KakaopayBuyFailVersion1";
-
 
 import KakaopayBuyVersion2 from "@components/pay/v2/KakaopayBuyVersion2";
 import KakaopayBuySuccessVersion2 from "@components/pay/v2/KakaopayBuySuccessVersion2";
 import KakaopayBuyCancelVersion2 from "@components/pay/v2/KakaopayBuyCancelVersion2";
 import KakaopayBuyFailVersion2 from "@components/pay/v2/KakaopayBuyFailVersion2";
-
 
 export default function Body() {
 
@@ -89,7 +87,7 @@ export default function Body() {
         {/* 관리자 기능 */}
         <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>
         <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}></Route>
-        <Route path="/admin/detail/:accountId" element={<Admin><AdminUserDetail/></Admin>}></Route>
+        <Route path="/admin/detail/:accountId" element={<Admin><AdminUsersDetail/></Admin>}></Route>
 
         <Route path="/admin/saleAdd" element={<Admin><AdminSaleAdd/></Admin>}></Route>
         <Route path="/admin/saleEdit/:saleNo" element={<Admin><AdminSaleEdit/></Admin>}></Route>
@@ -101,8 +99,8 @@ export default function Body() {
         <Route path="/session/test" element={<TestMain/>}/>
 
         {/* 결제 관련 */}
-        <Route path="/pay/v1/buy" element={<KakaopayBuyVersion1/>}></Route>
-        <Route path="/pay/v1/buy/success" element={<KakaopayBuySuccessVersion1/>}></Route>
+        <Route path="/pay/v1/buy" element={<KakaopayBuyVersion1/>}/>
+        <Route path="/pay/v1/buy/success" element={<KakaopayBuySuccessVersion1/>}/>
         <Route path="/pay/v1/buy/cancel" element={<KakaopayBuyCancelVersion1/>}/>
         <Route path="/pay/v1/buy/fail" element={<KakaopayBuyFailVersion1/>}/>
 
@@ -110,7 +108,6 @@ export default function Body() {
         <Route path="/pay/v2/buy/success" element={<KakaopayBuySuccessVersion2/>}/>
         <Route path="/pay/v2/buy/cancel" element={<KakaopayBuyCancelVersion2/>}/>
         <Route path="/pay/v2/buy/fail" element={<KakaopayBuyFailVersion2/>}/>
-        
 
         {/* error */}
         <Route path="/account/block" element={<AccountBlock/>}/>
