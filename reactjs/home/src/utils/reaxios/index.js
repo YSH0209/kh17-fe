@@ -32,6 +32,16 @@ export const apiClient = axios.create({
     withCredentials : true
 });
 
+//요청에 대한 인터셉터
+// - 정상 요청의 경우 커스텀 헤더를 하나 생성해서 현재 페이지의 주소를 첨부하도록 구현
+apiClient.interceptors.request.use(
+ config=>{
+    config.headers["X-Client-Page"] = window.location.href;
+    return config;
+  },
+  error=>error
+);
+
 
 //(추가) [3]번 API 요청용 Axios객체의 요청이 실패한 상황 중 응답코드가 401번인 경우 갱신 요청
 //- axios에는 interceptor라는 기능이 존재
