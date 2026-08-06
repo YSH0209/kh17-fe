@@ -17,7 +17,7 @@ export default function Private({ children }){
     // - isAdminState를 가져와서 관리자인지 아닌지 검증
     const isLogin = useAtomValue(isLoginState);
     const isAdmin = useAtomValue(isAdminState);
-    console.log("isLogin", isLogin, "isAdmin", isAdmin);
+    // console.log("isLogin", isLogin, "isAdmin", isAdmin);
     if(isLogin !== true){
         return (
         <NotAuthorized />
