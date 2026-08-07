@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, Col, Form, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import NoImage from "@assets/images/no-image.png";
 import { FaArrowTrendDown, FaCartShopping } from "react-icons/fa6";
+import { debounce } from "lodash-es";
 
 export default function AccountCart() {
 
@@ -33,10 +34,14 @@ export default function AccountCart() {
     }, []);
 
     // 수량 변경 함수 (수량이 변경되면 서버에 바로 반영할것인지 결정)
+    // - 수량이 변경되면 함수를 호출하여 서버로 전달하도록 요청
     const changeItemQty = useCallback((e, target) => {
         const { value } = e.target;
         const replacement = value.replace(/[^0-9]+/g, "");
         const number = parseInt(replacement) || 1;
+
+        sendChangeQty(target, number);
+
 
         setCartList(
             prev => prev.map(
@@ -50,6 +55,15 @@ export default function AccountCart() {
             )
         );
     }, []);
+
+    const sendChangeQty = useCallback(
+        debounce( //성능 저하를 위한 debounce 사용
+            async (item, qty) => {
+                const { data } = await apiClient.patch(
+                    "/cart/",
+                    { no: item.no, qty: qty }
+                );
+            }, 1000), []);
 
     //항목 체크
     const changeItemSelected = useCallback((e, target) => {
@@ -215,7 +229,7 @@ export default function AccountCart() {
         <Row className="mt-5">
             <Col>
                 <Button variant="success" size="lg" className="w-100">
-                    <FaCartShopping/>
+                    <FaCartShopping />
                     <span className="ms-2">구매하기</span>
                 </Button>
             </Col>
