@@ -5,7 +5,9 @@ import { apiClient } from "@utils/reaxios";
 import { ClockLoader } from "react-spinners";
 import { Badge, Button, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import NoImage from "@assets/images/no-image.png";
-import { FaXmark } from "react-icons/fa6";
+import { MdSubdirectoryArrowRight } from "react-icons/md";
+import Swal from 'sweetalert2'
+import { toast } from "react-toastify";
 
 import dayjs from "dayjs";
 
@@ -14,6 +16,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 //한국어로 설정
 import "dayjs/locale/ko";
+import { FaXmark } from "react-icons/fa6";
 dayjs.locale("ko");
 
 export default function KakaopayBuyDetailVersion2() {
@@ -25,20 +28,21 @@ export default function KakaopayBuyDetailVersion2() {
     const [details, setDetails] = useState(null);
     const [payResponse, setPayResponse] = useState(null);
 
-    useEffect(() => {
+    useEffect(()=>{
         loadData();
     }, []);
-    const loadData = useCallback(async () => {
+    const loadData = useCallback(async ()=>{
         const { data } = await apiClient.get(`/purchase/heavy/${purchaseNo}`);
         const { purchase, details, payResponse } = data;
         setPurchase(purchase);
         setDetails(details);
         setPayResponse(payResponse);
+        console.log(purchase, details, payResponse);
     }, []);
 
     //상품 개수까지 고려한 결제금액 계산
-    const calculateTotalPrice = useCallback((detail) => {
-        if (!detail) throw "detail 없음";
+    const calculateTotalPrice = useCallback((detail)=>{
+        if(!detail) throw "detail 없음";
 
         const { purchaseDetailQty, purchaseDetailPrice } = detail;
         const total = purchaseDetailPrice * purchaseDetailQty;
@@ -46,20 +50,49 @@ export default function KakaopayBuyDetailVersion2() {
     }, []);
 
     //memo
-    //기간내 취소 가능 판별
-    const withInPeriod = useMemo(() => {
-        if (purchase === null) return false;
+    const withInPeriod = useMemo(()=>{
+        if(purchase === null) return false;
         return dayjs().diff(purchase.purchaseCtime, 'day', false) <= 7;
     }, [purchase]);
 
-    if (purchase === null || details === null || payResponse === null) {
+    //전체취소
+    const cancelAll = useCallback(async ()=>{
+        try{
+
+            //확인창
+            const result = await Swal.fire({
+                title : "결제를 취소하시겠습니까?",
+                text: "취소한 결제는 복구할 수 없습니다.",
+                icon: "warning",
+                confirmButtonText:"네",
+                cancelButtonText:"아니오",
+                showCancelButton:true,
+            });
+        if(result.isConfirmed === false)return;
+
+        //취소요청
+        const { data } = await apiClient.delete(`/purchase/cancelAll/${purchaseNo}`);
+        toast.success("결제가 취소되었습니다");
+        
+        //화면 갱신처리
+        //await을 붙히면 뒷작업이 순차적으로 실행됨
+        // (async함수 내에서 다른 async 함수를 부를때 사용가능)
+        loadData();
+    }
+    catch(e){
+        toast.error("일시적인 오류입니다");
+    }
+        
+    },[]);
+
+    if(purchase === null || details === null || payResponse === null) {
         return (<>
-            <Jumbotron title="상품 결제 상세" content="결제 내역을 불러오는 중입니다..." />
+            <Jumbotron title="상품 결제 상세" content="결제 내역을 불러오는 중입니다..."/>
 
             <Row className="mt-5">
                 <Col>
                     <div className="d-flex justify-content-center align-items-center">
-                        <ClockLoader size={100} />
+                        <ClockLoader size={100}/>
                     </div>
                 </Col>
             </Row>
@@ -67,7 +100,7 @@ export default function KakaopayBuyDetailVersion2() {
     }
 
     return (<>
-        <Jumbotron title="상품 결제 상세" content="PG사와 연동된 결제 정보 내역입니다" />
+        <Jumbotron title="상품 결제 상세" content="PG사와 연동된 결제 정보 내역입니다"/>
 
         {/* 결제 대표 정보(purchase) */}
         <Row className="mt-2">
@@ -116,77 +149,80 @@ export default function KakaopayBuyDetailVersion2() {
         </Row>
 
         {/* 전체 취소 버튼 */}
-        {withInPeriod && purchase.purchaseRemain > 0 &&(
-        <Row className="mt-2 text-end">
+        { (withInPeriod && purchase.purchaseRemain > 0) && (
+        <Row className="mt-4 text-end">
             <Col>
-                <Button variant="danger" size="lg">
-                    <FaXmark/>    
+                <Button variant="danger" size="lg" onClick={cancelAll}>
+                    <FaXmark/>
                     <span className="ms-2">현재 구매내역 취소하기</span>
                 </Button>
             </Col>
         </Row>
-        )}
+        ) }
 
         {/* 결제 상세 상품 정보 (purchase_detail) */}
-        <hr className="my-5" />
+        <hr className="my-5"/>
 
         <Row>
             <Col>
                 <ListGroup>
-                    {details.map(detail => (
-                        <ListGroupItem key={detail.purchaseDetailNo} className="p-4">
-                            <div className="d-flex">
-                                {/* 상품 이미지(해결 필요) */}
-                                <img src={NoImage} width={100} />
+                    {details.map(detail=>(
+                    <ListGroupItem key={detail.purchaseDetailNo} className="p-4">
+                        <div className="d-flex">
+                            {/* 상품 이미지(해결 필요) */}
+                            <div style={{width:100, height:100, overflow:"hidden"}}>
+                                <img src={NoImage} width={"100%"}/>
+                            </div>
 
-                                {/* 상품 정보(스냅샷)와 구매 수량 */}
-                                <div className="flex-grow-1 ms-2">
-                                    <h4 className="text-truncate">
-                                        <Link to={`/sale/detail/${detail.purchaseDetailItem}`}>
-                                            {detail.purchaseDetailName}
-                                        </Link>
-                                    </h4>
-                                    <div className="mt-4">
-                                        구매 수량 : {detail.purchaseDetailQty.toLocaleString()}개
-                                    </div>
-                                    <div className="mt-2">
-                                        구매 금액 : {calculateTotalPrice(detail)}원
-                                        &nbsp;
-                                        (개당 {detail.purchaseDetailPrice.toLocaleString()}원)
-                                    </div>
-                                    <div className="mt-2">
-                                        <Badge bg={
-                                            detail.purchaseDetailStatus === "승인" ? "success" : "danger"
-                                        }>
-                                            {detail.purchaseDetailStatus}
-                                        </Badge>
-                                    </div>
-                                    {/* 
+                            {/* 상품 정보(스냅샷)와 구매 수량 */}
+                            <div className="flex-grow-1 ms-2">
+                                <h4 className="text-truncate">
+                                    <Link to={`/sale/detail/${detail.purchaseDetailItem}`}>
+                                        {detail.purchaseDetailName}
+                                    </Link>
+                                </h4>
+                                <div className="mt-4">
+                                    구매 수량 : {detail.purchaseDetailQty.toLocaleString()}개
+                                </div>
+                                <div className="mt-2">
+                                    구매 금액 : {calculateTotalPrice(detail)}원
+                                    &nbsp;
+                                    (개당 {detail.purchaseDetailPrice.toLocaleString()}원)
+                                </div>
+                                <div className="mt-2">
+                                    <Badge bg={
+                                        detail.purchaseDetailStatus === "승인" ? "success" : "danger"
+                                    }>
+                                        {detail.purchaseDetailStatus}
+                                    </Badge>
+                                </div>
+                                {/* 
                                     취소버튼 등장조건 
                                     1. 해당 상품 구매내역의 현재상태가 "승인"일 것
                                     2. 구매한지 일정 시간 이내일 것 (ex : 7일)
                                 */}
-                                    {
-                                        detail.purchaseDetailStatus === "승인"
-                                        &&
-                                        withInPeriod
-                                        && (
-                                            <div className="mt-2 text-end">
-                                                <Button variant="danger" size="sm">
-                                                    <FaXmark />
-                                                    <span className="ms-2">취소하기</span>
-                                                </Button>
-                                            </div>
-                                        )}
+                                { 
+                                    detail.purchaseDetailStatus === "승인"
+                                    &&
+                                    withInPeriod
+                                    && (
+                                <div className="mt-2 text-end">
+                                    <Button variant="danger" size="sm">
+                                        <FaXmark/>
+                                        <span className="ms-2">이 항목 취소하기</span>
+                                    </Button>
                                 </div>
+                                ) }
                             </div>
-                        </ListGroupItem>
+                        </div>
+                    </ListGroupItem>                    
                     ))}
                 </ListGroup>
             </Col>
         </Row>
 
         {/* 카카오페이 정보 */}
+        <hr className="my-5"/>
         <Row className="mt-2">
             <Col sm={3} className="text-info fw-bold">지불방식</Col>
             <Col sm={9} className="text-secondary">
@@ -200,59 +236,76 @@ export default function KakaopayBuyDetailVersion2() {
             </Col>
         </Row>
         <Row className="mt-2">
-            <Col sm={3} className="text-info fw-bold">결제 승인시각</Col>
+            <Col sm={3} className="text-info fw-bold">결제 승인시간</Col>
             <Col sm={9} className="text-secondary">
                 {dayjs(payResponse.approvedAt).format("YYYY년 M월 D일 dddd H시 m분 s초")}
             </Col>
         </Row>
+        {payResponse.canceledAt !== null && (
         <Row className="mt-2">
-            <Col sm={3} className="text-info fw-bold">금액 상세</Col>
+            <Col sm={3} className="text-info fw-bold">결제 취소시간</Col>
             <Col sm={9} className="text-secondary">
-                <div>총
-                    <span className="text-danger fw-bold mx-2">
+                {dayjs(payResponse.canceledAt).format("YYYY년 M월 D일 dddd H시 m분 s초")}
+            </Col>
+        </Row>
+        ) }
+        <Row className="mt-2">
+            <Col sm={3} className="text-info fw-bold">금액상세</Col>
+            <Col sm={9} className="text-secondary">
+                <div>
+                    총 
+                    <span className="text-info fw-bold mx-2">
                         {payResponse.amount.total.toLocaleString()}
                     </span>
-                    원</div>
-                <hr />
-                <div className="ps-2">상품가
-                    <span className="text-danger fw-bold mx-2">
-                        {(payResponse.amount.total - payResponse.amount.vat).toLocaleString()}
+                    원
+                </div>
+                <div className="ps-2">
+                    <MdSubdirectoryArrowRight/>
+                    <span>
+                        상품가 
+                        <span className="text-info fw-bold mx-2">
+                            {(payResponse.amount.total - payResponse.amount.vat).toLocaleString()}
+                        </span>    
+                        원
                     </span>
-                    원</div>
-                <div className="ps-2">부가세
-                    <span className="text-danger fw-bold mx-2">
-                        {payResponse.amount.vat.toLocaleString()}
+                </div>
+                <div className="ps-2">
+                    <MdSubdirectoryArrowRight/>
+                    <span>
+                        부가세 
+                        <span className="text-muted fw-bold mx-2">
+                            {payResponse.amount.vat.toLocaleString()}
+                        </span>    
+                        원
                     </span>
-                    원</div>
+                </div>
             </Col>
         </Row>
 
         <Row className="mt-4">
-            <Col>
+            <Col sm={3} className="text-info fw-bold">결제 상세</Col>
+            <Col sm={9} className="text-secondary">
                 <ListGroup>
-                    {payResponse.paymentActionDetails.map((action, index) => (
-                        <ListGroupItem key={index}>
-                            <div className="d-flex justify-content-between">
-                                <div>
-                                    <Badge bg={
-                                        action.paymentActionType === "PAYMENT" ? "success" : "danger"
-                                    }>{action.paymentActionType}</Badge>
+                    {payResponse.paymentActionDetails.map((action, index)=>(
+                    <ListGroupItem key={index}>
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                <Badge bg={
+                                    action.paymentActionType === "PAYMENT" ? "success" : "danger"
+                                }>{action.paymentActionType}</Badge>
 
-                                    <span className="ms-2">
-                                        {action.amount.toLocaleString()}원
-                                    </span>
-                                </div>
-                                <div>
-                                    {dayjs(action.approvedAt).format}
-                                </div>
+                                <span className="ms-2">
+                                    {action.amount.toLocaleString()} 원
+                                </span>
                             </div>
-                        </ListGroupItem>
+                            <div>
+                                {dayjs(action.approvedAt).format()}
+                            </div>
+                        </div>
+                    </ListGroupItem>
                     ))}
                 </ListGroup>
             </Col>
         </Row>
-
-
-
     </>)
 }
