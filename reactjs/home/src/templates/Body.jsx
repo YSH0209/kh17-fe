@@ -25,6 +25,7 @@ import AccountLogin from "@components/account/AccountLogin";
 import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
 import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
+import AccountCart from "@components/account/AccountCart";
 
 import MyPage from "@components/account/MyPage";
 
@@ -84,6 +85,9 @@ export default function Body() {
         <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
         <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
         <Route path="/account/needUpdate" element={<Private><AccountNeedUpdate/></Private>}/>
+        
+        <Route path="/account/cart" element={<Private><AccountCart/></Private>}/>
+
 
         {/* 관리자 기능 */}
         <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}></Route>

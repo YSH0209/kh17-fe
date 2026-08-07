@@ -15,6 +15,7 @@ import { isAdminState } from "@utils/storage";
 import { FaSquarePen, FaTrash } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { isLoginState } from "@utils/storage";
 
 export default function SaleDetail() {
     //parameter
@@ -69,10 +70,72 @@ export default function SaleDetail() {
         navigate("/sale/list");
     }, []);
 
+    const isLogin = useAtomValue(isLoginState);//로그인 상태
+
     //구매 확인 페이지로 주소를 잘 만들어서 전달
-    const purchase = useCallback(()=>{
+    const purchase = useCallback(async()=>{
+        if(!isLogin) {
+            const result = await Swal.fire({
+                title:"로그인이 필요한 서비스입니다",
+                text:"확인을 누르시면 로그인 페이지로 이동합니다",
+                icon:"info",
+                showCancelButton:true,
+                confirmButtonText:"확인",
+                cancelButtonText:"취소",
+                confirmButtonColor:"#0984e3",
+                cancelButtonColor:"#b2bec3",
+            });
+    
+            if(result.isConfirmed) {//확인을 눌렀다면
+                navigate("/account/login");
+            }
+            return;
+        }
+
         navigate(`/pay/v2/buy?sale=${saleNo}:${quantity}`);
     }, [saleNo, quantity]);
+
+    //장바구니 담기
+    const addCart = useCallback(async ()=>{
+        if(!isLogin) {
+            const result = await Swal.fire({
+                title:"로그인이 필요한 서비스입니다",
+                text:"확인을 누르시면 로그인 페이지로 이동합니다",
+                icon:"info",
+                showCancelButton:true,
+                confirmButtonText:"확인",
+                cancelButtonText:"취소",
+                confirmButtonColor:"#0984e3",
+                cancelButtonColor:"#b2bec3",
+            });
+    
+            if(result.isConfirmed) {//확인을 눌렀다면
+                navigate("/account/login");
+            }
+            return;
+        }
+
+        const { data } = await apiClient.post("/cart/", {
+            item : saleNo,//상품번호
+            qty : quantity//구매수량
+        });
+        console.log(data);
+
+        //장바구니에 담겼다는 알림 + 이동할것인지 확인
+        const result = await Swal.fire({
+            title:"상품이 장바구니에 담겼습니다",
+            icon:"success",
+            showCancelButton:true,
+            confirmButtonText:"장바구니로 이동",
+            cancelButtonText:"계속 쇼핑",
+            confirmButtonColor:"#00b894",
+            cancelButtonColor:"#dfe6e9"
+        });
+
+        if(result.isConfirmed) {//확인을 눌렀다면
+            navigate("/account/cart");
+        }
+    }, [quantity]);
 
     //sale은 절대로 null이면 안된다
     //→ sale이 null이면 기다려야 한다
@@ -125,7 +188,7 @@ export default function SaleDetail() {
                                 setQuantity(number);
                             }}/>
                     <Button variant="success" className="ms-2" onClick={purchase}>구매</Button>
-                    <Button variant="secondary" className="ms-2">담기</Button>
+                    <Button variant="secondary" className="ms-2" onClick={addCart}>담기</Button>
                 </div>
             </Col>
         </Row>
