@@ -17,22 +17,22 @@ import { FaCartShopping } from "react-icons/fa6";
 export default function Menu() {
     //메뉴에서는 로그인 상태 데이터가 필요하다
     const [loginUser, setLoginUser] = useAtom(loginUserState);
-
+    
     //읽기전용 atom을 불러오는법
     //const [isLogin] = useAtom(isLoginState);
     const isLogin = useAtomValue(isLoginState);
     const isAdmin = useAtomValue(isAdminState);
-
+    
     const loginAction = useSetAtom(loginActionState);
     const logoutAction = useSetAtom(logoutActionState);
 
     //서버에 로그아웃 요청 및 Jotai 저장소 초기화 요청을 수행하는 함수
-    const logout = useCallback(async () => {
+    const logout = useCallback(async ()=>{
         try {
             //await axios.delete("/service/auth/logout");//쿠키 삭제 요청
             await authClient.delete("/logout");//쿠키 삭제 요청
         }
-        catch (e) {
+        catch(e){
             console.error(e);
         }
         finally {
@@ -56,7 +56,7 @@ export default function Menu() {
 
     return (<>
         <Navbar expand="md" className="bg-body-tertiary sticky-top"
-            bg="dark" data-bs-theme="dark">
+                    bg="dark" data-bs-theme="dark">
             {/* 메뉴 메인 컨테이너 */}
             <Container fluid>
                 {/* 메인 브랜드 로고 */}
@@ -73,7 +73,7 @@ export default function Menu() {
                         <Nav.Link as={Link} to="/book/list">도서정보</Nav.Link>
                         <Nav.Link as={Link} to="/book/spa">도서정보2</Nav.Link>
                          */}
-
+                        
                         <NavDropdown title="데이터베이스" id="basic-nav-dropdown">
                             <NavDropdown.Item as={Link} to="/country/list">국가정보</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/country/search">국가명검색</NavDropdown.Item>
@@ -85,35 +85,36 @@ export default function Menu() {
                             <NavDropdown.Item as={Link} to="/book/spa">도서정보(SPA)</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="카카오페이" id="basic-nav-dropdown">
-                            <NavDropdown.Item as={Link} to="/pay/v1/buy">결제(V1)</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/pay/v1/buy">무식한 결제</NavDropdown.Item>
                         </NavDropdown>
                         {/* <Nav.Link as={Link} to="/session/test">세션테스트</Nav.Link> */}
-                        <Nav.Link as={Link} to="/sale/list">상품 목록</Nav.Link>
+                        <Nav.Link as={Link} to="/sale/list">상품목록</Nav.Link>
                     </Nav>
                     <Nav>
-                        {isLogin === true && (<>
-
-                            {isAdmin === true && (<><NavDropdown title="관리메뉴" id="basic-nav-dropdown">
-                                <NavDropdown.Item as={Link} to="/admin/users">회원관리</NavDropdown.Item>
-                                <NavDropdown.Item as={Link} to="/admin/users2">회원관리2</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item as={Link} to="/admin/saleAdd">상품등록(SPA)</NavDropdown.Item>
-                            </NavDropdown>
-                            </>)}
-                            {isAdmin === false && (<>
-                                <Nav.Link as={Link} to="/account/cart">
-                                <FaCartShopping />
-                                <span>장바구니</span>
-                                </Nav.Link>
-                                <Nav.Link as={Link} to="/account/mypage">내정보</Nav.Link>
-                            </>)}
-
-                            <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                        { isLogin === true && (<>
+                        
+                        { isAdmin === true && (<>
+                        <NavDropdown title="관리메뉴" id="basic-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/admin/users">회원관리</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/admin/users2">회원관리2</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item as={Link} to="/admin/saleAdd">상품등록</NavDropdown.Item>
+                        </NavDropdown>
                         </>)}
-                        {isLogin !== true && (<>
-                            <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
-                            <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
+                        { isAdmin === false && (<>
+                        <Nav.Link as={Link} to="/account/cart">
+                            <FaCartShopping/>
+                            <span className="ms-1">장바구니</span>
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/account/mypage">내정보</Nav.Link>
                         </>)}
+
+                        <Nav.Link onClick={logout}>로그아웃</Nav.Link>
+                        </>) }
+                        { isLogin !== true && (<>
+                        <Nav.Link as={Link} to="/account/join">회원가입</Nav.Link>
+                        <Nav.Link as={Link} to="/account/login">로그인</Nav.Link>
+                        </>) }
 
                         {/* 연습용 Refresh 버튼 (향후 삭제가 필요) */}
                         {/* <Nav.Link onClick={refresh}>갱신(Refresh)</Nav.Link> */}
