@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
 import { Col, Form, ListGroup, Row } from "react-bootstrap";
-import axios from "axios";
+import { apiClient } from "@utils/reaxios";
 import { throttle, debounce } from "lodash-es";
 
 export default function CountrySearch() {

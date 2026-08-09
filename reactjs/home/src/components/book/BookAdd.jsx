@@ -1,5 +1,5 @@
 import Jumbotron from "@templates/Jumbotron";
-import axios from "axios";
+import { apiClient } from "@utils/reaxios";
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2'
 import { useCallback, useEffect, useMemo, useState } from "react";

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button, Col, Form, Row, Table } from "react-bootstrap"
 import { FaMagnifyingGlass, FaPlus, FaTrash, FaChevronDown } from "react-icons/fa6"
 import { TbTilde } from "react-icons/tb";
-import axios from "axios";
+import { apiClient } from "@utils/reaxios";
 import { useMemo } from "react";
 import { toast } from "react-toastify";
 

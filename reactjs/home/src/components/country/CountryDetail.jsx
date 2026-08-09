@@ -1,7 +1,7 @@
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import { apiClient } from "@utils/reaxios";
 import { Button, Col, Row, Toast, Form } from "react-bootstrap";
 import { FaCheck, FaList, FaPenToSquare, FaSquarePen, FaTrash, FaTruckMedical, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";

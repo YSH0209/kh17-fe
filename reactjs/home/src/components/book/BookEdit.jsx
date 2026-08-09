@@ -1,5 +1,5 @@
 import { Row, Col, Form, Button } from "react-bootstrap";
-import axios from "axios";
+import { apiClient } from "@utils/reaxios";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, Navigate, Link } from "react-router-dom";
 import { FaCheck, FaList, FaPenToSquare, FaSquarePen, FaTrash, FaTruckMedical, FaXmark } from "react-icons/fa6";

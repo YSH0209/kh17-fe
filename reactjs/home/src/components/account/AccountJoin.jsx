@@ -3,7 +3,6 @@ import { useCallback, useMemo, useRef } from "react";
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaAsterisk, FaCheck, FaEye, FaEyeSlash, FaMagnifyingGlass, FaPaperPlane, FaRotateRight, FaSpinner, FaUserPlus, FaXmark } from "react-icons/fa6";
-import axios from "axios";
 import { useKakaoPostcodePopup } from "react-daum-postcode";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
