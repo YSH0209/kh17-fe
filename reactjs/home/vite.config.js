@@ -11,6 +11,11 @@ const path = (value)=>fileURLToPath(new URL(value, import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
+  //외부 접속 허용 설정
+  server : {
+    host : "0.0.0.0",
+    port : 5173
+  },
   plugins: [react()],
   resolve: {
     alias: {
@@ -22,5 +27,9 @@ export default defineConfig({
       "@utils": path("./src/utils"),
       "@guard": path("./src/guard"),
     }
+  },
+  //라이브러리 구동에 필요한 값을 정의
+  define : {
+    global : "window", //global이란 코드가 라이브러리에 있다면 window로 해석되도록 별칭 부여
   }
 })
