@@ -28,8 +28,8 @@
 }
 .message-wrapper > .message-outer > .message-inner > .content-wrapper > .content {
     display: flex;
-    align-items: flex-end;
     flex-direction: row;
+    align-items: flex-end;
 }
 .message-wrapper > .message-outer > .message-inner > .content-wrapper > .content > .body {
     background-color: white;
@@ -43,26 +43,24 @@
     margin-left: 0.5em;
 }
 
-
 /* 내 메세지에 대한 처리(디자인 재정의) */
-.message-wrapper > .message-outer.my > .message-inner{
+.message-wrapper > .message-outer.my > .message-inner {
     flex-direction: row-reverse;
 }
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content{
-    flex-direction: row;
-}
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .time{
-    margin-left: 0;
-    margin-right: 0.5em;
-}
-.message-wrapper > .message-outer.my > .message-inner > .profile-wrapper{
+.message-wrapper > .message-outer.my > .message-inner > .profile-wrapper {
     margin-left: 1em;
     margin-right: 0;
 }
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .body{
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .sender {
+    text-align: right;
+}
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content {
+    flex-direction: row-reverse;
+}
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .body {
     background-color: #FFEB00;
 }
-
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .sender{
-   text-align: right;
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .time {
+    margin-left: 0;
+    margin-right: 0.5em;
 }
