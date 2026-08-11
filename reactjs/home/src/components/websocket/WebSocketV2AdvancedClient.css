@@ -4,6 +4,12 @@
     flex-direction: column-reverse;
     font-size: 16px;
     background-color: #A1BFD9;
+
+    /* 높이제한을 걸고 스크롤을 추가하고 싶다면 */
+    max-height: 500px;
+    overflow: auto;
+
+    overflow-anchor: none;
 }
 .message-wrapper > .message-outer {
     padding: 0.5em;
@@ -23,13 +29,16 @@
 .message-wrapper > .message-outer > .message-inner > .profile-wrapper > img {
     width:100%;
 }
+.message-wrapper > .message-outer > .message-inner > .content-wrapper {
+    flex-grow: 1;
+}
 .message-wrapper > .message-outer > .message-inner > .content-wrapper > .sender {
     margin-bottom: 0.35em;
 }
 .message-wrapper > .message-outer > .message-inner > .content-wrapper > .content {
     display: flex;
-    align-items: flex-end;
     flex-direction: row;
+    align-items: flex-end;
 }
 .message-wrapper > .message-outer > .message-inner > .content-wrapper > .content > .body {
     background-color: white;
@@ -43,26 +52,40 @@
     margin-left: 0.5em;
 }
 
-
 /* 내 메세지에 대한 처리(디자인 재정의) */
-.message-wrapper > .message-outer.my > .message-inner{
+.message-wrapper > .message-outer.my > .message-inner {
     flex-direction: row-reverse;
 }
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content{
-    flex-direction: row;
-}
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .time{
-    margin-left: 0;
-    margin-right: 0.5em;
-}
-.message-wrapper > .message-outer.my > .message-inner > .profile-wrapper{
+.message-wrapper > .message-outer.my > .message-inner > .profile-wrapper {
     margin-left: 1em;
     margin-right: 0;
 }
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .body{
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .sender {
+    text-align: right;
+}
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content {
+    flex-direction: row-reverse;
+}
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .body {
     background-color: #FFEB00;
 }
+.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .time {
+    margin-left: 0;
+    margin-right: 0.5em;
+}
 
-.message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .sender{
-   text-align: right;
+/* DM인 경우 작성자를 강조하도록 표시 */
+.message-wrapper > .message-outer > .message-inner.dm > .content-wrapper > .sender {
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* 시스템 메세지 디자인 */
+.system-message {
+    text-align: center;
+    font-size: 16px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    padding: 0.15em;
+    background-color: rgba(0, 0, 0, 0.3);
 }
