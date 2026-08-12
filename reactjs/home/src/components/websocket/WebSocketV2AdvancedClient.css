@@ -72,8 +72,6 @@
 .message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .time {
     margin-left: 0;
     margin-right: 0.5em;
-<<<<<<< HEAD
-=======
 }
 
 /* DM인 경우 작성자를 강조하도록 표시 */
@@ -90,5 +88,4 @@
     border-bottom: 2px solid black;
     padding: 0.15em;
     background-color: rgba(0, 0, 0, 0.3);
->>>>>>> 6554a8fce0a43e6c1f50bcee220875041ef9931e
 }
